@@ -72,6 +72,12 @@ class Module extends AbstractGenericModule
         }
 
         $sharedEventManager->attach(
+            \Omeka\Api\Adapter\SitePageAdapter::class,
+            'api.search.query',
+            [$this, 'apiSearchQuerySitePage']
+        );
+
+        $sharedEventManager->attach(
             'Omeka\Controller\Admin\Media',
             'view.show.sidebar',
             [$this, 'handleViewShowSidebarMedia']
@@ -102,6 +108,36 @@ class Module extends AbstractGenericModule
 
         // Advanced property sorts.
         $this->buildPropertyQuery($qb, $query, $adapter);
+    }
+
+    public function apiSearchQuerySitePage(Event $event)
+    {
+        $adapter = $event->getTarget();
+        $qb = $event->getParam('queryBuilder');
+        $query = $event->getParam('request')->getContent();
+
+        if (isset($query['slug'])) {
+            $qb->andWhere($qb->expr()->eq(
+                'Omeka\Entity\SitePage.slug',
+                $adapter->createNamedParameter($qb, $query['slug']))
+            );
+        }
+
+        if (isset($query['site_id'])) {
+            $qb->andWhere($qb->expr()->eq('Omeka\Entity\SitePage.site', $query['site_id']));
+        }
+
+        if (isset($query['site_slug'])) {
+            $siteAlias = $adapter->createAlias();
+            $qb->innerJoin(
+                'Omeka\Entity\SitePage.site',
+                $siteAlias
+            );
+            $qb->andWhere($qb->expr()->eq(
+                "$siteAlias.slug",
+                $adapter->createNamedParameter($qb, $query['site_slug']))
+            );
+        }
     }
 
     /**
