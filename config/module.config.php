@@ -18,6 +18,7 @@ return [
     ],
     'block_layouts' => [
         'invokables' => [
+            'browsePreview' => Site\BlockLayout\BrowsePreview::class,
         ],
         'factories' => [
         ],
