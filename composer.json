@@ -1,0 +1,37 @@
+{
+    "name": "daniel-km/omeka-s-module-next",
+    "type": "library",
+    "description": "Next, module for Omeka S, that allows to use some new features of the next release of Omeka S in the stable release.",
+    "license": "CECILL-2.1",
+    "authors": [
+        {
+            "name": "Daniel Berthereau",
+            "email": "Daniel.packagist@Berthereau.net"
+        }
+    ],
+    "homepage": "https://github.com/Daniel-KM/Omeka-S-module-Next",
+    "support": {
+        "issues": "https://github.com/Daniel-KM/Omeka-S-module-Next/issues",
+        "forum": "https://forum.omeka.org/"
+    },
+    "keywords": [
+        "Omeka S",
+        "module",
+        "feature",
+        "block",
+        "admin"
+    ],
+    "require-dev": {
+        "biblibre/omeka-s-test-helper": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Next\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NextTest\\": "test/NextTest/"
+        }
+    }
+}

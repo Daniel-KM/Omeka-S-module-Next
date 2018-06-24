@@ -1,0 +1,59 @@
+.reference-pagination.pagination {
+    display: inline-block;
+    float: none;
+    margin: 12px 0;
+    padding: 0 0 1em;
+    height: auto;
+    width: auto;
+}
+.reference-pagination ul.pagination-list {
+    height: auto;
+    margin: auto;
+    padding: 0;
+    list-style: none;
+}
+.reference-pagination li.pagination-range {
+    height: auto;
+    line-height: initial;
+    display: initial;
+}
+.reference-pagination li.pagination-range a,
+.reference-pagination li.pagination-range span {
+    display: inline-block;
+    margin-right: 0px;
+    padding: 0.375em 9px;
+    vertical-align: top;
+}
+.reference-pagination li.pagination-range a {
+    border: 1px solid #000000;
+    text-decoration: none;
+}
+.reference-pagination li.pagination-range span {
+    border: 1px solid transparent;
+}
+.reference-pagination li.pagination-range a:hover {
+    background-color: #CCCCCC;
+    color: #000;
+    text-decoration: none;
+}
+
+ul.references {
+    list-style: inside none disc;
+}
+ol.references {
+    list-style: inside none decimal;
+}
+ul.references ul,
+ol.references ul {
+    list-style: inside none circle;
+    margin-left: 15px;
+}
+ol.references ol,
+ul.references ol {
+    list-style: inside none lower-latin;
+    margin-left: 15px;
+}
+ul.references li {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
