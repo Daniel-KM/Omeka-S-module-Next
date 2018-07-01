@@ -14,6 +14,7 @@ return [
         'invokables' => [
         ],
         'factories' => [
+            'mediaSize' => Service\ViewHelper\MediaSizeFactory::class,
         ],
     ],
     'block_layouts' => [
