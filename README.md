@@ -1,8 +1,9 @@
 Next (module for Omeka S)
 =========================
 
-[Next] is a module for [Omeka S] that allows to use some new features of the
-next release of Omeka S in the stable release.
+[Next] is a module for [Omeka S] that brings together various features too small
+to be a full module. They may be integrated in the next release of Omeka S, or
+not.
 
 
 Installation
@@ -12,6 +13,12 @@ Uncompress files and rename module folder `Next`. Then install it like any
 other Omeka module and follow the config instructions.
 
 See general end user documentation for [Installing a module].
+
+
+TODO
+----
+
+- Manage "has image" for browse preview (not only media, and for item sets too).
 
 
 Warning
