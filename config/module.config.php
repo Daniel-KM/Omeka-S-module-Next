@@ -21,12 +21,15 @@ return [
         'invokables' => [
         ],
         'factories' => [
+            'simplePage' => Service\BlockLayout\SimplePageFactory::class,
         ],
     ],
     'form_elements' => [
         'invokables' => [
+            Form\SimplePageBlockForm::class => Form\SimplePageBlockForm::class,
         ],
         'factories' => [
+            Form\Element\SitePageSelect::class => Service\Form\Element\SitePageSelectFactory::class,
         ],
     ],
     'controller_plugins' => [
@@ -49,6 +52,9 @@ return [
         'settings' => [
         ],
         'block_settings' => [
+            'simplePage' => [
+                'page' => null,
+            ],
         ],
     ],
 ];

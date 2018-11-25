@@ -6,6 +6,10 @@ to be a full module. They may be integrated in the next release of Omeka S, or
 not.
 
 - Logger in view: allow to use `$this->logger()->err()` in the views.
+- Simple page: allow to use a page as a block, so the same page can be use in
+  multiple sites, for example the page "About" or "Privacy". Of course, the page
+  is a standard page and can be more complex with multiple blocks. May be fun.
+  This is an equivalent for the [shortcode as a page] in Omeka classic too.
 
 
 Installation
@@ -71,6 +75,7 @@ Copyright
 
 [Omeka S]: https://omeka.org/s
 [Next]: https://github.com/Daniel-KM/Omeka-S-module-Next
+[shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
