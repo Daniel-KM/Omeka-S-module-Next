@@ -15,12 +15,6 @@ other Omeka module and follow the config instructions.
 See general end user documentation for [Installing a module].
 
 
-TODO
-----
-
-- Manage "has image" for browse preview (not only media, and for item sets too).
-
-
 Warning
 -------
 

@@ -14,12 +14,10 @@ return [
         'invokables' => [
         ],
         'factories' => [
-            'mediaSize' => Service\ViewHelper\MediaSizeFactory::class,
         ],
     ],
     'block_layouts' => [
         'invokables' => [
-            'browsePreview' => Site\BlockLayout\BrowsePreview::class,
         ],
         'factories' => [
         ],
@@ -47,7 +45,7 @@ return [
         ],
     ],
     'next' => [
-        'config' => [
+        'settings' => [
         ],
         'block_settings' => [
         ],
