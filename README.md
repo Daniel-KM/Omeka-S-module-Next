@@ -5,6 +5,8 @@ Next (module for Omeka S)
 to be a full module. They may be integrated in the next release of Omeka S, or
 not.
 
+- Logger in view: allow to use `$this->logger()->err()` in the views.
+
 
 Installation
 ------------

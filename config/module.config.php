@@ -14,6 +14,7 @@ return [
         'invokables' => [
         ],
         'factories' => [
+            'logger' => Service\ViewHelper\LoggerFactory::class,
         ],
     ],
     'block_layouts' => [
