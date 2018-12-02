@@ -13,6 +13,8 @@ not.
 - Trim property values: remove leading and trailing whitespaces preventively on
   any resource creation or update, or curatively via the batch edit, so values
   will be easier to find and to compare exactly (fix [#1258]).
+- Deduplicate property values: remove exact duplicated values on any new or
+  updated resource preventively.
 
 
 Installation

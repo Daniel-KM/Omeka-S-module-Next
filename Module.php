@@ -76,6 +76,7 @@ class Module extends AbstractModule
      * Process action on create/update.
      *
      * - preventive trim on property values.
+     * - preventive deduplication on property values
      *
      * @param Event $event
      */
@@ -120,6 +121,33 @@ class Module extends AbstractModule
             unset($value);
         }
         unset($values);
+
+        // Deduplicating.
+        foreach ($data as $term => &$values) {
+            // Process properties only.
+            if (strpos($term, ':') === false || !is_array($values) || empty($values)) {
+                continue;
+            }
+            $first = reset($values);
+            if (empty($first['property_id'])) {
+                continue;
+            }
+            // Reorder all keys of all the values to simplify strict check.
+            foreach ($values as &$value) {
+                ksort($value);
+            }
+            unset($value);
+            $test = [];
+            foreach ($values as $key => $value) {
+                if (in_array($value, $test, true)) {
+                    unset($values[$key]);
+                } else {
+                    $test[$key] = $value;
+                }
+            }
+        }
+        unset($values);
+
         $request->setContent($data);
     }
 
