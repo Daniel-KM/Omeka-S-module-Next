@@ -10,6 +10,9 @@ not.
   multiple sites, for example the page "About" or "Privacy". Of course, the page
   is a standard page and can be more complex with multiple blocks. May be fun.
   This is an equivalent for the [shortcode as a page] in Omeka classic too.
+- Trim properties: sometime metadata have a trailing end of line or leading
+  and trailing whitespace, so they may be hard to find or to compare exactly.
+  This feature allows to remove them via the batch edit feature of resources.
 
 
 Installation

@@ -36,6 +36,7 @@ return [
         'invokables' => [
         ],
         'factories' => [
+            'trimValues' => Service\ControllerPlugin\TrimValuesFactory::class,
         ],
     ],
     'translator' => [
