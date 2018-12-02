@@ -85,6 +85,10 @@ class Module extends AbstractModule
         $request = $event->getParam('request');
         $data = $request->getContent();
 
+        $trimUnicode = function ($v) {
+            return preg_replace('/^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$/u', '', $v);
+        };
+
         // Trimming.
         foreach ($data as $term => &$values) {
             // Process properties only.
@@ -97,19 +101,19 @@ class Module extends AbstractModule
             }
             foreach ($values as &$value) {
                 if (isset($value['@value'])) {
-                    $v = trim($value['@value']);
+                    $v = $trimUnicode($value['@value']);
                     $value['@value'] = strlen($v) ? $v : null;
                 }
                 if (isset($value['@id'])) {
-                    $v = trim($value['@id']);
+                    $v = $trimUnicode($value['@id']);
                     $value['@id'] = strlen($v) ? $v : null;
                 }
                 if (isset($value['@language'])) {
-                    $v = trim($value['@language']);
+                    $v = $trimUnicode($value['@language']);
                     $value['@language'] = strlen($v) ? $v : null;
                 }
                 if (isset($value['o:label'])) {
-                    $v = trim($value['o:label']);
+                    $v = $trimUnicode($value['o:label']);
                     $value['o:label'] = strlen($v) ? $v : null;
                 }
             }

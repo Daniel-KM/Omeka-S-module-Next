@@ -55,14 +55,13 @@ class TrimValues extends AbstractPlugin
 
         // Sql "trim" is for space " " only, not end of line, new line or tab.
         // So use regexp, allowed at least in mysql 5.5.3 (minimum Omeka).
-        // But MariaDB doesn’t allow parameters in regexp_replace, so it cannot
-        // manage multilines. So a double regexp is used to catch all configs.
+        // The pattern is a full unicode one.
         $query = <<<'SQL'
 UPDATE value v
 SET
-v.value = NULLIF(REGEXP_REPLACE(REGEXP_REPLACE(v.value, "^\\s+", ""), "\\s+$", ""), ""),
-v.lang = NULLIF(REGEXP_REPLACE(REGEXP_REPLACE(v.lang, "^\\s+", ""), "\\s+$", ""), ""),
-v.uri = NULLIF(REGEXP_REPLACE(REGEXP_REPLACE(v.uri, "^\\s+", ""), "\\s+$", ""), "")
+v.value = NULLIF(REGEXP_REPLACE(v.value, "^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$", ""), ""),
+v.lang = NULLIF(REGEXP_REPLACE(v.lang, "^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$", ""), ""),
+v.uri = NULLIF(REGEXP_REPLACE(v.uri, "^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$", ""), "")
 SQL;
         if ($idsString) {
             $query .= "\n" . <<<SQL
