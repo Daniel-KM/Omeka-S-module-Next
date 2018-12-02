@@ -38,6 +38,18 @@ class Module extends AbstractModule
 
             $sharedEventManager->attach(
                 $adapter,
+                'api.create.pre',
+                [$this, 'handleResourceProcessPre']
+            );
+
+            $sharedEventManager->attach(
+                $adapter,
+                'api.update.pre',
+                [$this, 'handleResourceProcessPre']
+            );
+
+            $sharedEventManager->attach(
+                $adapter,
                 'api.batch_update.post',
                 [$this, 'handleResourceBatchUpdatePost']
             );
@@ -58,6 +70,53 @@ class Module extends AbstractModule
             $qb = $event->getParam('queryBuilder');
             $qb->orderBy('RAND()');
         }
+    }
+
+    /**
+     * Process action on create/update.
+     *
+     * - preventive trim on property values.
+     *
+     * @param Event $event
+     */
+    public function handleResourceProcessPre(Event $event)
+    {
+        /** @var \Omeka\Api\Request $request */
+        $request = $event->getParam('request');
+        $data = $request->getContent();
+
+        // Trimming.
+        foreach ($data as $term => &$values) {
+            // Process properties only.
+            if (strpos($term, ':') === false || !is_array($values) || empty($values)) {
+                continue;
+            }
+            $first = reset($values);
+            if (empty($first['property_id'])) {
+                continue;
+            }
+            foreach ($values as &$value) {
+                if (isset($value['@value'])) {
+                    $v = trim($value['@value']);
+                    $value['@value'] = strlen($v) ? $v : null;
+                }
+                if (isset($value['@id'])) {
+                    $v = trim($value['@id']);
+                    $value['@id'] = strlen($v) ? $v : null;
+                }
+                if (isset($value['@language'])) {
+                    $v = trim($value['@language']);
+                    $value['@language'] = strlen($v) ? $v : null;
+                }
+                if (isset($value['o:label'])) {
+                    $v = trim($value['o:label']);
+                    $value['o:label'] = strlen($v) ? $v : null;
+                }
+            }
+            unset($value);
+        }
+        unset($values);
+        $request->setContent($data);
     }
 
     /**

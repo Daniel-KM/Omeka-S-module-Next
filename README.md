@@ -10,9 +10,9 @@ not.
   multiple sites, for example the page "About" or "Privacy". Of course, the page
   is a standard page and can be more complex with multiple blocks. May be fun.
   This is an equivalent for the [shortcode as a page] in Omeka classic too.
-- Trim properties: sometime metadata have a trailing end of line or leading
-  and trailing whitespace, so they may be hard to find or to compare exactly.
-  This feature allows to remove them via the batch edit feature of resources.
+- Trim property values: remove leading and trailing whitespaces preventively on
+  any resource creation or update, or curatively via the batch edit, so values
+  will be easier to find and to compare exactly (fix [#1258]).
 
 
 Installation
@@ -79,6 +79,7 @@ Copyright
 [Omeka S]: https://omeka.org/s
 [Next]: https://github.com/Daniel-KM/Omeka-S-module-Next
 [shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
+[#1258]: https://github.com/omeka/omeka-s/issues/1258
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
