@@ -166,16 +166,27 @@ class Module extends AbstractModule
         /** @var \Omeka\Api\Request $request */
         $request = $event->getParam('request');
         $trimValues = $request->getValue('trim_values');
-        if (!$trimValues) {
+        $deduplicateValues = $request->getValue('deduplicate_values');
+        if (!$trimValues && !$deduplicateValues) {
             return;
         }
 
         $services = $this->getServiceLocator();
         $plugins = $services->get('ControllerPluginManager');
-        /** @var \Next\Mvc\Controller\Plugin\TrimValues $trimValues */
-        $trimValues = $plugins->get('trimValues');
-        $ids = (array) $request->getIds();
-        $trimValues($ids);
+
+        if ($trimValues) {
+            /** @var \Next\Mvc\Controller\Plugin\TrimValues $trimValues */
+            $trimValues = $plugins->get('trimValues');
+            $ids = (array) $request->getIds();
+            $trimValues($ids);
+        }
+
+        if ($deduplicateValues) {
+            /** @var \Next\Mvc\Controller\Plugin\DeduplicateValues $deduplicateValues */
+            $deduplicateValues = $plugins->get('deduplicateValues');
+            $ids = (array) $request->getIds();
+            $deduplicateValues($ids);
+        }
     }
 
     public function formAddElementsResourceBatchUpdateForm(Event $event)
@@ -191,6 +202,20 @@ class Module extends AbstractModule
             ],
             'attributes' => [
                 'id' => 'trim_values',
+                // This attribute is required to make "batch edit all" working.
+                'data-collection-action' => 'replace',
+            ],
+        ]);
+
+        $form->add([
+            'name' => 'deduplicate_values',
+            'type' => Element\Checkbox::class,
+            'options' => [
+                'label' => 'Deduplicate property values case insensitively', // @translate
+                'info' => 'Deduplicate values of all properties, case INsensitively. Trimming values before is recommended, because values are checked strictly.', // @translate
+            ],
+            'attributes' => [
+                'id' => 'deduplicate_values',
                 // This attribute is required to make "batch edit all" working.
                 'data-collection-action' => 'replace',
             ],

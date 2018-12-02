@@ -26,6 +26,14 @@ other Omeka module and follow the config instructions.
 See general end user documentation for [Installing a module].
 
 
+Usage
+-----
+
+- Preventive deduplication is case sensitive, but curative deduplication is
+  case insensitive (it uses a direct query and the Omeka database is case
+  insensitive by default).
+
+
 Warning
 -------
 

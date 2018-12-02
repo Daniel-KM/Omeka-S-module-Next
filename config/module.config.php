@@ -37,6 +37,7 @@ return [
         ],
         'factories' => [
             'trimValues' => Service\ControllerPlugin\TrimValuesFactory::class,
+            'deduplicateValues' => Service\ControllerPlugin\DeduplicateValuesFactory::class,
         ],
     ],
     'translator' => [
