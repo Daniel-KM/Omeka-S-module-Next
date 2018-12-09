@@ -5,16 +5,60 @@ Next (module for Omeka S)
 to be a full module. They may be integrated in the next release of Omeka S, or
 not.
 
-- Logger in view: allow to use `$this->logger()->err()` in the views.
-- Simple page: allow to use a page as a block, so the same page can be use in
-  multiple sites, for example the page "About" or "Privacy". Of course, the page
-  is a standard page and can be more complex with multiple blocks. May be fun.
-  This is an equivalent for the [shortcode as a page] in Omeka classic too.
-- Trim property values: remove leading and trailing whitespaces preventively on
-  any resource creation or update, or curatively via the batch edit, so values
-  will be easier to find and to compare exactly (fix [#1258]).
-- Deduplicate property values: remove exact duplicated values on any new or
-  updated resource preventively.
+Features
+--------
+
+### Public
+
+#### Simple page
+
+Allow to use a page as a block, so the same page can be use in multiple sites,
+for example the page "About" or "Privacy". Of course, the page is a standard
+page and can be more complex with multiple blocks. May be fun.
+This is an equivalent for the [shortcode as a page] in Omeka classic too.
+
+### Admin
+
+#### Trim property values
+
+Remove leading and trailing whitespaces preventively on any resource creation or
+update, or curatively via the batch edit, so values will be easier to find and
+to compare exactly (fix [#1258]).
+
+#### Deduplicate property values
+
+Remove exact duplicated values on any new or updated resource preventively.
+Note: preventive deduplication is case sensitive, but curative deduplication is
+case insensitive (it uses a direct query and the Omeka database is case
+insensitive by default).
+
+### Backend
+
+#### Logger in view
+
+Allow to use `$this->logger()` in the views.
+
+#### AbstractGenericModule
+
+A class to simplify management of generic methods of the module (install and
+settings).
+
+The logic is "config over code": so all settings have just to be set in the main
+`config/module.config.php` file, inside a key with the lowercase module name,
+with sub-keys `config`, `settings`, `site_settings`, `user_settings` and
+`block_settings`. All the forms have just to be standard Zend form. Eventual
+install and uninstall sql can be set in `data/install/` and upgrade code in
+`data/scripts`. A eventual dependency on another module can be set as a property
+of the main module  ($this->dependency and $this->dependencies).
+
+To add it in a plugin, simply add at the  beginning of the file Module.php:
+
+```php
+require_once dirname(__DIR__) . '/Next/src/Module/AbstractGenericModule.php';
+```
+
+To avoid a dependency to this module, copy the file above in your module and
+replace the namespace.
 
 
 Installation
@@ -24,14 +68,6 @@ Uncompress files and rename module folder `Next`. Then install it like any
 other Omeka module and follow the config instructions.
 
 See general end user documentation for [Installing a module].
-
-
-Usage
------
-
-- Preventive deduplication is case sensitive, but curative deduplication is
-  case insensitive (it uses a direct query and the Omeka database is case
-  insensitive by default).
 
 
 Warning
