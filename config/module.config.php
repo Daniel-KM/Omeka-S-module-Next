@@ -18,6 +18,7 @@ return [
         'factories' => [
             'defaultSiteSlug' => Service\ViewHelper\DefaultSiteSlugFactory::class,
             'logger' => Service\ViewHelper\LoggerFactory::class,
+            'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
         ],
     ],
     'block_layouts' => [

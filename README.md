@@ -21,6 +21,8 @@ This is an equivalent for the [shortcode as a page] in Omeka classic too.
 
 Display direct links to the current resource in the public user bar in order to
 simplify edition and management of resources (fix [#1283]).
+The revert links are available too. They display the resource in the default
+site, or in the first one (fix [#1259]).
 
 #### Random order of resources
 
@@ -148,6 +150,7 @@ Copyright
 [shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
 [#1156]: https://github.com/omeka/omeka-s/issues/1156
 [#1258]: https://github.com/omeka/omeka-s/issues/1258
+[#1259]: https://github.com/omeka/omeka-s/issues/1259
 [#1274]: https://github.com/omeka/omeka-s/issues/1274
 [#1276]: https://github.com/omeka/omeka-s/issues/1276
 [#1281]: https://github.com/omeka/omeka-s/issues/1281
