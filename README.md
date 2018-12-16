@@ -48,6 +48,11 @@ Note: preventive deduplication is case sensitive, but curative deduplication is
 case insensitive (it uses a direct query and the Omeka database is case
 insensitive by default).
 
+#### New links
+
+- From the site permissions to the user page (fix [#1301]).
+- From the list of jobs to each log (fix [#1156]).
+
 ### Backend
 
 #### Logger in view
@@ -141,11 +146,13 @@ Copyright
 [Omeka S]: https://omeka.org/s
 [Next]: https://github.com/Daniel-KM/Omeka-S-module-Next
 [shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
+[#1156]: https://github.com/omeka/omeka-s/issues/1156
 [#1258]: https://github.com/omeka/omeka-s/issues/1258
 [#1274]: https://github.com/omeka/omeka-s/issues/1274
 [#1276]: https://github.com/omeka/omeka-s/issues/1276
 [#1281]: https://github.com/omeka/omeka-s/issues/1281
 [#1283]: https://github.com/omeka/omeka-s/issues/1283
+[#1301]: https://github.com/omeka/omeka-s/issues/1301
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
