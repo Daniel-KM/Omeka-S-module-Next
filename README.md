@@ -22,6 +22,12 @@ This is an equivalent for the [shortcode as a page] in Omeka classic too.
 Display direct links to the current resource in the public user bar in order to
 simplify edition and management of resources (fix [#1283]).
 
+#### Random order of resources
+
+Display resources in a random order, for example for a carousel or a featured
+resource. Simply add `sort_by=random` to the query when needed, in particular
+in the page block `Browse preview` (fix [#1281]).
+
 ### Admin
 
 #### Trim property values
