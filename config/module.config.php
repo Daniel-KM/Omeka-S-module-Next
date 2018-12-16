@@ -16,6 +16,7 @@ return [
             'userBar' => View\Helper\UserBar::class,
         ],
         'factories' => [
+            'defaultSiteSlug' => Service\ViewHelper\DefaultSiteSlugFactory::class,
             'logger' => Service\ViewHelper\LoggerFactory::class,
         ],
     ],
