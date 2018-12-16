@@ -12,6 +12,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
+            'searchFilters' => View\Helper\SearchFilters::class,
             'userBar' => View\Helper\UserBar::class,
         ],
         'factories' => [

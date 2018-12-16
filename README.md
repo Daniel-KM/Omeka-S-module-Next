@@ -28,6 +28,11 @@ Display resources in a random order, for example for a carousel or a featured
 resource. Simply add `sort_by=random` to the query when needed, in particular
 in the page block `Browse preview` (fix [#1281]).
 
+#### Advanced search by start with, end with, or in list
+
+Allow to do more advanced search in public or admin board on values of the
+properties: start with, end with, in list (fix [#1274], [#1276]).
+
 ### Admin
 
 #### Trim property values
@@ -136,8 +141,11 @@ Copyright
 [Omeka S]: https://omeka.org/s
 [Next]: https://github.com/Daniel-KM/Omeka-S-module-Next
 [shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
-[#1283]: https://github.com/omeka/omeka-s/issues/1283
 [#1258]: https://github.com/omeka/omeka-s/issues/1258
+[#1274]: https://github.com/omeka/omeka-s/issues/1274
+[#1276]: https://github.com/omeka/omeka-s/issues/1276
+[#1281]: https://github.com/omeka/omeka-s/issues/1281
+[#1283]: https://github.com/omeka/omeka-s/issues/1283
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html

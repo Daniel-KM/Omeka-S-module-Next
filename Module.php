@@ -3,6 +3,8 @@ namespace Next;
 
 require_once __DIR__ . '/src/Module/AbstractGenericModule.php';
 
+use Doctrine\ORM\QueryBuilder;
+use Omeka\Api\Adapter\AbstractResourceEntityAdapter;
 use Next\Module\AbstractGenericModule;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
@@ -61,12 +63,17 @@ class Module extends AbstractGenericModule
 
     public function apiSearchQuery(Event $event)
     {
-        // Add the random sort.
+        $adapter = $event->getTarget();
+        $qb = $event->getParam('queryBuilder');
         $query = $event->getParam('request')->getContent();
+
+        // Add the random sort.
         if (isset($query['sort_by']) && $query['sort_by'] === 'random') {
-            $qb = $event->getParam('queryBuilder');
             $qb->orderBy('RAND()');
         }
+
+        // Advanced property sorts.
+        $this->buildPropertyQuery($qb, $query, $adapter);
     }
 
     /**
@@ -217,5 +224,192 @@ class Module extends AbstractGenericModule
                 'data-collection-action' => 'replace',
             ],
         ]);
+    }
+
+    /**
+     * Build query on value.
+     *
+     * Complete \Omeka\Api\Adapter\AbstractResourceEntityAdapter::buildPropertyQuery()
+     *
+     * Note: because this filter is separate from the core one, all the
+     * properties are rechecked to avoid a issue with the joiner (or/and).
+     * @todo Find a way to not recheck all arguments used to search properties as long as it's not in the core.
+     *
+     * Query format:
+     *
+     * - property[{index}][joiner]: "and" OR "or" joiner with previous query
+     * - property[{index}][property]: property ID
+     * - property[{index}][text]: search text
+     * - property[{index}][type]: search type
+     *   - eq: is exactly
+     *   - neq: is not exactly
+     *   - in: contains
+     *   - nin: does not contain
+     *   - ex: has any value
+     *   - nex: has no value
+     *   - list: is in list
+     *   - nlist: is not in list
+     *   - sw: starts with
+     *   - nsw: does not start with
+     *   - ew: ends with
+     *   - new: does not end with
+     *   - res: has resource
+     *   - nres: has no resource
+     *
+     * @param QueryBuilder $qb
+     * @param array $query
+     * @param AbstractResourceEntityAdapter $adapter
+     */
+    protected function buildPropertyQuery(QueryBuilder $qb, array $query, AbstractResourceEntityAdapter $adapter)
+    {
+        if (!isset($query['property']) || !is_array($query['property'])) {
+            return;
+        }
+        $valuesJoin = $adapter->getEntityClass() . '.values';
+        $where = '';
+        $expr = $qb->expr();
+
+        foreach ($query['property'] as $queryRow) {
+            if (!(is_array($queryRow)
+                && array_key_exists('property', $queryRow)
+                && array_key_exists('type', $queryRow)
+            )) {
+                continue;
+            }
+            $propertyId = $queryRow['property'];
+            $queryType = $queryRow['type'];
+            $joiner = isset($queryRow['joiner']) ? $queryRow['joiner'] : null;
+            $value = isset($queryRow['text']) ? $queryRow['text'] : null;
+
+            if (!strlen($value) && $queryType !== 'nex' && $queryType !== 'ex') {
+                continue;
+            }
+
+            $valuesAlias = $adapter->createAlias();
+            $positive = true;
+
+            switch ($queryType) {
+                case 'neq':
+                    $positive = false;
+                    // No break.
+                case 'eq':
+                    $param = $adapter->createNamedParameter($qb, $value);
+                    $predicateExpr = $expr->orX(
+                        $expr->eq("$valuesAlias.value", $param),
+                        $expr->eq("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nin':
+                    $positive = false;
+                    // No break.
+                case 'in':
+                    $param = $adapter->createNamedParameter($qb, "%$value%");
+                    $predicateExpr = $expr->orX(
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nlist':
+                    $positive = false;
+                    // No break.
+                case 'list':
+                    $list = is_array($value) ? $value : explode("\n", $value);
+                    $list = array_filter(array_map('trim', $list), 'strlen');
+                    if (empty($list)) {
+                        continue 2;
+                    }
+                    $param = $adapter->createNamedParameter($qb, $list);
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.value", $param),
+                        $expr->in("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nsw':
+                    $positive = false;
+                    // No break.
+                case 'sw':
+                    $param = $adapter->createNamedParameter($qb, "$value%");
+                    $predicateExpr = $expr->orX(
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'new':
+                    $positive = false;
+                    // No break.
+                case 'ew':
+                    $param = $adapter->createNamedParameter($qb, "%$value");
+                    $predicateExpr = $expr->orX(
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nres':
+                    $positive = false;
+                    // No break.
+                case 'res':
+                    $predicateExpr = $expr->eq(
+                        "$valuesAlias.valueResource",
+                        $adapter->createNamedParameter($qb, $value)
+                    );
+                    break;
+
+                case 'nex':
+                    $positive = false;
+                    // No break.
+                case 'ex':
+                    $predicateExpr = $expr->isNotNull("$valuesAlias.id");
+                    break;
+
+                default:
+                    continue 2;
+            }
+
+            $joinConditions = [];
+            // Narrow to specific property, if one is selected
+            if ($propertyId) {
+                if (is_numeric($propertyId)) {
+                    $propertyId = (int) $propertyId;
+                } else {
+                    $property = $adapter->getPropertyByTerm($propertyId);
+                    if ($property) {
+                        $propertyId = $property->getId();
+                    } else {
+                        $propertyId = 0;
+                    }
+                }
+                $joinConditions[] = $expr->eq("$valuesAlias.property", (int) $propertyId);
+            }
+
+            if ($positive) {
+                $whereClause = '(' . $predicateExpr . ')';
+            } else {
+                $joinConditions[] = $predicateExpr;
+                $whereClause = $expr->isNull("$valuesAlias.id");
+            }
+
+            if ($joinConditions) {
+                $qb->leftJoin($valuesJoin, $valuesAlias, 'WITH', $expr->andX(...$joinConditions));
+            } else {
+                $qb->leftJoin($valuesJoin, $valuesAlias);
+            }
+
+            if ($where == '') {
+                $where = $whereClause;
+            } elseif ($joiner == 'or') {
+                $where .= " OR $whereClause";
+            } else {
+                $where .= " AND $whereClause";
+            }
+        }
+
+        if ($where) {
+            $qb->andWhere($where);
+        }
     }
 }
