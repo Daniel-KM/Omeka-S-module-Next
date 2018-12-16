@@ -12,6 +12,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
+            'userBar' => View\Helper\UserBar::class,
         ],
         'factories' => [
             'logger' => Service\ViewHelper\LoggerFactory::class,

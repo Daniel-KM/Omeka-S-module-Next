@@ -1,0 +1,46 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var \Omeka\Entity\User $user
+ * @var array $links
+ */
+
+$translate = $this->plugin('translate');
+$hyperlink = $this->plugin('hyperlink');
+$urlHelper = $this->plugin('url');
+$this->headLink()->prependStylesheet($this->assetUrl('css/user-bar.css', 'Omeka'));
+$this->headLink()->prependStylesheet('//fonts.googleapis.com/css?family=Source+Code+Pro|Lato:400,400italic,700,700italic');
+?>
+<style>
+#user-bar .admin:not(:last-child):not(:nth-last-child(2)):not(:nth-last-child(3)):after {
+    content: "\2022";
+    margin: 0 12px;
+}
+#user-bar .user-id {
+    margin-left: auto;
+}
+</style>
+<div id="user-bar">
+<?php if ($user): ?>
+    <?php foreach ($links as $link): ?>
+    <span class="admin <?php echo $link['resource'] . ' ' . $link['action']; ?>">
+        <?php echo $hyperlink($link['text'], $link['url']); ?>
+    </span>
+    <?php endforeach; ?>
+
+    <span class="user-id">
+        <?php
+        $url = $urlHelper('admin/id', ['controller' => 'user', 'id' => $user->getId()]);
+        echo sprintf($translate('Signed in as %s'), $hyperlink($user->getName(), $url));
+        ?>
+    </span>
+    <span class="logout">
+        <?php echo $hyperlink($translate('Logout'), $urlHelper('logout')); ?>
+    </span>
+<?php else: ?>
+    <span class="login">
+        <?php echo $hyperlink($translate('Log in'), $urlHelper('login')); ?>
+    </span>
+<?php endif; ?>
+</div>

@@ -17,6 +17,11 @@ for example the page "About" or "Privacy". Of course, the page is a standard
 page and can be more complex with multiple blocks. May be fun.
 This is an equivalent for the [shortcode as a page] in Omeka classic too.
 
+#### Direct links in user bar
+
+Display direct links to the current resource in the public user bar in order to
+simplify edition and management of resources (fix [#1283]).
+
 ### Admin
 
 #### Trim property values
@@ -125,6 +130,7 @@ Copyright
 [Omeka S]: https://omeka.org/s
 [Next]: https://github.com/Daniel-KM/Omeka-S-module-Next
 [shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
+[#1283]: https://github.com/omeka/omeka-s/issues/1283
 [#1258]: https://github.com/omeka/omeka-s/issues/1258
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
