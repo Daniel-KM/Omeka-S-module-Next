@@ -6,11 +6,15 @@
  * @var array $links
  */
 
+// Make compatible with old themes that call partial directly.
+if (!array_key_exists('user', get_defined_vars())): echo $this->userBar(); return; endif;
+
 $translate = $this->plugin('translate');
 $hyperlink = $this->plugin('hyperlink');
 $urlHelper = $this->plugin('url');
-$this->headLink()->prependStylesheet($this->assetUrl('css/user-bar.css', 'Omeka'));
-$this->headLink()->prependStylesheet('//fonts.googleapis.com/css?family=Source+Code+Pro|Lato:400,400italic,700,700italic');
+$this->headLink()
+    ->prependStylesheet($this->assetUrl('css/user-bar.css', 'Omeka'))
+    ->prependStylesheet('//fonts.googleapis.com/css?family=Source+Code+Pro|Lato:400,400italic,700,700italic');
 ?>
 <style>
 #user-bar .admin:not(:last-child):not(:nth-last-child(2)):not(:nth-last-child(3)):after {
