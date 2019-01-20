@@ -291,7 +291,7 @@ class Module extends AbstractGenericModule
             switch ($queryType) {
                 case 'neq':
                     $positive = false;
-                    // No break.
+                    // no break.
                 case 'eq':
                     $param = $adapter->createNamedParameter($qb, $value);
                     $predicateExpr = $expr->orX(
@@ -302,7 +302,7 @@ class Module extends AbstractGenericModule
 
                 case 'nin':
                     $positive = false;
-                    // No break.
+                    // no break.
                 case 'in':
                     $param = $adapter->createNamedParameter($qb, "%$value%");
                     $predicateExpr = $expr->orX(
@@ -313,7 +313,7 @@ class Module extends AbstractGenericModule
 
                 case 'nlist':
                     $positive = false;
-                    // No break.
+                    // no break.
                 case 'list':
                     $list = is_array($value) ? $value : explode("\n", $value);
                     $list = array_filter(array_map('trim', $list), 'strlen');
@@ -329,7 +329,7 @@ class Module extends AbstractGenericModule
 
                 case 'nsw':
                     $positive = false;
-                    // No break.
+                    // no break.
                 case 'sw':
                     $param = $adapter->createNamedParameter($qb, "$value%");
                     $predicateExpr = $expr->orX(
@@ -340,7 +340,7 @@ class Module extends AbstractGenericModule
 
                 case 'new':
                     $positive = false;
-                    // No break.
+                    // no break.
                 case 'ew':
                     $param = $adapter->createNamedParameter($qb, "%$value");
                     $predicateExpr = $expr->orX(
@@ -351,7 +351,7 @@ class Module extends AbstractGenericModule
 
                 case 'nres':
                     $positive = false;
-                    // No break.
+                    // no break.
                 case 'res':
                     $predicateExpr = $expr->eq(
                         "$valuesAlias.valueResource",
@@ -361,7 +361,7 @@ class Module extends AbstractGenericModule
 
                 case 'nex':
                     $positive = false;
-                    // No break.
+                    // no break.
                 case 'ex':
                     $predicateExpr = $expr->isNotNull("$valuesAlias.id");
                     break;

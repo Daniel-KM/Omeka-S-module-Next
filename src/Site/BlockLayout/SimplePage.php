@@ -127,7 +127,7 @@ class SimplePage extends AbstractBlockLayout
      * @param SitePage $page
      * @param SitePage $simplePage
      * @param array $blocks
-     * @return boolean
+     * @return bool
      */
     protected function checkSimplePage(SitePage $page, SitePage $simplePage)
     {

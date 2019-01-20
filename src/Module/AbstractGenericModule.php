@@ -71,7 +71,6 @@ abstract class AbstractGenericModule extends AbstractModule
     }
 
     /**
-     *
      * @return string
      */
     protected function modulePath()
