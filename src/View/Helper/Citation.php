@@ -26,7 +26,7 @@ class Citation extends AbstractHelper
         $view = $this->getView();
         $translate = $view->plugin('translate');
 
-        $creators = $resource->value('dcterms:creator', ['all' => true]) ?: array();
+        $creators = $resource->value('dcterms:creator', ['all' => true]) ?: [];
         // Strip formatting and remove empty creator elements.
         $creators = array_filter(array_map('strip_tags', $creators));
         if ($creators) {

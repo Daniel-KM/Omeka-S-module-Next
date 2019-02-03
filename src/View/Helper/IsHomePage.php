@@ -53,7 +53,7 @@ class IsHomePage extends AbstractHelper
      * Upgrade of a method of Omeka Classic / globals.php.
      *
      * @param string $url Relative or absolute
-     * @return boolean
+     * @return bool
      */
     protected function isCurrentUrl($url)
     {
@@ -64,7 +64,7 @@ class IsHomePage extends AbstractHelper
 
         // Strip out the protocol, host, base URL, and rightmost slash before
         // comparing the URL to the current one
-        $stripOut = array($serverUrl . $baseUrl, @$_SERVER['HTTP_HOST'], $baseUrl);
+        $stripOut = [$serverUrl . $baseUrl, @$_SERVER['HTTP_HOST'], $baseUrl];
         $currentUrl = rtrim(str_replace($stripOut, '', $currentUrl), '/');
         $url = rtrim(str_replace($stripOut, '', $url), '/');
 

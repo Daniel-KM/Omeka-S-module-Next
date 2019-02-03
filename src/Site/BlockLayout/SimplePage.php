@@ -45,8 +45,11 @@ class SimplePage extends AbstractBlockLayout
         return 'Simple page'; // @translate
     }
 
-    public function form(PhpRenderer $view, SiteRepresentation $site,
-        SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+    public function form(
+        PhpRenderer $view,
+        SiteRepresentation $site,
+        SitePageRepresentation $page = null,
+        SitePageBlockRepresentation $block = null
     ) {
         $data = $block ? $block->data() + $this->defaultSettings : $this->defaultSettings;
 
@@ -79,7 +82,9 @@ class SimplePage extends AbstractBlockLayout
         } catch (\Omeka\Api\Exception\NotFoundException $e) {
             $view->logger()->err(sprintf(
                 'Simple page block #%d of page "%s" of site "%s" should be updated: it refers to a removed page.', // @translate
-                $block->id(), $block->page()->slug(), $block->page()->site()->slug()
+                $block->id(),
+                $block->page()->slug(),
+                $block->page()->site()->slug()
             ));
             return '';
         } catch (\Omeka\Api\Exception\PermissionDeniedException $e) {

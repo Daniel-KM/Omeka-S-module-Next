@@ -270,7 +270,8 @@ class Module extends AbstractGenericModule
         $expr = $qb->expr();
 
         foreach ($query['property'] as $queryRow) {
-            if (!(is_array($queryRow)
+            if (!(
+                is_array($queryRow)
                 && array_key_exists('property', $queryRow)
                 && array_key_exists('type', $queryRow)
             )) {
