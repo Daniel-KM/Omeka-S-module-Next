@@ -35,6 +35,23 @@ in the page block `Browse preview` (fix [#1281]).
 Allow to do more advanced search in public or admin board on values of the
 properties: start with, end with, in list (fix [#1274], [#1276]).
 
+#### Citation
+
+Create a citation from the main properties of a resource, like in Omeka Classic.
+
+#### Is home page
+
+Allow to check if the current page is the home page of the site, like in Omeka Classic.
+
+#### Previous/Next resources
+
+Allow to get the previous or the next resources, that simplifies browsing like
+in Omeka Classic.
+
+#### Current site
+
+Allow to get the current site in public view, that may be missing in some cases.
+
 ### Admin
 
 #### Trim property values
