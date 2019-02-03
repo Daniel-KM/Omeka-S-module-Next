@@ -13,6 +13,7 @@ return [
     'view_helpers' => [
         'invokables' => [
             'citation' => View\Helper\Citation::class,
+            'currentSite' => View\Helper\CurrentSite::class,
             'searchFilters' => View\Helper\SearchFilters::class,
             'userBar' => View\Helper\UserBar::class,
         ],
