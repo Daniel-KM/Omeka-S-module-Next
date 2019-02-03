@@ -21,6 +21,8 @@ return [
         'factories' => [
             'defaultSiteSlug' => Service\ViewHelper\DefaultSiteSlugFactory::class,
             'logger' => Service\ViewHelper\LoggerFactory::class,
+            'nextResource' => Service\ViewHelper\NextResourceFactory::class,
+            'previousResource' => Service\ViewHelper\PreviousResourceFactory::class,
             'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
         ],
     ],
