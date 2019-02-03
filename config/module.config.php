@@ -14,6 +14,7 @@ return [
         'invokables' => [
             'citation' => View\Helper\Citation::class,
             'currentSite' => View\Helper\CurrentSite::class,
+            'isHomePage' => View\Helper\IsHomePage::class,
             'searchFilters' => View\Helper\SearchFilters::class,
             'userBar' => View\Helper\UserBar::class,
         ],
