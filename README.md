@@ -48,6 +48,12 @@ Allow to check if the current page is the home page of the site, like in Omeka C
 Allow to get the previous or the next resources, that simplifies browsing like
 in Omeka Classic.
 
+#### Last browse page
+
+Add a button in admin resources pages to go back to the last list of results. It
+allows to browse inside item sets, items or media after a search without losing
+the search results. A helper allows to get the same feature in public front-end.
+
 #### Current site
 
 Allow to get the current site in public view, that may be missing in some cases.

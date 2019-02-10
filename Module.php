@@ -9,6 +9,7 @@ use Next\Module\AbstractGenericModule;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Form\Element;
+use Zend\Session\Container;
 
 /**
  * Next
@@ -16,7 +17,7 @@ use Zend\Form\Element;
  * Bring together various features too small to be a full module; may be
  * integrated in the next release of Omeka S, or not.
  *
- * @copyright Daniel Berthereau, 2018
+ * @copyright Daniel Berthereau, 2018-2019
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  */
 class Module extends AbstractGenericModule
@@ -51,6 +52,22 @@ class Module extends AbstractGenericModule
                 $adapter,
                 'api.batch_update.post',
                 [$this, 'handleResourceBatchUpdatePost']
+            );
+        }
+
+        $controllers = [
+            'Omeka\Controller\Admin\Item',
+            'Omeka\Controller\Admin\ItemSet',
+            'Omeka\Controller\Admin\Media',
+            'Omeka\Controller\Site\Item',
+            'Omeka\Controller\Site\ItemSet',
+            'Omeka\Controller\Site\Media',
+        ];
+        foreach ($controllers as $controller) {
+            $sharedEventManager->attach(
+                $controller,
+                'view.browse.before',
+                [$this, 'handleViewBrowse']
             );
         }
 
@@ -224,6 +241,14 @@ class Module extends AbstractGenericModule
                 'data-collection-action' => 'replace',
             ],
         ]);
+    }
+
+    public function handleViewBrowse(Event $event)
+    {
+        $params = $event->getTarget()->params()->fromRoute();
+        $ui = empty($params['__ADMIN__']) ? 'public' : 'admin';
+        $session = new Container('Next');
+        $session->lastBrowsePage[$ui] = $_SERVER['REQUEST_URI'];
     }
 
     /**
