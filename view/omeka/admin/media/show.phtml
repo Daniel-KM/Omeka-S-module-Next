@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\MediaRepresentation $media
+ * @var \Omeka\Api\Representation\MediaRepresentation $resource
+ */
+
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 $this->htmlElement('body')->appendAttribute('class', 'media show');

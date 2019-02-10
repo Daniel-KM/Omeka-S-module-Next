@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\ItemSetRepresentation $itemSet
+ * @var \Omeka\Api\Representation\ItemSetRepresentation $resource
+ */
+
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 $this->htmlElement('body')->appendAttribute('class', 'item-sets show');
