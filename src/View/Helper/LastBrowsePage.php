@@ -18,8 +18,8 @@ class LastBrowsePage extends AbstractHelper
         $params = $this->getView()->params()->fromRoute();
         $ui = $params['__ADMIN__'] ? 'admin' : 'public';
         $session = new Container('Next');
-        return isset($session->lastSearch[$ui])
-            ? $session->lastSearch[$ui]
+        return isset($session->lastBrowsePage[$ui])
+            ? $session->lastBrowsePage[$ui]
             : '';
     }
 }

@@ -266,6 +266,10 @@ class Module extends AbstractGenericModule
         $params = $event->getTarget()->params()->fromRoute();
         $ui = empty($params['__ADMIN__']) ? 'public' : 'admin';
         $session = new Container('Next');
+        if (!isset($session->lastBrowsePage)) {
+            $session->lastBrowsePage = [];
+        }
+        // Why not use $this->getServiceLocator()->get('Request')->getServer()->get('REQUEST_URI')?
         $session->lastBrowsePage[$ui] = $_SERVER['REQUEST_URI'];
     }
 
