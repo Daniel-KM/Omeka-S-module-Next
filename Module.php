@@ -72,6 +72,17 @@ class Module extends AbstractGenericModule
         }
 
         $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Media',
+            'view.show.sidebar',
+            [$this, 'handleViewShowSidebarMedia']
+        );
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Media',
+            'view.details',
+            [$this, 'handleViewShowSidebarMedia']
+        );
+
+        $sharedEventManager->attach(
             \Omeka\Form\ResourceBatchUpdateForm::class,
             'form.add_elements',
             [$this, 'formAddElementsResourceBatchUpdateForm']
@@ -208,6 +219,13 @@ class Module extends AbstractGenericModule
             $ids = (array) $request->getIds();
             $deduplicateValues($ids);
         }
+    }
+
+    public function handleViewShowSidebarMedia(Event $event)
+    {
+        $view = $event->getTarget();
+        $resource = $view->resource;
+        echo $view->partial('admin/media/show-details-renderer', ['media' => $resource]);
     }
 
     public function formAddElementsResourceBatchUpdateForm(Event $event)
