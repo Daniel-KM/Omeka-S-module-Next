@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
+ * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $previous
+ * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $next
+ * @var string $lastBrowse
+ */
+
+$translate = $this->plugin('translate');
+$hyperlink = $this->plugin('hyperlink');
+
+if ($previous):
+    echo $hyperlink('<', $previous->url('show'), ['class' => 'button', 'rel' => 'prev', 'title' => $translate('Previous resource')]);
+else:
+    echo $hyperlink('<', '#', ['class' => 'button', 'rel' => 'prev', 'title' => $translate('No previous resource'), 'disabled' => 'disabled']);
+endif;
+
+echo $hyperlink('^', $lastBrowse, ['class' => 'button', 'title' => $translate('Back to last browse page')]);
+
+if ($next):
+    echo $hyperlink('>', $next->url('show'), ['class' => 'button', 'rel' => 'next', 'title' => $translate('Next resource')]);
+else:
+    echo $hyperlink('>', '#', ['class' => 'button', 'rel' => 'next', 'title' => $translate('No next resource'), 'disabled' => 'disabled']);
+endif;
+
+// pmd([
+//     'resource' => $resource,
+//     'previous' => $previous,
+//     'next' => $next,
+//     'lastBrowse' => $lastBrowse,
+// ]);

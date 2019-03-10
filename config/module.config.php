@@ -20,6 +20,7 @@ return [
             'userBar' => View\Helper\UserBar::class,
         ],
         'factories' => [
+            'browsePreviousNext' => Service\ViewHelper\BrowsePreviousNextFactory::class,
             'defaultSiteSlug' => Service\ViewHelper\DefaultSiteSlugFactory::class,
             'logger' => Service\ViewHelper\LoggerFactory::class,
             'nextResource' => Service\ViewHelper\NextResourceFactory::class,

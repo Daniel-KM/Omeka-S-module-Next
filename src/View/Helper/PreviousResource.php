@@ -22,9 +22,10 @@ class PreviousResource extends AbstractHelper
      * Get the public resource immediately before the current one.
      *
      * @param AbstractResourceEntityRepresentation $resource
+     * @param array $query
      * @return AbstractResourceEntityRepresentation
      */
-    public function __invoke(AbstractResourceEntityRepresentation $resource)
+    public function __invoke(AbstractResourceEntityRepresentation $resource, array $query = null)
     {
         $resourceName = $resource->resourceName();
         if ($resourceName === 'media') {

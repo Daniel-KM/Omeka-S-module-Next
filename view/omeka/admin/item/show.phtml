@@ -25,7 +25,7 @@ $sectionNavs = [
     <?php if ($item->userIsAllowed('update')): ?>
     <?php echo $item->link($translate('Edit item'), 'edit', ['class' => 'button']); ?>
     <?php endif; ?>
-    <?php echo $this->hyperlink('^', $this->lastBrowsePage(), ['class' => 'button', 'title' => $translate('Back to last browse item page')]); ?>
+    <?php echo $this->browsePreviousNext($resource); ?>
 </div>
 
 <?php echo $this->sectionNav($sectionNavs, 'view.show.section_nav', $item); ?>
