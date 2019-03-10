@@ -46,7 +46,7 @@ Allow to check if the current page is the home page of the site, like in Omeka C
 #### Previous/Next resources
 
 Allow to get the previous or the next resources, that simplifies browsing like
-in Omeka Classic.
+in Omeka Classic. Set by default in admin board for items.
 
 #### Last browse page
 

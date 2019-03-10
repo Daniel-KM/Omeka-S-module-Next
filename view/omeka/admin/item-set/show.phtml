@@ -37,7 +37,6 @@ $sectionNavs = [
     <?php echo $itemSet->link($translate('Edit item set'), 'edit', ['class' => 'button']); ?>
     <?php endif; ?>
     <a href="<?php echo $viewItemsLink; ?>" class="button"><?php echo $translate('View items'); ?></a>
-    <?php if ($lastBrowsePage = $this->lastBrowsePage()) echo $this->hyperlink($translate('Back'), $lastBrowsePage, ['class' => 'button']); ?>
 </div>
 
 <?php echo $this->sectionNav($sectionNavs, 'view.show.section_nav', $itemSet); ?>

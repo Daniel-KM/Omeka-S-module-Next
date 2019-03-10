@@ -57,11 +57,11 @@ class Module extends AbstractGenericModule
 
         $controllers = [
             'Omeka\Controller\Admin\Item',
-            'Omeka\Controller\Admin\ItemSet',
-            'Omeka\Controller\Admin\Media',
-            'Omeka\Controller\Site\Item',
-            'Omeka\Controller\Site\ItemSet',
-            'Omeka\Controller\Site\Media',
+            // 'Omeka\Controller\Admin\ItemSet',
+            // 'Omeka\Controller\Admin\Media',
+            // 'Omeka\Controller\Site\Item',
+            // 'Omeka\Controller\Site\ItemSet',
+            // 'Omeka\Controller\Site\Media',
         ];
         foreach ($controllers as $controller) {
             $sharedEventManager->attach(
@@ -263,12 +263,12 @@ class Module extends AbstractGenericModule
 
     public function handleViewBrowse(Event $event)
     {
-        $params = $event->getTarget()->params()->fromRoute();
-        $ui = empty($params['__ADMIN__']) ? 'public' : 'admin';
         $session = new Container('Next');
         if (!isset($session->lastBrowsePage)) {
             $session->lastBrowsePage = [];
         }
+        $params = $event->getTarget()->params();
+        $ui = $params->fromRoute('__ADMIN__') ? 'admin' : 'public';
         // Why not use $this->getServiceLocator()->get('Request')->getServer()->get('REQUEST_URI')?
         $session->lastBrowsePage[$ui] = $_SERVER['REQUEST_URI'];
     }

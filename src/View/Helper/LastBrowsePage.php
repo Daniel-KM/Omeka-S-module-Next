@@ -15,11 +15,13 @@ class LastBrowsePage extends AbstractHelper
      */
     public function __invoke()
     {
-        $params = $this->getView()->params()->fromRoute();
-        $ui = $params['__ADMIN__'] ? 'admin' : 'public';
+        $view = $this->getView();
+        $params = $view->params();
+        $isAdmin = (bool) $params->fromRoute('__ADMIN__');
+        $ui = $isAdmin ? 'admin' : 'public';
         $session = new Container('Next');
         return isset($session->lastBrowsePage[$ui])
             ? $session->lastBrowsePage[$ui]
-            : '';
+            : $view->url($isAdmin ? 'admin/default' : 'site/resource', ['action' => ''], [], true);
     }
 }
