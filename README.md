@@ -84,9 +84,24 @@ insensitive by default).
 
 ### Backend
 
+#### Cron tasks
+
+A script allows to run jobs from the command line, even if they are not
+initialized. It’s useful to run cron tasks. See required and optional arguments:
+
+```
+php /path/to/omeka/modules/Next/data/scripts/task.php --help
+```
+
+In your cron tab, you can add a task like that:
+
+```
+/bin/su - www-data -C "php /var/www/omeka/modules/Next/data/scripts/task.php --task MyTask --user-id 1
+```
+
 #### Logger in view
 
-Allow to use `$this->logger()` in the views.
+Allow to use `$this->logger()` in the views (fix [#1371]).
 
 #### AbstractGenericModule
 
@@ -175,6 +190,7 @@ Copyright
 [#1281]: https://github.com/omeka/omeka-s/issues/1281
 [#1283]: https://github.com/omeka/omeka-s/issues/1283
 [#1301]: https://github.com/omeka/omeka-s/issues/1301
+[#1371]: https://github.com/omeka/omeka-s/issues/1371
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
