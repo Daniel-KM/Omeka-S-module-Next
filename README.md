@@ -99,6 +99,16 @@ In your cron tab, you can add a task like that:
 /bin/su - www-data -C "php /var/www/omeka/modules/Next/data/scripts/task.php --task MyTask --user-id 1
 ```
 
+#### Loop items task
+
+A task (job) allows to update all items, so all the modules that uses api events
+are triggered. This job can be use as a one-time task that help to process
+existing items when a new feature is added in a module.
+
+```
+php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id 1
+```
+
 #### Logger in view
 
 Allow to use `$this->logger()` in the views (fix [#1371]).
