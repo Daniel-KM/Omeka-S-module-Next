@@ -30,6 +30,7 @@ return [
     ],
     'block_layouts' => [
         'invokables' => [
+            'searchForm' => Site\BlockLayout\SearchForm::class,
         ],
         'factories' => [
             'simplePage' => Service\BlockLayout\SimplePageFactory::class,

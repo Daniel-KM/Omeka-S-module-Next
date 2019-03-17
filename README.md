@@ -58,6 +58,10 @@ the search results. A helper allows to get the same feature in public front-end.
 
 Allow to get the current site in public view, that may be missing in some cases.
 
+#### Block "search form"
+
+Allow to add a search form in any page, typically in the home page.
+
 ### Admin
 
 #### Trim property values
