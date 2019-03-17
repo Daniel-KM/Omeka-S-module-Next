@@ -1,7 +1,7 @@
 <?php
 namespace Next\Job;
 
-use Omeka\Job\AbstractJob;
+use Next\Job\AbstractTask;
 use Omeka\Stdlib\Message;
 
 /**
@@ -10,7 +10,7 @@ use Omeka\Stdlib\Message;
  * This job can be use as a one-time task that help to process existing items
  * when a new feature is added in a module.
  */
-class LoopItems extends AbstractJob
+class LoopItems extends AbstractTask
 {
     /**
      * Limit for the loop to avoid heavy sql requests.

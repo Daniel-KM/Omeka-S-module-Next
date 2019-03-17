@@ -8,6 +8,10 @@
  * Nevertheless, the process is checked and must be a system one, not a web one.
  * The class must be a job one.
  *
+ * Note: since there is no job id, the job should not require it (for example,
+ * method `shouldStop()` should not be called. The use the abstract class `AbstractTask`,
+ * that extends `AbstractJob`, is recommended, as it takes care of this point.
+ *
  * @todo Use the true Zend console routing system.
  * @todo Manage the server url for absolute links (currently via a setting).
  */

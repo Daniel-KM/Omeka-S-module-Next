@@ -99,6 +99,10 @@ In your cron tab, you can add a task like that:
 /bin/su - www-data -C "php /var/www/omeka/modules/Next/data/scripts/task.php --task MyTask --user-id 1
 ```
 
+Note: since there is no job id, the job should not require it (for example,
+method `shouldStop()` should not be called. The use the abstract class `AbstractTask`,
+that extends `AbstractJob`, is recommended, as it takes care of this point.
+
 #### Loop items task
 
 A task (job) allows to update all items, so all the modules that uses api events
