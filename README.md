@@ -38,6 +38,7 @@ properties: start with, end with, in list (fix [#1274], [#1276]).
 #### Citation
 
 Create a citation from the main properties of a resource, like in Omeka Classic.
+To use it, add this in your theme: `echo $this->citation($resource);`.
 
 #### Is home page
 
@@ -100,7 +101,7 @@ In your cron tab, you can add a task like that:
 ```
 
 Note: since there is no job id, the job should not require it (for example,
-method `shouldStop()` should not be called. The use the abstract class `AbstractTask`,
+method `shouldStop()` should not be called. The use of the abstract class `AbstractTask`,
 that extends `AbstractJob`, is recommended, as it takes care of this point.
 
 #### Loop items task
