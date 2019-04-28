@@ -18,13 +18,29 @@ class Citation extends AbstractHelper
      * @todo Find a full php library to manage citation. No event is triggered currently.
      *
      * @param AbstractResourceEntityRepresentation $resource
+     * @param array $options Managed options: "reference", "site", "accessed".
+     * The default options are used for Omeka resources. So use "reference" for
+     * a real bibliographic resource.
      * @return string
      */
-    public function __invoke(AbstractResourceEntityRepresentation $resource)
+    public function __invoke(AbstractResourceEntityRepresentation $resource, array $options = [])
     {
         $citation = '';
         $view = $this->getView();
         $translate = $view->plugin('translate');
+
+        if (empty($options['reference'])) {
+            $options += [
+                'reference' => false,
+                'site' => true,
+                'accessed' => true,
+            ];
+        } else {
+            $options += [
+                'site' => false,
+                'accessed' => false,
+            ];
+        }
 
         $creators = $resource->value('dcterms:creator', ['all' => true]) ?: [];
         // Strip formatting and remove empty creator elements.
@@ -47,24 +63,42 @@ class Citation extends AbstractHelper
                     $creator = sprintf($translate('%s et al.'), $creators[0]);
                     break;
             }
-            $citation .= $creator . ', ';
+            $citation .= $creator;
         }
 
         $title = $resource->displayTitle();
         if ($title) {
-            $citation .= '“' . $title . '”, ';
+            $citation .= ($citation ? ', ' : '') . '“' . $title . '”';
         }
 
-        $site = $view->currentSite();
-        if ($site) {
-            $citation .= '<em>' . $site->title() . '</em>, ';
+        if ($options['reference']) {
+            $publisher = $resource->value('dcterms:publisher');
+            if ($publisher) {
+                $citation .= ', <i>' . $publisher . '</i>';
+            }
+            $date = $resource->value('dcterms:date');
+            if ($date) {
+                $citation .= ', ' . $date;
+            }
+        } else {
+            if ($options['site']) {
+                $site = $view->currentSite();
+                if ($site) {
+                    $citation .= ', <i>' . $site->title() . '</i>';
+                }
+            }
+
+            if ($options['accessed']) {
+                // TODO Use the locale for the citation.
+                $accessed = (new \DateTime())->format('j F Y');
+                $url = '<span class="citation-url">' . $view->escapeHtml($resource->siteUrl(null, true)) . '</span>';
+                /// Chicago-style item citation: access date and URL
+                $citation .= ', ' . sprintf($translate('accessed %1$s, %2$s'), $accessed, $url);
+            }
         }
 
-        // TODO Use the locale for the citation.
-        $accessed = (new \DateTime())->format('j F Y');
-        $url = '<span class="citation-url">' . $view->escapeHtml($resource->siteUrl(null, true)) . '</span>';
-        /// Chicago-style item citation: access date and URL
-        $citation .= sprintf($translate('accessed %1$s, %2$s.'), $accessed, $url);
+        $citation .= '.';
+
         return $citation;
     }
 }
