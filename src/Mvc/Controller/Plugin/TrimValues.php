@@ -59,9 +59,9 @@ class TrimValues extends AbstractPlugin
         $query = <<<'SQL'
 UPDATE value v
 SET
-v.value = NULLIF(REGEXP_REPLACE(v.value, "^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$", ""), ""),
-v.lang = NULLIF(REGEXP_REPLACE(v.lang, "^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$", ""), ""),
-v.uri = NULLIF(REGEXP_REPLACE(v.uri, "^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$", ""), "")
+v.value = NULLIF(REGEXP_REPLACE(v.value, "^[\\s\\h\\v[:blank:][:space:]]+|[\\s\\h\\v[:blank:][:space:]]+$", ""), ""),
+v.lang = NULLIF(REGEXP_REPLACE(v.lang, "^[\\s\\h\\v[:blank:][:space:]]+|[\\s\\h\\v[:blank:][:space:]]+$", ""), ""),
+v.uri = NULLIF(REGEXP_REPLACE(v.uri, "^[\\s\\h\\v[:blank:][:space:]]+|[\\s\\h\\v[:blank:][:space:]]+$", ""), "")
 SQL;
         if ($idsString) {
             $query .= "\n" . <<<SQL

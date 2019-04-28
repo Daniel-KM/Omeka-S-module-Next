@@ -155,7 +155,7 @@ class Module extends AbstractGenericModule
         $data = $request->getContent();
 
         $trimUnicode = function ($v) {
-            return preg_replace('/^[\h\v\s[:blank:][:space:]]+|[\h\v\s[:blank:][:space:]]+$/u', '', $v);
+            return preg_replace('/^[\s\h\v[:blank:][:space:]]+|[\s\h\v[:blank:][:space:]]+$/u', '', $v);
         };
 
         // Trimming.
