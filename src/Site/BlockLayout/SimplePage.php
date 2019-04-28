@@ -56,8 +56,6 @@ class SimplePage extends AbstractBlockLayout
         /** @var \Next\Form\SimplePageBlockForm $form */
         $form = $this->formElementManager->get(SimplePageBlockForm::class);
 
-        $view->logger()->err('sdfdq');
-
         $form->setData([
             'o:block[__blockIndex__][o:data][page]' => $data['page'],
         ]);
