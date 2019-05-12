@@ -119,8 +119,8 @@ class Module extends AbstractGenericModule
         if (isset($query['slug'])) {
             $qb->andWhere($qb->expr()->eq(
                 'Omeka\Entity\SitePage.slug',
-                $adapter->createNamedParameter($qb, $query['slug']))
-            );
+                $adapter->createNamedParameter($qb, $query['slug'])
+            ));
         }
 
         if (isset($query['site_id'])) {
@@ -135,8 +135,8 @@ class Module extends AbstractGenericModule
             );
             $qb->andWhere($qb->expr()->eq(
                 "$siteAlias.slug",
-                $adapter->createNamedParameter($qb, $query['site_slug']))
-            );
+                $adapter->createNamedParameter($qb, $query['site_slug'])
+            ));
         }
     }
 

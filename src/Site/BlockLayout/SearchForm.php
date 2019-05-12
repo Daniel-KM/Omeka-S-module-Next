@@ -14,8 +14,11 @@ class SearchForm extends AbstractBlockLayout
         return 'Search Form'; // @translate
     }
 
-    public function form(PhpRenderer $view, SiteRepresentation $site,
-        SitePageRepresentation $page = null, SitePageBlockRepresentation $block = null
+    public function form(
+        PhpRenderer $view,
+        SiteRepresentation $site,
+        SitePageRepresentation $page = null,
+        SitePageBlockRepresentation $block = null
     ) {
         return $view->translate('Insert a themable search form on the page, generally the home page.'); // @translate
     }
