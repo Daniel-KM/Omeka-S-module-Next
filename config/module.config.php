@@ -12,7 +12,6 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'citation' => View\Helper\Citation::class,
             'currentSite' => View\Helper\CurrentSite::class,
             'isHomePage' => View\Helper\IsHomePage::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,

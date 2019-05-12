@@ -37,8 +37,8 @@ properties: start with, end with, in list (fix [#1274], [#1276]).
 
 #### Citation
 
-Create a citation from the main properties of a resource, like in Omeka Classic.
-To use it, add this in your theme: `echo $this->citation($resource);`.
+Since 3.1.2.7, this feature has moved to module [Citation], that uses a partial
+view to easily customize it. The view helper doesn’t change.
 
 #### Is home page
 
@@ -206,6 +206,7 @@ Copyright
 [#1283]: https://github.com/omeka/omeka-s/issues/1283
 [#1301]: https://github.com/omeka/omeka-s/issues/1301
 [#1371]: https://github.com/omeka/omeka-s/issues/1371
+[Citation]: https://github.com/Daniel-KM/Omeka-S-module-Citation
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
