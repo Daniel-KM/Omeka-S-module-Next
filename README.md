@@ -121,24 +121,7 @@ Allow to use `$this->logger()` in the views (fix [#1371]).
 #### AbstractGenericModule
 
 A class to simplify management of generic methods of the module (install and
-settings).
-
-The logic is "config over code": so all settings have just to be set in the main
-`config/module.config.php` file, inside a key with the lowercase module name,
-with sub-keys `config`, `settings`, `site_settings`, `user_settings` and
-`block_settings`. All the forms have just to be standard Zend form. Eventual
-install and uninstall sql can be set in `data/install/` and upgrade code in
-`data/scripts`. A eventual dependency on another module can be set as a property
-of the main module  ($this->dependency and $this->dependencies).
-
-To add it in a plugin, simply add at the  beginning of the file Module.php:
-
-```php
-require_once dirname(__DIR__) . '/Next/src/Module/AbstractGenericModule.php';
-```
-
-To avoid a dependency to this module, copy the file above in your module and
-replace the namespace.
+settings). This part is now managed in module [Generic] more simply.
 
 
 Installation
@@ -207,6 +190,7 @@ Copyright
 [#1301]: https://github.com/omeka/omeka-s/issues/1301
 [#1371]: https://github.com/omeka/omeka-s/issues/1371
 [Citation]: https://github.com/Daniel-KM/Omeka-S-module-Citation
+[Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html

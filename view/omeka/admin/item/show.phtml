@@ -9,7 +9,7 @@ $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 $this->htmlElement('body')->appendAttribute('class', 'items show');
 if ($owner = $item->owner()) {
-    $ownerText = $escape($item->owner()->name());
+    $ownerText = $escape($owner->name());
 } else {
     $ownerText = $translate('[no owner]');
 }

@@ -41,6 +41,9 @@ use Zend\View\Renderer\PhpRenderer;
  * This class allows to manage all methods that should run only once and that
  * are generic to all modules (install and settings).
  *
+ * Important: this class is now managed by module Generic more simply.
+ * @see https://github.com/Daniel-KM/Omeka-S-module-Generic
+ *
  * The logic is "config over code": so all settings have just to be set in the
  * main `config/module.config.php` file, inside a key with the lowercase module
  * name,  with sub-keys `config`, `settings`, `site_settings`, `user_settings`
