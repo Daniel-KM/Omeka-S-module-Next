@@ -5,6 +5,7 @@
  * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $previous
  * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $next
  * @var string $lastBrowse
+ * @var array $options
  */
 
 $translate = $this->plugin('translate');
@@ -16,7 +17,9 @@ else:
     echo $hyperlink('<', '#', ['class' => 'button', 'rel' => 'prev', 'title' => $translate('No previous resource'), 'disabled' => 'disabled']);
 endif;
 
-echo $hyperlink('^', $lastBrowse, ['class' => 'button', 'title' => $translate('Back to last browse page')]);
+if (!empty($options['upper'])):
+    echo $hyperlink('^', $lastBrowse, ['class' => 'button', 'title' => $translate('Back to last browse page')]);
+endif;
 
 if ($next):
     echo $hyperlink('>', $next->url('show'), ['class' => 'button', 'rel' => 'next', 'title' => $translate('Next resource')]);

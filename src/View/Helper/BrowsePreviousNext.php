@@ -45,26 +45,36 @@ class BrowsePreviousNext extends AbstractHelper
      * @todo Check visibility for public front-end.
      *
      * @param AbstractResourceEntityRepresentation $resource
+     * @param array $options
      * @return string Html code
      */
-    public function __invoke(AbstractResourceEntityRepresentation $resource)
+    public function __invoke(AbstractResourceEntityRepresentation $resource, array $options = [])
     {
         $view = $this->getView();
         $params = $view->params();
         $isAdmin = (bool) $params->fromRoute('__ADMIN__');
         $ui = $isAdmin ? 'admin' : 'public';
 
+        $options += [
+            'partial' => null,
+            'upper' => true,
+        ];
+
         $session = new Container('Next');
         $query = isset($session->lastQuery[$ui]) ? $session->lastQuery[$ui] : [];
 
-        $lastBrowse = $view->lastBrowsePage();
+        $lastBrowse = $options['upper'] ? $view->lastBrowsePage() : null;
         list($previous, $next) = $this->previousNext($resource, $query);
 
-        return $view->partial('common/browse-previous-next', [
+        $partial = empty($options['partial']) ? 'common/browse-previous-next' : $options['partial'];
+        unset($options['partial']);
+
+        return $view->partial($partial, [
             'resource' => $resource,
             'previous' => $previous,
             'next' => $next,
             'lastBrowse' => $lastBrowse,
+            'options' => $options,
         ]);
     }
 
