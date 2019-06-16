@@ -20,7 +20,7 @@ This is an equivalent for the [shortcode as a page] in Omeka classic too.
 #### Direct links in user bar
 
 Display direct links to the current resource in the public user bar in order to
-simplify edition and management of resources (fix [#1283]).
+simplify edition and management of resources (fix [#1283], included in Omeka S 1.4).
 The revert links are available too. They display the resource in the default
 site, or in the first one (fix [#1259]).
 
@@ -116,7 +116,7 @@ php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id
 
 #### Logger in view
 
-Allow to use `$this->logger()` in the views (fix [#1371]).
+Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.4).
 
 #### AbstractGenericModule
 

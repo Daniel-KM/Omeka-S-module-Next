@@ -1,7 +1,7 @@
 <?php
 namespace Next;
 
-return [
+$config = [
     'view_manager' => [
         'template_path_stack' => [
             dirname(__DIR__) . '/view',
@@ -16,12 +16,12 @@ return [
             'isHomePage' => View\Helper\IsHomePage::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,
             'searchFilters' => View\Helper\SearchFilters::class,
-            'userBar' => View\Helper\UserBar::class,
+            // 'userBar' => View\Helper\UserBar::class,
         ],
         'factories' => [
             'browsePreviousNext' => Service\ViewHelper\BrowsePreviousNextFactory::class,
             'defaultSiteSlug' => Service\ViewHelper\DefaultSiteSlugFactory::class,
-            'logger' => Service\ViewHelper\LoggerFactory::class,
+            // 'logger' => Service\ViewHelper\LoggerFactory::class,
             'nextResource' => Service\ViewHelper\NextResourceFactory::class,
             'previousResource' => Service\ViewHelper\PreviousResourceFactory::class,
             'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
@@ -71,3 +71,11 @@ return [
         ],
     ],
 ];
+
+$isBelow14 = version_compare(\Omeka\Module::VERSION, '1.4.0', '<');
+if ($isBelow14) {
+    $config['view_helpers']['invokables']['userBar'] = View\Helper\UserBar::class;
+    $config['view_helpers']['factories']['logger'] = Service\ViewHelper\LoggerFactory::class;
+}
+
+return $config;
