@@ -90,12 +90,6 @@ class UserBar extends AbstractHelper
         // There is no default label for resources, so get it from the controller (sometime upper-cased).
         $params = $view->params();
         $controller = strtolower($params->fromRoute('__CONTROLLER__'));
-        $mapLabels = [
-            'item' => 'Item', // @translate
-            'item-set' => 'Item set', // @translate
-            'media' => 'Media', // @translate
-            'page' => 'Page', // @translate
-        ];
         $mapPluralLabels = [
             'item' => 'Items', // @translate
             'item-set' => 'Item sets', // @translate
@@ -103,8 +97,8 @@ class UserBar extends AbstractHelper
             'page' => 'Pages', // @translate
         ];
 
-        if (!isset($mapLabels[$controller])) {
-            return [];
+        if (!isset($mapPluralLabels[$controller])) {
+            return $links;
         }
 
         $routeParams = $params->fromRoute();
@@ -120,7 +114,7 @@ class UserBar extends AbstractHelper
                 $links[] = [
                     'resource' => $controller,
                     'action' => 'edit',
-                    'text' => sprintf($translate('Edit %s'), $translate($mapLabels[$controller])), // @translate
+                    'text' => $translate('Edit'),
                     'url' => $page->adminUrl('edit'),
                 ];
             }
@@ -147,19 +141,18 @@ class UserBar extends AbstractHelper
                 $mapResourceNames = ['item' => 'items', 'item-set' => 'item_sets', 'media' => 'media'];
                 $resourceName = $mapResourceNames[$controller];
                 $resource = $view->api()->read($resourceName, $id)->getContent();
+                $links[] = [
+                    'resource' => $controller,
+                    'action' => 'show',
+                    'text' => $translate('View'),
+                    'url' => $resource->adminUrl(),
+                ];
                 if ($resource->userIsAllowed('edit')) {
                     $links[] = [
                         'resource' => $controller,
                         'action' => 'edit',
-                        'text' => sprintf($translate('Edit %s'), $translate($mapLabels[$controller])), // @translate
+                        'text' => $translate('Edit'),
                         'url' => $resource->adminUrl('edit'),
-                    ];
-                } else {
-                    $links[] = [
-                        'resource' => $controller,
-                        'action' => 'show',
-                        'text' => sprintf($translate('Show %s'), $translate($mapLabels[$controller])), // @translate
-                        'url' => $resource->adminUrl(),
                     ];
                 }
             }
