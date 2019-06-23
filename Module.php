@@ -72,9 +72,30 @@ class Module extends AbstractGenericModule
         }
 
         $sharedEventManager->attach(
+            \Omeka\Api\Adapter\PropertyAdapter::class,
+            'api.search.query',
+            [$this, 'apiSearchQueryProperty']
+        );
+        $sharedEventManager->attach(
+            \Omeka\Api\Adapter\ResourceClassAdapter::class,
+            'api.search.query',
+            [$this, 'apiSearchQueryResourceClass']
+        );
+        $sharedEventManager->attach(
             \Omeka\Api\Adapter\SitePageAdapter::class,
             'api.search.query',
             [$this, 'apiSearchQuerySitePage']
+        );
+
+        $sharedEventManager->attach(
+            \Omeka\Form\Element\PropertySelect::class,
+            'form.vocab_member_select.query',
+            [$this, 'formVocabMemberSelectQuery']
+        );
+        $sharedEventManager->attach(
+            \Omeka\Form\Element\ResourceClassSelect::class,
+            'form.vocab_member_select.query',
+            [$this, 'formVocabMemberSelectQuery']
         );
 
         $sharedEventManager->attach(
@@ -93,6 +114,13 @@ class Module extends AbstractGenericModule
             'form.add_elements',
             [$this, 'formAddElementsResourceBatchUpdateForm']
         );
+
+        // Site settings.
+        $sharedEventManager->attach(
+            \Omeka\Form\SiteSettingsForm::class,
+            'form.add_elements',
+            [$this, 'handleSiteSettings']
+        );
     }
 
     public function apiSearchQuery(Event $event)
@@ -110,21 +138,62 @@ class Module extends AbstractGenericModule
         $this->buildPropertyQuery($qb, $query, $adapter);
     }
 
+    public function apiSearchQueryProperty(Event $event)
+    {
+        $query = $event->getParam('request')->getContent();
+
+        // This key is used by PropertySelect.
+        if (!empty($query['used'])) {
+            $adapter = $event->getTarget();
+            $qb = $event->getParam('queryBuilder');
+            $expr = $qb->expr();
+
+            $valuesAlias = $adapter->createAlias();
+            $qb->innerJoin(
+                'Omeka\Entity\Property.values',
+                $valuesAlias,
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                $expr->eq("$valuesAlias.property", 'Omeka\Entity\Property.id')
+            );
+        }
+    }
+
+    public function apiSearchQueryResourceClass(Event $event)
+    {
+        $query = $event->getParam('request')->getContent();
+
+        // This key is used by ResourceClassSelect.
+        if (!empty($query['used'])) {
+            $adapter = $event->getTarget();
+            $qb = $event->getParam('queryBuilder');
+            $expr = $qb->expr();
+
+            $resourceAlias = $adapter->createAlias();
+            $qb->innerJoin(
+                'Omeka\Entity\ResourceClass.resources',
+                $resourceAlias,
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                $expr->eq("$resourceAlias.resourceClass", 'Omeka\Entity\ResourceClass.id')
+            );
+        }
+    }
+
     public function apiSearchQuerySitePage(Event $event)
     {
         $adapter = $event->getTarget();
         $qb = $event->getParam('queryBuilder');
+        $expr = $qb->expr();
         $query = $event->getParam('request')->getContent();
 
         if (isset($query['slug'])) {
-            $qb->andWhere($qb->expr()->eq(
+            $qb->andWhere($expr->eq(
                 'Omeka\Entity\SitePage.slug',
                 $adapter->createNamedParameter($qb, $query['slug'])
             ));
         }
 
         if (isset($query['site_id'])) {
-            $qb->andWhere($qb->expr()->eq('Omeka\Entity\SitePage.site', $query['site_id']));
+            $qb->andWhere($expr->eq('Omeka\Entity\SitePage.site', $query['site_id']));
         }
 
         if (isset($query['site_slug'])) {
@@ -133,10 +202,20 @@ class Module extends AbstractGenericModule
                 'Omeka\Entity\SitePage.site',
                 $siteAlias
             );
-            $qb->andWhere($qb->expr()->eq(
+            $qb->andWhere($expr->eq(
                 "$siteAlias.slug",
                 $adapter->createNamedParameter($qb, $query['site_slug'])
             ));
+        }
+    }
+
+    public function formVocabMemberSelectQuery(Event $event)
+    {
+        $selectElement = $event->getTarget();
+        if ($selectElement->getOption('used_terms')) {
+            $query = $event->getParam('query', []);
+            $query['used'] = true;
+            $event->setParam('query', $query);
         }
     }
 

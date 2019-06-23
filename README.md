@@ -35,6 +35,11 @@ in the page block `Browse preview` (fix [#1281]).
 Allow to do more advanced search in public or admin board on values of the
 properties: start with, end with, in list (fix [#1274], [#1276]).
 
+#### Advanced search with list of used properties and resource classes.
+
+Display only the used properties and resources classes in the advanced search
+form, via a site setting (fix [#1423]).
+
 #### Citation
 
 Since 3.1.2.7, this feature has moved to module [Citation], that uses a partial

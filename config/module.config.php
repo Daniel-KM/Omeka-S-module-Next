@@ -38,6 +38,7 @@ $config = [
     'form_elements' => [
         'invokables' => [
             Form\SimplePageBlockForm::class => Form\SimplePageBlockForm::class,
+            Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
         'factories' => [
             Form\Element\SitePageSelect::class => Service\Form\Element\SitePageSelectFactory::class,
@@ -63,6 +64,9 @@ $config = [
     ],
     'next' => [
         'settings' => [
+        ],
+        'site_settings' => [
+            'search_used_terms' => true,
         ],
         'block_settings' => [
             'simplePage' => [
