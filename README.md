@@ -127,7 +127,7 @@ php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id
 
 Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.4).
 
-#### AbstractGenericModule
+#### AbstractModule
 
 A class to simplify management of generic methods of the module (install and
 settings). This part is now managed in module [Generic] more simply.

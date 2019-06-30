@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright Daniel Berthereau, 2018
+ * Copyright Daniel Berthereau, 2018-2019
  *
  * This software is governed by the CeCILL license under French law and abiding
  * by the rules of distribution of free software.  You can use, modify and/ or
@@ -26,9 +26,9 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-namespace Next\Module;
+namespace Generic;
 
-use Omeka\Module\AbstractModule;
+// use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Settings\SettingsInterface;
 use Omeka\Stdlib\Message;
@@ -41,46 +41,17 @@ use Zend\View\Renderer\PhpRenderer;
  * This class allows to manage all methods that should run only once and that
  * are generic to all modules (install and settings).
  *
- * Important: this class is now managed by module Generic more simply.
- * @see https://github.com/Daniel-KM/Omeka-S-module-Generic
- *
  * The logic is "config over code": so all settings have just to be set in the
  * main `config/module.config.php` file, inside a key with the lowercase module
  * name,  with sub-keys `config`, `settings`, `site_settings`, `user_settings`
  * and `block_settings`. All the forms have just to be standard Zend form.
  * Eventual install and uninstall sql can be set in `data/install/` and upgrade
- * code in `data/scripts`. A dependency on another module can be set as a
- * property of the main module  ($this->dependency and $this->dependencies).
- * To add it in a plugin, simply add at the  beginning of the file Module.php:
- * ```php
- * require_once dirname(__DIR__) . '/Next/src/Module/AbstractGenericModule.php';
- * ```
- * To avoid a dependency to this module, copy the file above file in your module
- * and replace the namespace.
+ * code in `data/scripts`.
+ *
+ * See readme.
  */
-abstract class AbstractGenericModule extends AbstractModule
+abstract class AbstractModule extends \Omeka\Module\AbstractModule
 {
-    /**
-     * This is the root namespace of the module, instead the one of the current
-     * abstract class.
-     *
-     * @var string
-     */
-    protected $namespace;
-
-    public function __construct()
-    {
-        $this->namespace = (new \ReflectionClass($this))->getNamespaceName();
-    }
-
-    /**
-     * @return string
-     */
-    protected function modulePath()
-    {
-        return OMEKA_PATH . '/modules/' . $this->namespace;
-    }
-
     public function getConfig()
     {
         return include $this->modulePath() . '/config/module.config.php';
@@ -123,14 +94,17 @@ abstract class AbstractGenericModule extends AbstractModule
         $services = $this->getServiceLocator();
 
         $formManager = $services->get('FormElementManager');
-        $formClass = $this->namespace . '\Form\ConfigForm';
+        $formClass = static::NAMESPACE . '\Form\ConfigForm';
         if (!$formManager->has($formClass)) {
             return;
         }
 
         $settings = $services->get('Omeka\Settings');
+
+        $this->initDataToPopulate($settings, 'config');
+
         $data = $this->prepareDataToPopulate($settings, 'config');
-        if (empty($data)) {
+        if (is_null($data)) {
             return;
         }
 
@@ -144,14 +118,14 @@ abstract class AbstractGenericModule extends AbstractModule
     public function handleConfigForm(AbstractController $controller)
     {
         $config = $this->getConfig();
-        $space = strtolower($this->namespace);
+        $space = strtolower(static::NAMESPACE);
         if (empty($config[$space]['config'])) {
             return true;
         }
 
         $services = $this->getServiceLocator();
         $formManager = $services->get('FormElementManager');
-        $formClass = $this->namespace . '\Form\ConfigForm';
+        $formClass = static::NAMESPACE . '\Form\ConfigForm';
         if (!$formManager->has($formClass)) {
             return true;
         }
@@ -190,6 +164,14 @@ abstract class AbstractGenericModule extends AbstractModule
     public function handleUserSettings(Event $event)
     {
         $this->handleAnySettings($event, 'user_settings');
+    }
+
+    /**
+     * @return string
+     */
+    protected function modulePath()
+    {
+        return OMEKA_PATH . '/modules/' . static::NAMESPACE;
     }
 
     /**
@@ -242,7 +224,7 @@ abstract class AbstractGenericModule extends AbstractModule
     {
         $settingsType = 'site_settings';
         $config = $this->getConfig();
-        $space = strtolower($this->namespace);
+        $space = strtolower(static::NAMESPACE);
         if (empty($config[$space][$settingsType])) {
             return;
         }
@@ -265,7 +247,7 @@ abstract class AbstractGenericModule extends AbstractModule
     {
         $settingsType = 'user_settings';
         $config = $this->getConfig();
-        $space = strtolower($this->namespace);
+        $space = strtolower(static::NAMESPACE);
         if (empty($config[$space][$settingsType])) {
             return;
         }
@@ -289,7 +271,7 @@ abstract class AbstractGenericModule extends AbstractModule
     protected function manageAnySettings(SettingsInterface $settings, $settingsType, $process)
     {
         $config = $this->getConfig();
-        $space = strtolower($this->namespace);
+        $space = strtolower(static::NAMESPACE);
         if (empty($config[$space][$settingsType])) {
             return;
         }
@@ -328,22 +310,45 @@ abstract class AbstractGenericModule extends AbstractModule
 
         // TODO Check fieldsets in the config of the module.
         $settingFieldsets = [
-            // 'config' => $this->namespace . '\Form\ConfigForm',
-            'settings' => $this->namespace . '\Form\SettingsFieldset',
-            'site_settings' => $this->namespace . '\Form\SiteSettingsFieldset',
-            'user_settings' => $this->namespace . '\Form\UserSettingsFieldset',
+            // 'config' => static::NAMESPACE . '\Form\ConfigForm',
+            'settings' => static::NAMESPACE . '\Form\SettingsFieldset',
+            'site_settings' => static::NAMESPACE . '\Form\SiteSettingsFieldset',
+            'user_settings' => static::NAMESPACE . '\Form\UserSettingsFieldset',
         ];
         if (!isset($settingFieldsets[$settingsType])) {
             return;
         }
 
         $settings = $services->get($settingsTypes[$settingsType]);
+
+        switch ($settingsType) {
+            case 'settings':
+                $id = null;
+                break;
+            case 'site_settings':
+                $id = $services->get('ControllerPluginManager')->get('currentSite')->id();
+                break;
+            case 'user_settings':
+                /** @var \Zend\Router\RouteMatch $routeMatch */
+                $routeMatch = $event->getRouteMatch();
+                if ($routeMatch->getMatchedRouteName() !== 'admin/site/slug/action'
+                    || $routeMatch->getParam('controller') !== 'user'
+                    || !$routeMatch->getParam('id')
+                ) {
+                    return;
+                }
+                $id = $routeMatch->getParam('id');
+                break;
+        }
+
+        $this->initDataToPopulate($settings, $settingsType, $id);
+
         $data = $this->prepareDataToPopulate($settings, $settingsType);
-        if (empty($data)) {
+        if (is_null($data)) {
             return;
         }
 
-        $space = strtolower($this->namespace);
+        $space = strtolower(static::NAMESPACE);
 
         $fieldset = $services->get('FormElementManager')->get($settingFieldsets[$settingsType]);
         $fieldset->setName($space);
@@ -360,14 +365,16 @@ abstract class AbstractGenericModule extends AbstractModule
      * @todo Use form methods to populate.
      * @param SettingsInterface $settings
      * @param string $settingsType
-     * @return array
+     * @return array|null
      */
     protected function prepareDataToPopulate(SettingsInterface $settings, $settingsType)
     {
         $config = $this->getConfig();
-        $space = strtolower($this->namespace);
-        if (empty($config[$space][$settingsType])) {
-            return;
+        $space = strtolower(static::NAMESPACE);
+        // Use isset() instead of empty() to give the possibility to display a
+        // specific form.
+        if (!isset($config[$space][$settingsType])) {
+            return null;
         }
 
         $defaultSettings = $config[$space][$settingsType];
@@ -379,6 +386,51 @@ abstract class AbstractGenericModule extends AbstractModule
         }
 
         return $data;
+    }
+
+    /**
+     * Initialize each original settings, if not ready.
+     *
+     * If the default settings were never registered, it means an incomplete
+     * config, install or upgrade, or a new site or a new user. In all cases,
+     * check it and save defauilt value first.
+     *
+     * @param SettingsInterface $settings
+     * @param string $settingsType
+     * @param int $id
+     */
+    protected function initDataToPopulate(SettingsInterface $settings, $settingsType, $id = null)
+    {
+        // This method is not in the interface, but is set for config, site and
+        // user settings.
+        if (!method_exists($settings, 'getTableName')) {
+            return;
+        }
+
+        $config = $this->getConfig();
+        $space = strtolower(static::NAMESPACE);
+        if (empty($config[$space][$settingsType])) {
+            return;
+        }
+
+        /** @var \Doctrine\DBAL\Connection $connection */
+        $connection = $this->getServiceLocator()->get('Omeka\Connection');
+        if ($id) {
+            if (!method_exists($settings, 'getTargetIdColumnName')) {
+                return;
+            }
+            $sql = sprintf('SELECT id, value FROM %s WHERE %s = ?', $settings->getTableName(), $settings->getTargetIdColumnName());
+            $stmt = $connection->query($sql, [$id]);
+        } else {
+            $sql = sprintf('SELECT id, value FROM %s', $settings->getTableName());
+            $stmt = $connection->query($sql);
+        }
+        $currentSettings = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
+        $defaultSettings = $config[$space][$settingsType];
+        $missingSettings = array_diff_key($defaultSettings, $currentSettings);
+        foreach ($missingSettings as $name => $value) {
+            $settings->set($name, $value);
+        }
     }
 
     /**

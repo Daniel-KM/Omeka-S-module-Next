@@ -1,11 +1,15 @@
 <?php
 namespace Next;
 
-require_once __DIR__ . '/src/Module/AbstractGenericModule.php';
+if (!class_exists(\Generic\AbstractModule::class)) {
+    require_once file_exists(dirname(__DIR__) . '/Generic/AbstractModule.php')
+        ? dirname(__DIR__) . '/Generic/AbstractModule.php'
+        : __DIR__ . '/src/Generic/AbstractModule.php';
+}
 
 use Doctrine\ORM\QueryBuilder;
+use Generic\AbstractModule;
 use Omeka\Api\Adapter\AbstractResourceEntityAdapter;
-use Next\Module\AbstractGenericModule;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Form\Element;
@@ -20,8 +24,10 @@ use Zend\Session\Container;
  * @copyright Daniel Berthereau, 2018-2019
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  */
-class Module extends AbstractGenericModule
+class Module extends AbstractModule
 {
+    const NAMESPACE = __NAMESPACE__;
+
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
         $adapters = [
