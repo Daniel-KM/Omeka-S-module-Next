@@ -5,6 +5,9 @@ use Doctrine\ORM\EntityManager;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 
+/**
+ * @deprecated Use module BulkEdit.
+ */
 class TrimValues extends AbstractPlugin
 {
     /**

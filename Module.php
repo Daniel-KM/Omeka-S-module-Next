@@ -36,18 +36,21 @@ class Module extends AbstractGenericModule
                 [$this, 'apiSearchQuery']
             );
 
+            // Deprecated Use module BulkEdit.
             $sharedEventManager->attach(
                 $adapter,
                 'api.create.pre',
                 [$this, 'handleResourceProcessPre']
             );
 
+            // Deprecated Use module BulkEdit.
             $sharedEventManager->attach(
                 $adapter,
                 'api.update.pre',
                 [$this, 'handleResourceProcessPre']
             );
 
+            // Deprecated Use module BulkEdit.
             $sharedEventManager->attach(
                 $adapter,
                 'api.batch_update.post',
@@ -109,6 +112,7 @@ class Module extends AbstractGenericModule
             [$this, 'handleViewShowSidebarMedia']
         );
 
+        // Deprecated Use module BulkEdit.
         $sharedEventManager->attach(
             \Omeka\Form\ResourceBatchUpdateForm::class,
             'form.add_elements',
@@ -226,9 +230,14 @@ class Module extends AbstractGenericModule
      * - preventive deduplication on property values
      *
      * @param Event $event
+     * @deprecated Use module BulkEdit.
      */
     public function handleResourceProcessPre(Event $event)
     {
+        if ($this->isModuleActive('BulkEdit')) {
+            return;
+        }
+
         /** @var \Omeka\Api\Request $request */
         $request = $event->getParam('request');
         $data = $request->getContent();
@@ -307,9 +316,14 @@ class Module extends AbstractGenericModule
      * the results are probably the same with a simple trimming.
      *
      * @param Event $event
+     * @deprecated Use module BulkEdit.
      */
     public function handleResourceBatchUpdatePost(Event $event)
     {
+        if ($this->isModuleActive('BulkEdit')) {
+            return;
+        }
+
         /** @var \Omeka\Api\Request $request */
         $request = $event->getParam('request');
         $trimValues = $request->getValue('trim_values');
@@ -343,8 +357,16 @@ class Module extends AbstractGenericModule
         echo $view->partial('admin/media/show-details-renderer', ['media' => $resource]);
     }
 
+    /**
+     * @param Event $event
+     * @deprecated Use module BulkEdit.
+     */
     public function formAddElementsResourceBatchUpdateForm(Event $event)
     {
+        if ($this->isModuleActive('BulkEdit')) {
+            return;
+        }
+
         $form = $event->getTarget();
 
         $form->add([

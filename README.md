@@ -76,12 +76,16 @@ Remove leading and trailing whitespaces preventively on any resource creation or
 update, or curatively via the batch edit, so values will be easier to find and
 to compare exactly (fix [#1258]).
 
+Warning: This feature is still available, but is improved in module [Bulk Edit].
+
 #### Deduplicate property values
 
 Remove exact duplicated values on any new or updated resource preventively.
 Note: preventive deduplication is case sensitive, but curative deduplication is
 case insensitive (it uses a direct query and the Omeka database is case
 insensitive by default).
+
+Warning: This feature is still available, but is improved in module [Bulk Edit].
 
 #### New links
 
@@ -179,7 +183,7 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018 (see [Daniel-KM] on GitHub)
+* Copyright Daniel Berthereau, 2018-2019 (see [Daniel-KM] on GitHub)
 
 
 [Omeka S]: https://omeka.org/s
@@ -196,6 +200,7 @@ Copyright
 [#1371]: https://github.com/omeka/omeka-s/issues/1371
 [Citation]: https://github.com/Daniel-KM/Omeka-S-module-Citation
 [Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
+[Bulk Edit]: https://github.com/Daniel-KM/Omeka-S-module-BulkEdit
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html

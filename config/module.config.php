@@ -48,6 +48,7 @@ $config = [
         'invokables' => [
         ],
         'factories' => [
+            // Deprecated Use module BulkEdit.
             'trimValues' => Service\ControllerPlugin\TrimValuesFactory::class,
             'deduplicateValues' => Service\ControllerPlugin\DeduplicateValuesFactory::class,
         ],
