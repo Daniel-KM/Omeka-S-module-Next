@@ -2,7 +2,7 @@
 namespace Next;
 
 if (!class_exists(\Generic\AbstractModule::class)) {
-    require_once file_exists(dirname(__DIR__) . '/Generic/AbstractModule.php')
+    require file_exists(dirname(__DIR__) . '/Generic/AbstractModule.php')
         ? dirname(__DIR__) . '/Generic/AbstractModule.php'
         : __DIR__ . '/src/Generic/AbstractModule.php';
 }
@@ -13,6 +13,8 @@ use Omeka\Api\Adapter\AbstractResourceEntityAdapter;
 use Zend\EventManager\Event;
 use Zend\EventManager\SharedEventManagerInterface;
 use Zend\Form\Element;
+use Zend\ModuleManager\ModuleEvent;
+use Zend\ModuleManager\ModuleManager;
 use Zend\Session\Container;
 
 /**
@@ -27,6 +29,27 @@ use Zend\Session\Container;
 class Module extends AbstractModule
 {
     const NAMESPACE = __NAMESPACE__;
+
+    public function init(ModuleManager $moduleManager)
+    {
+        $moduleManager->getEventManager()
+            ->attach(ModuleEvent::EVENT_MERGE_CONFIG, [$this, 'onMergeConfig']);
+    }
+
+    public function onMergeConfig(ModuleEvent $event)
+    {
+        // When module BulkEdit is installed and enabled, its controller plugins
+        // should be used, not the Next ones.
+        $configListener = $event->getConfigListener();
+        $config = $configListener->getMergedConfig(false);
+        if (!isset($config['bulkedit'])) {
+            return;
+        }
+
+        $config['controller_plugins']['factories']['trimValues'] = \BulkEdit\Service\ControllerPlugin\TrimValuesFactory::class;
+        $config['controller_plugins']['factories']['deduplicateValues'] = \BulkEdit\Service\ControllerPlugin\DeduplicateValuesFactory::class;
+        $configListener->setMergedConfig($config);
+    }
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
