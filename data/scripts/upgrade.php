@@ -25,12 +25,12 @@ $space = strtolower(__NAMESPACE__);
 
 if (version_compare($oldVersion, '3.1.2.9', '<')) {
     $message = new Message(
-        'Some features were moved and improved in a new module %sBulkEdit%s: trim metadata and deduplicate metadata. They are still available here.', // @translate
+        'Some features were moved and improved in a new module %sBulkEdit%s: trim metadata and deduplicate metadata. They are still available in module Next.', // @translate
         '<a href="https://github.com/Daniel-KM/Omeka-S-module-BulkEdit">',
         '</a>'
     );
 
     $message->setEscapeHtml(false);
     $messenger = new Messenger();
-    $messenger->addNotice($message);
+    $messenger->addSuccess($message);
 }
