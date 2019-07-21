@@ -16,7 +16,7 @@ Allow to use a page as a block, so the same page can be use in multiple sites,
 for example the page "About" or "Privacy". Of course, the page is a standard
 page and can be more complex with multiple blocks. May be fun.
 This is an equivalent for the [shortcode as a page] in Omeka classic too.
-This block is now managed by module [Block Plus].
+This block is now managed by module [Block Plus] since version 3.1.2.12.
 
 #### Direct links in user bar
 
@@ -68,7 +68,7 @@ Allow to get the current site in public view, that may be missing in some cases.
 #### Block "search form"
 
 Allow to add a search form in any page, typically in the home page.
-This block is now managed by module [Block Plus].
+This block is now managed by module [Block Plus] since version 3.1.2.12.
 
 ### Admin
 
