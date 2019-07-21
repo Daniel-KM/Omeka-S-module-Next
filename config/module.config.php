@@ -39,6 +39,7 @@ $config = [
     'form_elements' => [
         'invokables' => [
             Form\SimplePageFieldset::class => Form\SimplePageFieldset::class,
+            Form\SearchFormFieldset::class => Form\SearchFormFieldset::class,
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
         'factories' => [
@@ -71,6 +72,9 @@ $config = [
             'search_used_terms' => true,
         ],
         'block_settings' => [
+            'searchForm' => [
+                'heading' => '',
+            ],
             'simplePage' => [
                 'page' => null,
             ],
