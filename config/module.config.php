@@ -42,7 +42,7 @@ $config = [
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
         'factories' => [
-            Form\Element\SitePageSelect::class => Service\Form\Element\SitePageSelectFactory::class,
+            Form\Element\SitesPageSelect::class => Service\Form\Element\SitesPageSelectFactory::class,
         ],
     ],
     'controller_plugins' => [

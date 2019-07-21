@@ -1,7 +1,7 @@
 <?php
 namespace Next\Form;
 
-use Next\Form\Element\SitePageSelect;
+use Next\Form\Element\SitesPageSelect;
 use Zend\Form\Form;
 
 class SimplePageBlockForm extends Form
@@ -10,7 +10,7 @@ class SimplePageBlockForm extends Form
     {
         $this->add([
             'name' => 'o:block[__blockIndex__][o:data][page]',
-            'type' => SitePageSelect::class,
+            'type' => SitesPageSelect::class,
             'options' => [
                 'label' => 'Page', // @translate
                 'info' => 'Private sites are marked with a "*". If a private page is selected, it will be hidden on the public site. The current page and recursive pages are forbidden.', // @translate
