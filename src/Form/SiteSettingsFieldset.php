@@ -8,7 +8,7 @@ class SiteSettingsFieldset extends Fieldset
 {
     public function init()
     {
-        $this->setLabel('Next'); // @translate
+        $this->setLabel('Module Next'); // @translate
 
         $this->add([
             'type' => Element\Checkbox::class,
