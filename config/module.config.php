@@ -27,19 +27,8 @@ $config = [
             'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
         ],
     ],
-    // Deprecated Use module BlockPlus.
-    'block_layouts' => [
-        'invokables' => [
-            'searchForm' => Site\BlockLayout\SearchForm::class,
-        ],
-        'factories' => [
-            'simplePage' => Service\BlockLayout\SimplePageFactory::class,
-        ],
-    ],
     'form_elements' => [
         'invokables' => [
-            Form\SimplePageFieldset::class => Form\SimplePageFieldset::class,
-            Form\SearchFormFieldset::class => Form\SearchFormFieldset::class,
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
         'factories' => [
@@ -71,14 +60,6 @@ $config = [
         'site_settings' => [
             'search_used_terms' => true,
         ],
-        'block_settings' => [
-            'searchForm' => [
-                'heading' => '',
-            ],
-            'simplePage' => [
-                'page' => null,
-            ],
-        ],
     ],
 ];
 
@@ -86,6 +67,30 @@ $isBelow14 = version_compare(\Omeka\Module::VERSION, '1.4.0', '<');
 if ($isBelow14) {
     // $config['view_helpers']['invokables']['userBar'] = View\Helper\UserBar::class;
     $config['view_helpers']['factories']['logger'] = Service\ViewHelper\LoggerFactory::class;
+}
+
+// Avoid to override existing modules.
+
+if (!file_exists(dirname(dirname(__DIR__)) . '/BlockPlus/Module.php')) {
+    // Deprecated Use module BlockPlus.
+    $config['block_layouts'] = [
+        'invokables' => [
+            'searchForm' => Site\BlockLayout\SearchForm::class,
+        ],
+        'factories' => [
+            'simplePage' => Service\BlockLayout\SimplePageFactory::class,
+        ],
+    ];
+    $config['form_elements']['invokables'][Form\SearchFormFieldset::class] = Form\SearchFormFieldset::class;
+    $config['form_elements']['invokables'][Form\SimplePageFieldset::class ] = Form\SimplePageFieldset::class;
+    $config['next']['block_settings'] = [
+        'searchForm' => [
+            'heading' => '',
+        ],
+        'simplePage' => [
+            'page' => null,
+        ],
+    ];
 }
 
 return $config;
