@@ -2,9 +2,9 @@
 namespace Next\Form;
 
 use Next\Form\Element\SitesPageSelect;
-use Zend\Form\Form;
+use Zend\Form\Fieldset;
 
-class SimplePageBlockForm extends Form
+class SimplePageFieldset extends Fieldset
 {
     public function init()
     {

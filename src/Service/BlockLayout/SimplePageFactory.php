@@ -17,11 +17,8 @@ class SimplePageFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        $controllerPluginManager = $services->get('ControllerPluginManager');
         return new SimplePage(
-            $services->get('FormElementManager'),
-            $services->get('Config')['next']['block_settings']['simplePage'],
-            $controllerPluginManager->get('api')
+            $services->get('Omeka\ApiManager')
         );
     }
 }

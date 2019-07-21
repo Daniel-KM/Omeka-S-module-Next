@@ -38,7 +38,7 @@ $config = [
     ],
     'form_elements' => [
         'invokables' => [
-            Form\SimplePageBlockForm::class => Form\SimplePageBlockForm::class,
+            Form\SimplePageFieldset::class => Form\SimplePageFieldset::class,
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
         'factories' => [
