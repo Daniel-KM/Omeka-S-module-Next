@@ -13,6 +13,9 @@ use Omeka\Stdlib\ErrorStore;
 use Zend\Form\FormElementManager\FormElementManagerV3Polyfill as FormElementManager;
 use Zend\View\Renderer\PhpRenderer;
 
+/**
+ * @deprecated Use the same feature in module BlockPlus.
+ */
 class SimplePage extends AbstractBlockLayout
 {
     /**

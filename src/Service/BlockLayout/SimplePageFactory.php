@@ -5,6 +5,9 @@ use Interop\Container\ContainerInterface;
 use Next\Site\BlockLayout\SimplePage;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
+/**
+ * @deprecated Use the same feature in module BlockPlus.
+ */
 class SimplePageFactory implements FactoryInterface
 {
     /**

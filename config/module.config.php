@@ -27,6 +27,7 @@ $config = [
             'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
         ],
     ],
+    // Deprecated Use module BlockPlus.
     'block_layouts' => [
         'invokables' => [
             'searchForm' => Site\BlockLayout\SearchForm::class,

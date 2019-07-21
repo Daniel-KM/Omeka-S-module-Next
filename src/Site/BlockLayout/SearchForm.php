@@ -7,6 +7,9 @@ use Omeka\Api\Representation\SitePageBlockRepresentation;
 use Omeka\Site\BlockLayout\AbstractBlockLayout;
 use Zend\View\Renderer\PhpRenderer;
 
+/**
+ * @deprecated Use the same feature in module BlockPlus.
+ */
 class SearchForm extends AbstractBlockLayout
 {
     public function getLabel()
