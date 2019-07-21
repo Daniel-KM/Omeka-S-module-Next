@@ -34,3 +34,15 @@ if (version_compare($oldVersion, '3.1.2.9', '<')) {
     $messenger = new Messenger();
     $messenger->addSuccess($message);
 }
+
+if (version_compare($oldVersion, '3.1.2.12', '<')) {
+    $message = new Message(
+        'Some features were moved and improved in a new module %sBlockPlus%s: SearchForm block and SimplePage block. They are still available in module Next.', // @translate
+        '<a href="https://github.com/Daniel-KM/Omeka-S-module-BlockPlus">',
+        '</a>'
+    );
+
+    $message->setEscapeHtml(false);
+    $messenger = new Messenger();
+    $messenger->addSuccess($message);
+}
