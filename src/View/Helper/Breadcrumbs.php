@@ -25,16 +25,16 @@ class Breadcrumbs extends AbstractHelper
      *
      * @params array $options Managed options:
      * - home (bool) Prepend home (true by default)
-     * - homepage (bool) Display the breadcrumb on the home page (false by
+     * - homepage (bool) Display the breadcrumbs on the home page (false by
      *   default)
      * - prepend (array) A list of crumbs to insert after home
      * - current (bool) Append current resource if any (true by default; always
      *   true for pages currently)
-     * - crumb_itemset (bool) Insert the first item set as crumb for an item
-     *   (true by default)
+     * - itemset (bool) Insert the first item set as crumb for an item (true by
+     *   default)
      * - property_itemset (string) Property where is set the first parent item
      *   set of an item when they are multiple.
-     * - separator (string) Separator, escaped for html (default is " &gt; ")
+     * - separator (string) Separator, escaped for html (default is "&gt;")
      * - partial (string) The partial to use (default: "common/breadcrumbs")
      * Options are passed to the partial too.
      * @return string The html breadcrumb.
@@ -49,14 +49,30 @@ class Breadcrumbs extends AbstractHelper
             return;
         }
 
-        $defaults = [
+        $plugins = $view->getHelperPluginManager();
+        $translate = $plugins->get('translate');
+        $url = $plugins->get('url');
+        $siteSetting = $plugins->get('siteSetting');
+
+        $crumbsSettings = $siteSetting('next_breadcrumbs_crumbs');
+        // The multicheckbox skips keys of unset boxes, so they are added.
+        if (is_array($crumbsSettings)) {
+            $crumbsSettings = array_fill_keys($crumbsSettings, true) + [
+                'home' => false,
+                'homepage' => false,
+                'current' => false,
+                'itemset' => false,
+            ];
+        }
+
+        $defaults = $crumbsSettings + [
             'home' => true,
             'homepage' => false,
             'prepend' => [],
             'current' => true,
-            'crumb_itemset' => true,
-            'property_itemset' => $view->siteSetting('next_breadcrumbs_property_itemset'),
-            'separator' => " &gt; \n",
+            'itemset' => true,
+            'property_itemset' => $siteSetting('next_breadcrumbs_property_itemset'),
+            'separator' => $siteSetting('next_breadcrumbs_separator', '&gt;'),
             'partial' => $this->partial,
         ];
         $options += $defaults;
@@ -66,10 +82,6 @@ class Breadcrumbs extends AbstractHelper
 
         // To set the site slug make creation of next urls quicker internally.
         $this->siteSlug = $site->slug();
-
-        $plugins = $view->getHelperPluginManager();
-        $translate = $plugins->get('translate');
-        $url = $plugins->get('url');
 
         /** @var \Zend\Router\RouteMatch $routeMatch */
         $routeMatch = $site->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
@@ -154,7 +166,7 @@ class Breadcrumbs extends AbstractHelper
                 switch ($type) {
                     case 'media':
                         $item = $resource->item();
-                        if ($options['crumb_itemset']) {
+                        if ($options['itemset']) {
                             $crumbs = $this->includeItemSetToCrumb($crumbs, $item, $options['property_itemset']);
                         }
                         $crumbs[] = [
@@ -165,7 +177,7 @@ class Breadcrumbs extends AbstractHelper
                         break;
 
                     case 'items':
-                        if ($options['crumb_itemset']) {
+                        if ($options['itemset']) {
                             $crumbs = $this->includeItemSetToCrumb($crumbs, $resource, $options['property_itemset']);
                         }
                         break;

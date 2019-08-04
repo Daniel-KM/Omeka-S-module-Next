@@ -57,10 +57,17 @@ $config = [
     ],
     'next' => [
         'settings' => [
+            'next_breadcrumbs_property_itemset' => '',
         ],
         'site_settings' => [
             'next_search_used_terms' => true,
-            'next_breadcrumbs_property_itemset' => '',
+            'next_breadcrumbs_crumbs' => [
+                'home',
+                // 'homepage',
+                'current',
+                'itemset',
+            ],
+            'next_breadcrumbs_separator' => '&gt;',
         ],
     ],
 ];

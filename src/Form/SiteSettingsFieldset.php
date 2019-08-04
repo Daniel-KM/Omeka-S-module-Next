@@ -1,7 +1,6 @@
 <?php
 namespace Next\Form;
 
-use Omeka\Form\Element\PropertySelect;
 use Zend\Form\Element;
 use Zend\Form\Fieldset;
 
@@ -22,20 +21,46 @@ class SiteSettingsFieldset extends Fieldset
                 'attributes' => [
                     'id' => 'next_search_used_terms',
                 ],
-            ])
+            ]);
+
+        $this
             ->add([
-                'name' => 'next_breadcrumbs_property_itemset',
-                'type' => PropertySelect::class,
+                'name' => 'breadcrumbs',
+                'type' => Fieldset::class,
                 'options' => [
-                    'label' => 'Property for parent item set for breadcrumbs', // @translate
-                    'info' => 'When an item is included in multiple item sets, the one that will be displayed will be the first item set in this property. If empty, the item set crumb will be skipped in that case.', // @translate
-                    'empty_option' => '',
-                    'term_as_value' => true,
+                    'label' => 'Next module : Breadcrumbs', // @translate
+                ],
+            ]);
+        // Fieldset is only for display currently.
+        // $fieldset = $this->get('breadcrumbs');
+        $fieldset = $this;
+        $fieldset
+            ->add([
+                'name' => 'next_breadcrumbs_crumbs',
+                'type' => Element\MultiCheckbox::class,
+                'options' => [
+                    'label' => 'Crumbs', // @translate
+                    'value_options' => [
+                        'home' => 'Prepend home', // @translate
+                        'homepage' => 'Display on home page', // @translate
+                        'current' => 'Append current resource', // @translate
+                        'itemset' => 'Include item set for item', // @translate,
+                    ],
                 ],
                 'attributes' => [
-                    'id' => 'next_breadcrumbs_property_itemset',
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Select a property…', // @translate
+                    'id' => 'next_breadcrumbs_crumbs',
+                ],
+            ])
+            ->add([
+                'name' => 'next_breadcrumbs_separator',
+                'type' => Element\Text::class,
+                'options' => [
+                    'label' => 'Separator', // @translate
+                    'info' => 'The separator between crumbs may be set as raw text or via css. it should be set as an html text ("&gt;").', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'next_breadcrumbs_separator',
+                    'placeholder' => '&gt;',
                 ],
             ]);
     }

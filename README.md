@@ -57,7 +57,7 @@ The default partial is `common/breadcrumbs.phtml`, so the breadcrumb can be
 themed. Some options are available too.
 By default, the breadcrumb for an item uses the first item set as the parent
 crumb. The first item set is the item set with the smallest id. If you want to
-use another item set, set it as resource in the property that is set in the site
+use another item set, set it as resource in the property that is set in the main
 settings, or in the options of the view helper.
 
 #### Previous/Next resources

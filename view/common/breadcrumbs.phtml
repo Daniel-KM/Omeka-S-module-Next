@@ -6,6 +6,8 @@
  */
 
 $hyperlink = $this->plugin('hyperlink');
+
+$separator = ' ' . $options['separator'] . " \n";
 ?>
 
 <nav id="breadcrumb" class="breadcrumbs">
@@ -18,10 +20,10 @@ $hyperlink = $this->plugin('hyperlink');
     foreach ($crumbs as &$crumb):
         $crumb = $hyperlink($crumb['label'], $crumb['url']);
     endforeach;
-    echo implode($options['separator'], $crumbs);
+    echo implode($separator, $crumbs);
 
     if ($options['current']):
-        echo $options['separator'];
+        echo $separator;
     ?>
         <span class="active"><?= $last['label'] ?></span>
     <?php endif; ?>
