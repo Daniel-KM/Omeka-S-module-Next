@@ -60,6 +60,7 @@ $config = [
         ],
         'site_settings' => [
             'next_search_used_terms' => true,
+            'next_breadcrumbs_property_itemset' => '',
         ],
     ],
 ];
