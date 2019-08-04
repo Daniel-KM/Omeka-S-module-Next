@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \Zend\View\Renderer\PhpRenderer $this
- * @var array $crumbs Each crumb is an array with "url", "title", "resource", if any.
+ * @var array $crumbs Each crumb is an array with "url", "label", "resource", if any.
  * @var array $options The options provided to the helper, merged with default values.
  */
 
@@ -16,13 +16,13 @@ $hyperlink = $this->plugin('hyperlink');
     endif;
 
     foreach ($crumbs as &$crumb):
-        $crumb = $hyperlink($crumb['title'], $crumb['url']);
+        $crumb = $hyperlink($crumb['label'], $crumb['url']);
     endforeach;
     echo implode($options['separator'], $crumbs);
 
     if ($options['current']):
         echo $options['separator'];
     ?>
-        <span class="active"><?= $last['title'] ?></span>
+        <span class="active"><?= $last['label'] ?></span>
     <?php endif; ?>
 </nav>

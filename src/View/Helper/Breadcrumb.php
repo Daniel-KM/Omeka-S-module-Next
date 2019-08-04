@@ -68,7 +68,7 @@ class Breadcrumb extends AbstractHelper
             $crumbs[] = [
                 'resource' => $site,
                 'url' => $site->siteUrl($siteSlug),
-                'title' => $translate('Home'),
+                'label' => $translate('Home'),
             ];
         }
 
@@ -88,7 +88,7 @@ class Breadcrumb extends AbstractHelper
                     $crumbs[] = [
                         'resource' => $site,
                         'url' => $site->siteUrl($siteSlug),
-                        'title' => $translate('Home'),
+                        'label' => $translate('Home'),
                     ];
                 }
                 break;
@@ -105,7 +105,7 @@ class Breadcrumb extends AbstractHelper
                             $matchedRouteName,
                             ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
                         ),
-                        'title' => $translate($label),
+                        'label' => $translate($label),
                     ];
                     if ($options['current']) {
                         $crumbs[] = [
@@ -114,7 +114,7 @@ class Breadcrumb extends AbstractHelper
                                 $matchedRouteName,
                                 ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => $action]
                             ),
-                            'title' => $translate('Search'),
+                            'label' => $translate('Search'),
                         ];
                     }
                 }
@@ -128,7 +128,7 @@ class Breadcrumb extends AbstractHelper
                             $matchedRouteName,
                             ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
                         ),
-                        'title' => $translate($label),
+                        'label' => $translate($label),
                     ];
                 }
                 break;
@@ -147,13 +147,13 @@ class Breadcrumb extends AbstractHelper
                             $crumbs[] = [
                                 'resource' => $itemSet,
                                 'url' => $itemSet->siteUrl($siteSlug),
-                                'title' => $itemSet->displayTitle(),
+                                'label' => $itemSet->displayTitle(),
                             ];
                         }
                         $crumbs[] = [
                             'resource' => $item,
                             'url' => $item->siteUrl($siteSlug),
-                            'title' => $item->displayTitle(),
+                            'label' => $item->displayTitle(),
                         ];
                         break;
 
@@ -164,7 +164,7 @@ class Breadcrumb extends AbstractHelper
                             $crumbs[] = [
                                 'resource' => $itemSet,
                                 'url' => $itemSet->siteUrl($siteSlug),
-                                'title' => $itemSet->displayTitle(),
+                                'label' => $itemSet->displayTitle(),
                             ];
                         }
                         break;
@@ -176,7 +176,7 @@ class Breadcrumb extends AbstractHelper
                     $crumbs[] = [
                         'resource' => $resource,
                         'url' => $resource->siteUrl($siteSlug),
-                        'title' => $resource->displayTitle(),
+                        'label' => $resource->displayTitle(),
                     ];
                 }
                 break;
@@ -190,7 +190,7 @@ class Breadcrumb extends AbstractHelper
                     $crumbs[] = [
                         'resource' => $resource,
                         'url' => $resource->siteUrl($siteSlug),
-                        'title' => $resource->displayTitle(),
+                        'label' => $resource->displayTitle(),
                     ];
                 }
                 break;
@@ -231,7 +231,7 @@ class Breadcrumb extends AbstractHelper
                         $parents[] = [
                             'resource' => $page,
                             'url' => $active->getHref(),
-                            'title' => $active->getLabel(),
+                            'label' => $active->getLabel(),
                         ];
                     }
 
@@ -243,7 +243,7 @@ class Breadcrumb extends AbstractHelper
                         $parents[] = [
                             'resource' => null,
                             'url' => $parent->getHref(),
-                            'title' => $parent->getLabel(),
+                            'label' => $parent->getLabel(),
                         ];
 
                         // Break if at the root of the given container.
@@ -261,7 +261,7 @@ class Breadcrumb extends AbstractHelper
                     $crumbs[] = [
                         'resource' => $page,
                         'url' => $page->siteUrl($siteSlug),
-                        'title' => $page->title(),
+                        'label' => $page->title(),
                     ];
                 }
                 break;
