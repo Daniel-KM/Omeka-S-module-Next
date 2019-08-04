@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \Zend\View\Renderer\PhpRenderer $this
- * @var array $crumbs Each crumb is an array with "url", "title", "resource", and "nav" if any.
+ * @var array $crumbs Each crumb is an array with "url", "title", "resource", if any.
  * @var array $options The options provided to the helper, merged with default values.
  */
 
@@ -9,12 +9,6 @@ $hyperlink = $this->plugin('hyperlink');
 ?>
 
 <nav id="breadcrumb" class="breadcrumbs">
-<?php if ($options['nav']): ?>
-
-    <?= $options['nav']->breadcrumbs(); ?>
-
-<?php else: ?>
-
     <?php
     // Remove the last crumb, that should not be a link.
     if ($options['current']):
@@ -27,8 +21,7 @@ $hyperlink = $this->plugin('hyperlink');
     echo implode(" &gt; \n", $crumbs);
 
     if ($options['current']): ?>
+    &gt;
         <span class="active"><?= $last['title'] ?></span>
     <?php endif; ?>
-
-<?php endif; ?>
 </nav>

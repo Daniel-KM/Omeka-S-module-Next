@@ -1,6 +1,7 @@
 <?php
 namespace Next\View\Helper;
 
+use Zend\Navigation\Page\AbstractPage;
 use Zend\View\Helper\AbstractHelper;
 
 class Breadcrumb extends AbstractHelper
@@ -13,7 +14,6 @@ class Breadcrumb extends AbstractHelper
      * For pages, the output is the same than the default Omeka breadcrumbs.
      *
      * @todo Manage the case when there is no default site.
-     * @todo Manage the option current for the pages and convert nav into crumbs.
      * @todo Manage the case where the home page is not a page and the editor doesn't want breadcrumb on it.
      * @todo Use the standard Breadcrumbs helper instead of conversion into a partial? It will rights and translator. See \Zend\View\Helper\Navigation\Breadcrumbs
      *
@@ -42,7 +42,6 @@ class Breadcrumb extends AbstractHelper
             'prepend' => [],
             'current' => true,
             'homepage' => false,
-            'nav' => null,
             'partial' => $this->partial,
         ];
         $options += $defaults;
@@ -195,6 +194,8 @@ class Breadcrumb extends AbstractHelper
                 break;
 
             case 'site/page':
+                /** @var \Omeka\Api\Representation\SitePageRepresentation $page */
+                $page = $vars->page;
                 if (!$options['homepage']) {
                     $homepage = version_compare(\Omeka\Module::VERSION, '1.4', '>=')
                         ? $site->homepage()
@@ -203,12 +204,64 @@ class Breadcrumb extends AbstractHelper
                         $linkedPages = $site->linkedPages();
                         $homepage = $linkedPages ? current($linkedPages) : null;
                     }
-                    if ($homepage && $homepage->id() === $vars->page->id()) {
+                    if ($homepage && $homepage->id() === $page->id()) {
                         return '';
                     }
                 }
 
-                $options['nav'] = $site->publicNav();
+                // Find the page inside navigation. By construction, this is the
+                // active page of the navigation. If not in navigation, it's a
+                // root page.
+
+                /**
+                 * @var \Zend\View\Helper\Navigation $nav
+                 * @var \Zend\Navigation\Navigation $container
+                 * @see \Zend\View\Helper\Navigation\Breadcrumbs::renderPartialModel()
+                 */
+                $nav = $site->publicNav();
+                $container = $nav->getContainer();
+                $active = $nav->findActive($container);
+                if ($active) {
+                    // This process uses the short title in the navigation (label).
+                    $active = $active['page'];
+                    $parents = [];
+                    if ($options['current']) {
+                        $parents[] = [
+                            'resource' => $page,
+                            'url' => $active->getHref(),
+                            'title' => $active->getLabel(),
+                        ];
+                    }
+
+                    while ($parent = $active->getParent()) {
+                        if (!$parent instanceof AbstractPage) {
+                            break;
+                        }
+
+                        $parents[] = [
+                            'resource' => null,
+                            'url' => $parent->getHref(),
+                            'title' => $parent->getLabel(),
+                        ];
+
+                        // Break if at the root of the given container.
+                        if ($parent === $container) {
+                            break;
+                        }
+
+                        $active = $parent;
+                    }
+                    $parents = array_reverse($parents);
+                    $crumbs = array_merge($crumbs, $parents);
+                }
+                // The page is not in the navigation menu, so it's a root page.
+                elseif ($options['current']) {
+                    $crumbs[] = [
+                        'resource' => $page,
+                        'url' => $page->siteUrl($siteSlug),
+                        'title' => $page->title(),
+                    ];
+                }
                 break;
         }
 
