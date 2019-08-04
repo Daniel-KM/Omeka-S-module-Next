@@ -8,19 +8,21 @@ class Breadcrumb extends AbstractHelper
     protected $partial = 'common/breadcrumb';
 
     /**
-     * Prepare the breadcrumb via a partial.
+     * Prepare the breadcrumb via a partial for resources and pages.
+     *
+     * For pages, the output is the same than the default Omeka breadcrumbs.
      *
      * @todo Manage the case when there is no default site.
+     * @todo Manage the option current for the pages and convert nav into crumbs.
      *
      * @params array $options Managed options:
      * - home (bool) Prepend home (true by default)
      * - prepend (array) A list of crumbs to insert after home
-     * - current (bool) Append current resource if any (true by default)
+     * - current (bool) Append current resource if any (true by default; always
+     *   true for pages currently)
      * - partial (string) The partial to use (default: "common/breadcrumb")
-     * Options are passed to the partial.
-     * @return string The html breadcrumb. For pages, it is recommended to use
-     * the default helper navigation breadcrumb helper: `$site->publicNav()->breadcrumbs()`
-     * in order to get all the tree menu.
+     * Options are passed to the partial too.
+     * @return string The html breadcrumb.
      */
     public function __invoke(array $options = [])
     {
@@ -36,6 +38,7 @@ class Breadcrumb extends AbstractHelper
             'home' => true,
             'prepend' => [],
             'current' => true,
+            'nav' => null,
             'partial' => $this->partial,
         ];
         $options += $defaults;
@@ -80,6 +83,7 @@ class Breadcrumb extends AbstractHelper
                     ];
                 }
                 break;
+
             case 'site/resource':
                 // Only actions "browse" and "search" are available in public.
                 $action = $routeMatch->getParam('action', 'browse');
@@ -119,10 +123,12 @@ class Breadcrumb extends AbstractHelper
                     ];
                 }
                 break;
+
             case 'site/resource-id':
                 /** @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource */
                 $resource = $vars->resource;
                 $type = $resource->resourceName();
+
                 switch ($type) {
                     case 'media':
                         $item = $resource->item();
@@ -141,6 +147,7 @@ class Breadcrumb extends AbstractHelper
                             'title' => $item->displayTitle(),
                         ];
                         break;
+
                     case 'items':
                         $itemSet = array_slice($resource->itemSets(), 0, 1);
                         if ($itemSet) {
@@ -164,6 +171,7 @@ class Breadcrumb extends AbstractHelper
                     ];
                 }
                 break;
+
             case 'site/item-set':
                 // In Omeka S, item set show is a redirect to item browse with a
                 // special partial.
@@ -178,15 +186,7 @@ class Breadcrumb extends AbstractHelper
                 }
                 break;
             case 'site/page':
-                if ($options['current']) {
-                    /** @var \Omeka\Api\Representation\SitePageRepresentation $page */
-                    $page = $vars->page;
-                    $crumbs[] = [
-                        'resource' => $page,
-                        'url' => $page->siteUrl($siteSlug),
-                        'title' => $page->displayTitle(),
-                    ];
-                }
+                $options['nav'] = $site->publicNav();
                 break;
         }
 

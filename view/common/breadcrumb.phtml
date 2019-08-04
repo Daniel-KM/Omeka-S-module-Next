@@ -1,26 +1,34 @@
 <?php
 /**
  * @var \Zend\View\Renderer\PhpRenderer $this
- * @var array $crumbs Each crumb is an array with "url", "title", and "resource" if any.
+ * @var array $crumbs Each crumb is an array with "url", "title", "resource", and "nav" if any.
  * @var array $options The options provided to the helper, merged with default values.
  */
 
 $hyperlink = $this->plugin('hyperlink');
 ?>
 
-<nav id="breadcrumb" class="breadcrumb">
-<?php
-// Remove the last crumb, that should not be a link.
-if ($options['current']):
-    $last = array_pop($crumbs);
-endif;
+<nav id="breadcrumb" class="breadcrumbs">
+<?php if ($options['nav']): ?>
 
-foreach ($crumbs as $crumb):
-    echo $hyperlink($crumb['title'], $crumb['url']);
-    echo " &gt; \n";
-endforeach;
-?>
-<?php if ($options['current']): ?>
-    <span class="active"><?= $last['title'] ?></span>
+    <?= $options['nav']->breadcrumbs(); ?>
+
+<?php else: ?>
+
+    <?php
+    // Remove the last crumb, that should not be a link.
+    if ($options['current']):
+        $last = array_pop($crumbs);
+    endif;
+
+    foreach ($crumbs as &$crumb):
+        $crumb = $hyperlink($crumb['title'], $crumb['url']);
+    endforeach;
+    echo implode(" &gt; \n", $crumbs);
+
+    if ($options['current']): ?>
+        <span class="active"><?= $last['title'] ?></span>
+    <?php endif; ?>
+
 <?php endif; ?>
 </nav>
