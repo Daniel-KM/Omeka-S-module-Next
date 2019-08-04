@@ -12,6 +12,7 @@ $config = [
     ],
     'view_helpers' => [
         'invokables' => [
+            'breadcrumbs' => View\Helper\Breadcrumbs::class,
             'currentSite' => View\Helper\CurrentSite::class,
             'isHomePage' => View\Helper\IsHomePage::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,
@@ -56,9 +57,17 @@ $config = [
     ],
     'next' => [
         'settings' => [
+            'next_breadcrumbs_property_itemset' => '',
         ],
         'site_settings' => [
             'next_search_used_terms' => true,
+            'next_breadcrumbs_crumbs' => [
+                'home',
+                // 'homepage',
+                'current',
+                'itemset',
+            ],
+            'next_breadcrumbs_separator' => '&gt;',
         ],
     ],
 ];

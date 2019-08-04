@@ -148,11 +148,27 @@ class Module extends AbstractModule
             [$this, 'formAddElementsResourceBatchUpdateForm']
         );
 
+        // Main settings.
+        $sharedEventManager->attach(
+            \Omeka\Form\SettingForm::class,
+            'form.add_elements',
+            [$this, 'handleMainSettings']
+        );
+        $sharedEventManager->attach(
+            \Omeka\Form\SettingForm::class,
+            'form.add_input_filters',
+            [$this, 'handleMainSettingsFilters']
+        );
         // Site settings.
         $sharedEventManager->attach(
             \Omeka\Form\SiteSettingsForm::class,
             'form.add_elements',
             [$this, 'handleSiteSettings']
+        );
+        $sharedEventManager->attach(
+            \Omeka\Form\SiteSettingsForm::class,
+            'form.add_input_filters',
+            [$this, 'handleSiteSettingsFilters']
         );
     }
 
@@ -439,6 +455,26 @@ class Module extends AbstractModule
         // Why not use $this->getServiceLocator()->get('Request')->getServer()->get('REQUEST_URI')?
         $session->lastBrowsePage[$ui] = $_SERVER['REQUEST_URI'];
         $session->lastQuery[$ui] = $params->fromQuery();
+    }
+
+    public function handleMainSettingsFilters(Event $event)
+    {
+        $event->getParam('inputFilter')
+            ->get('next')
+            ->add([
+                'name' => 'next_breadcrumbs_property_itemset',
+                'required' => false,
+            ]);
+    }
+
+    public function handleSiteSettingsFilters(Event $event)
+    {
+        $event->getParam('inputFilter')
+            ->get('next')
+            ->add([
+                'name' => 'next_breadcrumbs_crumbs',
+                'required' => false,
+            ]);
     }
 
     /**
