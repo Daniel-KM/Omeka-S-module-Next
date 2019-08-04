@@ -18,10 +18,11 @@ $hyperlink = $this->plugin('hyperlink');
     foreach ($crumbs as &$crumb):
         $crumb = $hyperlink($crumb['title'], $crumb['url']);
     endforeach;
-    echo implode(" &gt; \n", $crumbs);
+    echo implode($options['separator'], $crumbs);
 
-    if ($options['current']): ?>
-    &gt;
+    if ($options['current']):
+        echo $options['separator'];
+    ?>
         <span class="active"><?= $last['title'] ?></span>
     <?php endif; ?>
 </nav>

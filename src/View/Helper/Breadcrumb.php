@@ -22,6 +22,7 @@ class Breadcrumb extends AbstractHelper
      * - prepend (array) A list of crumbs to insert after home
      * - current (bool) Append current resource if any (true by default; always
      *   true for pages currently)
+     * - separator (string) Separator, escaped for html (default is " &gt; ")
      * - homepage (bool) Display the breadcrumb on the home page (false by default)
      * - partial (string) The partial to use (default: "common/breadcrumb")
      * Options are passed to the partial too.
@@ -41,6 +42,7 @@ class Breadcrumb extends AbstractHelper
             'home' => true,
             'prepend' => [],
             'current' => true,
+            'separator' => " &gt; \n",
             'homepage' => false,
             'partial' => $this->partial,
         ];
