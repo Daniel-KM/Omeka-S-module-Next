@@ -50,10 +50,10 @@ view to easily customize it. The view helper doesn’t change.
 
 Allow to check if the current page is the home page of the site, like in Omeka Classic.
 
-#### Breadcrumb
+#### Breadcrumbs
 
-A breadcrumb may be added on resources pages via the command `echo $this->breadcrumb();`.
-The default partial is `common/breadcrumb.phtml`, so the breadcrumb can be
+A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.
+The default partial is `common/breadcrumbs.phtml`, so the breadcrumb can be
 themed. Some options are available too.
 
 #### Previous/Next resources

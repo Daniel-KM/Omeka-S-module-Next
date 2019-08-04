@@ -12,7 +12,7 @@ $config = [
     ],
     'view_helpers' => [
         'invokables' => [
-            'breadcrumb' => View\Helper\Breadcrumb::class,
+            'breadcrumbs' => View\Helper\Breadcrumbs::class,
             'currentSite' => View\Helper\CurrentSite::class,
             'isHomePage' => View\Helper\IsHomePage::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,

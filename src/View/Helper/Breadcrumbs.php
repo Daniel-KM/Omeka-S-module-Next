@@ -4,9 +4,9 @@ namespace Next\View\Helper;
 use Zend\Navigation\Page\AbstractPage;
 use Zend\View\Helper\AbstractHelper;
 
-class Breadcrumb extends AbstractHelper
+class Breadcrumbs extends AbstractHelper
 {
-    protected $partial = 'common/breadcrumb';
+    protected $partial = 'common/breadcrumbs';
 
     /**
      * Prepare the breadcrumb via a partial for resources and pages.
@@ -24,7 +24,7 @@ class Breadcrumb extends AbstractHelper
      *   true for pages currently)
      * - separator (string) Separator, escaped for html (default is " &gt; ")
      * - homepage (bool) Display the breadcrumb on the home page (false by default)
-     * - partial (string) The partial to use (default: "common/breadcrumb")
+     * - partial (string) The partial to use (default: "common/breadcrumbs")
      * Options are passed to the partial too.
      * @return string The html breadcrumb.
      */
