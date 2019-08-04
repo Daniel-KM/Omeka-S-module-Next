@@ -52,4 +52,16 @@ if (version_compare($oldVersion, '3.1.2.13', '<')) {
 UPDATE site_setting SET id = "next_search_used_terms" WHERE `id` = "search_used_terms";
 SQL;
     $connection->exec($sql);
+
+    $settings->set('next_breadcrumbs_property_itemset',
+        $config['next']['settings']['next_breadcrumbs_property_itemset']);
+
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
+    $sites = $api->search('sites')->getContent();
+    foreach ($sites as $site) {
+        $siteSettings->setTargetId($site->id());
+        $siteSettings->set('next_breadcrumbs_crumbs',
+            $config['next']['site_settings']['next_breadcrumbs_crumbs']);
+    }
 }
