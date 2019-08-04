@@ -46,3 +46,10 @@ if (version_compare($oldVersion, '3.1.2.12', '<')) {
     $messenger = new Messenger();
     $messenger->addSuccess($message);
 }
+
+if (version_compare($oldVersion, '3.1.2.13', '<')) {
+    $sql = <<<SQL
+UPDATE site_setting SET id = "next_search_used_terms" WHERE `id` = "search_used_terms";
+SQL;
+    $connection->exec($sql);
+}

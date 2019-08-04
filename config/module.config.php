@@ -58,7 +58,7 @@ $config = [
         'settings' => [
         ],
         'site_settings' => [
-            'search_used_terms' => true,
+            'next_search_used_terms' => true,
         ],
     ],
 ];

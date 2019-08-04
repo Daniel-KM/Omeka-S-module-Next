@@ -9,7 +9,7 @@ $resourceClassSelect = $this->plugin('resourceClassSelect');
 $siteSetting = $this->plugin('siteSetting');
 
 $isSiteRequest = version_compare(\Omeka\Module::VERSION, '1.3.0', '<') ? $this->params()->fromRoute('__SITE__') : $this->status()->isSiteRequest();
-$usedTerms = $isSiteRequest ? $siteSetting('search_used_terms') : false;
+$usedTerms = $isSiteRequest ? $siteSetting('next_search_used_terms') : false;
 
 // Prepare the resource class query.
 $ids = isset($query['resource_class_id']) ? $query['resource_class_id'] : [];
