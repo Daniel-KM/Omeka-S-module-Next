@@ -50,6 +50,10 @@ view to easily customize it. The view helper doesn’t change.
 
 Allow to check if the current page is the home page of the site, like in Omeka Classic.
 
+#### Item set position
+
+Determine the position of an item set in the site.  
+
 #### Breadcrumbs
 
 A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.

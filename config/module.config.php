@@ -15,6 +15,7 @@ $config = [
             'breadcrumbs' => View\Helper\Breadcrumbs::class,
             'currentSite' => View\Helper\CurrentSite::class,
             'isHomePage' => View\Helper\IsHomePage::class,
+            'itemSetPosition' => View\Helper\ItemSetPosition::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,
             'searchFilters' => View\Helper\SearchFilters::class,
             'userBar' => View\Helper\UserBar::class,
