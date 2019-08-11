@@ -1,9 +1,10 @@
 <?php
 namespace Next\View\Helper;
 
+use Omeka\Api\Representation\ItemRepresentation;
+use Omeka\Api\Representation\SiteRepresentation;
 use Zend\Navigation\Page\AbstractPage;
 use Zend\View\Helper\AbstractHelper;
-use Omeka\Api\Representation\ItemRepresentation;
 
 class Breadcrumbs extends AbstractHelper
 {
@@ -167,7 +168,7 @@ class Breadcrumbs extends AbstractHelper
                     case 'media':
                         $item = $resource->item();
                         if ($options['itemset']) {
-                            $crumbs = $this->includeItemSetToCrumb($crumbs, $item, $options['property_itemset']);
+                            $crumbs = $this->includeItemSetToCrumb($crumbs, $item, $site, $options['property_itemset']);
                         }
                         $crumbs[] = [
                             'resource' => $item,
@@ -178,7 +179,7 @@ class Breadcrumbs extends AbstractHelper
 
                     case 'items':
                         if ($options['itemset']) {
-                            $crumbs = $this->includeItemSetToCrumb($crumbs, $resource, $options['property_itemset']);
+                            $crumbs = $this->includeItemSetToCrumb($crumbs, $resource, $site, $options['property_itemset']);
                         }
                         break;
                     case 'itemsets':
@@ -291,9 +292,24 @@ class Breadcrumbs extends AbstractHelper
         );
     }
 
-    protected function includeItemSetToCrumb(array $crumbs, ItemRepresentation $item, $propertyItemset)
-    {
-        $itemSets = $item->itemSets();
+    protected function includeItemSetToCrumb(
+        array $crumbs,
+        ItemRepresentation $item,
+        SiteRepresentation $site,
+        $propertyItemset
+    ) {
+        // Check only with the item sets of the site.
+        // Use item set id as key to simplify checks.
+        $itemSets = [];
+        foreach ($item->itemSets() as $itemSet) {
+            $itemSets[$itemSet->id()] = $itemSet;
+        }
+        $siteItemSets = [];
+        foreach ($site->siteItemSets() as $siteItemSet) {
+            $siteItemSets[$siteItemSet->itemSet()->id()] = null;
+        }
+        $itemSets = array_intersect_key($itemSets, $siteItemSets);
+
         $count = count($itemSets);
         if ($count === 1) {
             $itemSet = reset($itemSets);
@@ -304,7 +320,8 @@ class Breadcrumbs extends AbstractHelper
             ];
         } elseif ($count && $propertyItemset) {
             // Omeka manages differently the datatype when there is a resource
-            // template.
+            // template, so a check should be done for "resource:itemset"
+            // and "resource".
             $value = $item->value($propertyItemset, ['type' => 'resource:itemset']);
             if ($value) {
                 $itemSet = $value->valueResource();
