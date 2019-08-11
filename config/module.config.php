@@ -18,6 +18,7 @@ $config = [
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,
             'searchFilters' => View\Helper\SearchFilters::class,
+            'thumbnailUrl' => View\Helper\ThumbnailUrl::class,
             'userBar' => View\Helper\UserBar::class,
         ],
         'factories' => [

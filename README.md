@@ -69,6 +69,11 @@ settings, or in the options of the view helper.
 Allow to get the previous or the next resources, that simplifies browsing like
 in Omeka Classic. Set by default in admin board for items.
 
+#### Thumbnail url
+
+Allow to get the url of the thumbnail of a resource. The core allows to get only
+the full image tag.
+
 #### Last browse page
 
 Add a button in admin resources pages to go back to the last list of results. It
