@@ -294,6 +294,23 @@ class Breadcrumbs extends AbstractHelper
                     ];
                 }
                 break;
+
+            case 'site/basket':
+                if ($plugins->has('guestUserWidget')) {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $url('site/guest-user', ['site-slug' => $siteSlug, 'action' => 'me']),
+                        'label' => $translate('My board'), // @translate
+                    ];
+                }
+                if ($options['current']) {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $url('site/basket', ['site-slug' => $siteSlug]),
+                        'label' => $translate('Basket'), // @translate
+                    ];
+                }
+                break;
         }
 
         $partialName = $options['partial'];
