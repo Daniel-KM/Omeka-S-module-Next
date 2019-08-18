@@ -402,6 +402,12 @@ class Breadcrumbs extends AbstractHelper
                 }
                 break;
 
+            case strpos($matchedRouteName, 'search-page-') === 0:
+                if ($options['current']) {
+                    $label = $translate('Search'); // @translate
+                }
+                break;
+
             default:
                 if ($options['current']) {
                     $label = $translate('Current page'); // @translate
