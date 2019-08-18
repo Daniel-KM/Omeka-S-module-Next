@@ -134,14 +134,7 @@ class Breadcrumbs extends AbstractHelper
                         'label' => $translate($label),
                     ];
                     if ($options['current']) {
-                        $crumbs[] = [
-                            'resource' => null,
-                            'url' => $url(
-                                $matchedRouteName,
-                                ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => $action]
-                            ),
-                            'label' => $translate('Search'),
-                        ];
+                        $label = $translate('Search');
                     }
                 }
                 // In other cases, action is browse or unknown.
@@ -150,22 +143,11 @@ class Breadcrumbs extends AbstractHelper
                     if ($controller === 'browse') {
                         if ($options['current']) {
                             $label = $this->extractLabel($controller);
-                            $crumbs[] = [
-                                'resource' => null,
-                                'url' => $url(
-                                    $matchedRouteName,
-                                    ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
-                                ),
-                                'label' => $translate($label),
-                            ];
+                            $label = $translate($label);
                         }
                     } else {
                         if ($options['current']) {
-                            $crumbs[] = [
-                                'resource' => null,
-                                'url' => $view->serverUrl(true),
-                                'label' => 'Unknown', // @translate
-                            ];
+                            $label = $translate('Unknown'); // @translate
                         }
                     }
                 }
@@ -223,11 +205,7 @@ class Breadcrumbs extends AbstractHelper
                         break;
                 }
                 if ($options['current']) {
-                    $crumbs[] = [
-                        'resource' => $resource,
-                        'url' => $resource->siteUrl($siteSlug),
-                        'label' => $resource->displayTitle(),
-                    ];
+                    $label = $resource->displayTitle();
                 }
                 break;
 
@@ -237,11 +215,7 @@ class Breadcrumbs extends AbstractHelper
                 if ($options['current']) {
                     /** @var \Omeka\Api\Representation\ItemSetRepresentation $resource */
                     $resource = $vars->itemSet;
-                    $crumbs[] = [
-                        'resource' => $resource,
-                        'url' => $resource->siteUrl($siteSlug),
-                        'label' => $resource->displayTitle(),
-                    ];
+                    $label = $resource->displayTitle();
                 }
                 break;
 
@@ -318,11 +292,7 @@ class Breadcrumbs extends AbstractHelper
                 }
                 // The page is not in the navigation menu, so it's a root page.
                 elseif ($options['current']) {
-                    $crumbs[] = [
-                        'resource' => $page,
-                        'url' => $page->siteUrl($siteSlug),
-                        'label' => $page->title(),
-                    ];
+                    $label = $page->title();
                 }
                 break;
 
@@ -335,11 +305,7 @@ class Breadcrumbs extends AbstractHelper
                     ];
                 }
                 if ($options['current']) {
-                    $crumbs[] = [
-                        'resource' => null,
-                        'url' => $url('site/basket', ['site-slug' => $siteSlug]),
-                        'label' => $translate('Basket'), // @translate
-                    ];
+                    $label = $translate('Basket'); // @translate
                 }
                 break;
 
@@ -347,23 +313,23 @@ class Breadcrumbs extends AbstractHelper
                 // TODO Add the page where the collecting form is.
                 // Action can be "submit", "success" or "item-show".
                 if ($options['current']) {
-                    $crumbs[] = [
-                        'resource' => null,
-                        'url' => $view->serverUrl(true),
-                        'label' => $translate('Contribution'), // @translate
-                    ];
+                    $label = $translate('Collecting'); // @translate
                 }
                 break;
 
             default:
                 if ($options['current']) {
-                    $crumbs[] = [
-                        'resource' => null,
-                        'url' => $view->serverUrl(true),
-                        'label' => $translate('Current'), // @translate
-                    ];
+                    $label = $translate('Current page'); // @translate
                 }
                 break;
+        }
+
+        if ($options['current'] && isset($label)) {
+            $crumbs[] = [
+                'resource' => null,
+                'url' => $view->serverUrl(true),
+                'label' => $label,
+            ];
         }
 
         $partialName = $options['partial'];
