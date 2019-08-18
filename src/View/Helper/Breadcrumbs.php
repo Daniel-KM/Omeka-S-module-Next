@@ -343,6 +343,18 @@ class Breadcrumbs extends AbstractHelper
                 }
                 break;
 
+            case 'site/collecting':
+                // TODO Add the page where the collecting form is.
+                // Action can be "submit", "success" or "item-show".
+                if ($options['current']) {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $view->serverUrl(true),
+                        'label' => $translate('Contribution'), // @translate
+                    ];
+                }
+                break;
+
             default:
                 if ($options['current']) {
                     $crumbs[] = [
