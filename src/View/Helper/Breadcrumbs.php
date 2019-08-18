@@ -144,18 +144,30 @@ class Breadcrumbs extends AbstractHelper
                         ];
                     }
                 }
-                // In other cases, action is browse.
-                elseif ($options['current']) {
+                // In other cases, action is browse or unknown.
+                else {
                     $controller = $this->extractController($routeMatch);
-                    $label = $this->extractLabel($controller);
-                    $crumbs[] = [
-                        'resource' => null,
-                        'url' => $url(
-                            $matchedRouteName,
-                            ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
-                        ),
-                        'label' => $translate($label),
-                    ];
+                    if ($controller === 'browse') {
+                        if ($options['current']) {
+                            $label = $this->extractLabel($controller);
+                            $crumbs[] = [
+                                'resource' => null,
+                                'url' => $url(
+                                    $matchedRouteName,
+                                    ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
+                                ),
+                                'label' => $translate($label),
+                            ];
+                        }
+                    } else {
+                        if ($options['current']) {
+                            $crumbs[] = [
+                                'resource' => null,
+                                'url' => $view->serverUrl(true),
+                                'label' => 'Unknown', // @translate
+                            ];
+                        }
+                    }
                 }
                 break;
 
@@ -311,6 +323,16 @@ class Breadcrumbs extends AbstractHelper
                     ];
                 }
                 break;
+
+            default:
+                if ($options['current']) {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $view->serverUrl(true),
+                        'label' => $translate('Current'), // @translate
+                    ];
+                }
+                break;
         }
 
         $partialName = $options['partial'];
@@ -336,7 +358,9 @@ class Breadcrumbs extends AbstractHelper
             'media' => 'media',
         ];
         $controller = $routeMatch->getParam('controller') ?: $routeMatch->getParam('__CONTROLLER__');
-        return $controllers[$controller];
+        return isset($controllers[$controller])
+            ? $controllers[$controller]
+            : $controller;
     }
 
     protected function extractLabel($controller)
@@ -346,6 +370,8 @@ class Breadcrumbs extends AbstractHelper
             'item' => 'Items', // @translate
             'media' => 'Media', // @translate
         ];
-        return $labels[$controller];
+        return isset($labels[$controller])
+            ? $labels[$controller]
+            : $controller;
     }
 }
