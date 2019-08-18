@@ -12,10 +12,16 @@ class CurrentSite extends AbstractHelper
      */
     public function __invoke()
     {
-        return $this->getView()
-             ->getHelperPluginManager()
-             ->get('Zend\View\Helper\ViewModel')
-             ->getRoot()
-             ->getVariable('site');
+        static $site;
+
+        if (is_null($site)) {
+            $site = $this->getView()
+                ->getHelperPluginManager()
+                ->get('Zend\View\Helper\ViewModel')
+                ->getRoot()
+                ->getVariable('site');
+        }
+
+        return $site;
     }
 }

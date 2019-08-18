@@ -10,11 +10,6 @@ class Breadcrumbs extends AbstractHelper
     protected $partial = 'common/breadcrumbs';
 
     /**
-     * @var string
-     */
-    protected $siteSlug;
-
-    /**
      * Prepare the breadcrumb via a partial for resources and pages.
      *
      * For pages, the output is the same than the default Omeka breadcrumbs.
@@ -41,13 +36,25 @@ class Breadcrumbs extends AbstractHelper
      */
     public function __invoke(array $options = [])
     {
-        /** @var \Zend\View\Renderer\PhpRenderer $view */
+        /**
+         * @var \Zend\View\Renderer\PhpRenderer $view
+         * @var \Omeka\Api\Representation\SiteRepresentation $site
+         */
         $view = $this->getView();
 
         $vars = $view->vars();
-        if (!isset($vars->site)) {
-            return;
+        if (isset($vars->site)) {
+            $site = $vars->site;
+        } else {
+            // In some case, there is no vars (see ItemController for search).
+            $site = $view->currentSite();
+            if (!$site) {
+                return '';
+            }
         }
+
+        // To set the site slug make creation of next urls quicker internally.
+        $siteSlug = $site->slug();
 
         $plugins = $view->getHelperPluginManager();
         $translate = $plugins->get('translate');
@@ -77,12 +84,6 @@ class Breadcrumbs extends AbstractHelper
         ];
         $options += $defaults;
 
-        /** @var \Omeka\Api\Representation\SiteRepresentation $site */
-        $site = $vars->site;
-
-        // To set the site slug make creation of next urls quicker internally.
-        $this->siteSlug = $site->slug();
-
         /** @var \Zend\Router\RouteMatch $routeMatch */
         $routeMatch = $site->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
         $matchedRouteName = $routeMatch->getMatchedRouteName();
@@ -92,7 +93,7 @@ class Breadcrumbs extends AbstractHelper
         if ($options['home']) {
             $crumbs[] = [
                 'resource' => $site,
-                'url' => $site->siteUrl($this->siteSlug),
+                'url' => $site->siteUrl($siteSlug),
                 'label' => $translate('Home'),
             ];
         }
@@ -112,7 +113,7 @@ class Breadcrumbs extends AbstractHelper
                 if (!$options['home'] != $options['current']) {
                     $crumbs[] = [
                         'resource' => $site,
-                        'url' => $site->siteUrl($this->siteSlug),
+                        'url' => $site->siteUrl($siteSlug),
                         'label' => $translate('Home'),
                     ];
                 }
@@ -128,7 +129,7 @@ class Breadcrumbs extends AbstractHelper
                         'resource' => null,
                         'url' => $url(
                             $matchedRouteName,
-                            ['site-slug' => $this->siteSlug, 'controller' => $controller, 'action' => 'browse']
+                            ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
                         ),
                         'label' => $translate($label),
                     ];
@@ -137,7 +138,7 @@ class Breadcrumbs extends AbstractHelper
                             'resource' => null,
                             'url' => $url(
                                 $matchedRouteName,
-                                ['site-slug' => $this->siteSlug, 'controller' => $controller, 'action' => $action]
+                                ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => $action]
                             ),
                             'label' => $translate('Search'),
                         ];
@@ -151,7 +152,7 @@ class Breadcrumbs extends AbstractHelper
                         'resource' => null,
                         'url' => $url(
                             $matchedRouteName,
-                            ['site-slug' => $this->siteSlug, 'controller' => $controller, 'action' => 'browse']
+                            ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
                         ),
                         'label' => $translate($label),
                     ];
@@ -171,14 +172,14 @@ class Breadcrumbs extends AbstractHelper
                             if ($itemSet) {
                                 $crumbs[] = [
                                     'resource' => $itemSet,
-                                    'url' => $itemSet->siteUrl($this->siteSlug),
+                                    'url' => $itemSet->siteUrl($siteSlug),
                                     'label' => $itemSet->displayTitle(),
                                 ];
                             }
                         }
                         $crumbs[] = [
                             'resource' => $item,
-                            'url' => $item->siteUrl($this->siteSlug),
+                            'url' => $item->siteUrl($siteSlug),
                             'label' => $item->displayTitle(),
                         ];
                         break;
@@ -189,7 +190,7 @@ class Breadcrumbs extends AbstractHelper
                             if ($itemSet) {
                                 $crumbs[] = [
                                     'resource' => $itemSet,
-                                    'url' => $itemSet->siteUrl($this->siteSlug),
+                                    'url' => $itemSet->siteUrl($siteSlug),
                                     'label' => $itemSet->displayTitle(),
                                 ];
                             }
@@ -203,7 +204,7 @@ class Breadcrumbs extends AbstractHelper
                 if ($options['current']) {
                     $crumbs[] = [
                         'resource' => $resource,
-                        'url' => $resource->siteUrl($this->siteSlug),
+                        'url' => $resource->siteUrl($siteSlug),
                         'label' => $resource->displayTitle(),
                     ];
                 }
@@ -217,7 +218,7 @@ class Breadcrumbs extends AbstractHelper
                     $resource = $vars->itemSet;
                     $crumbs[] = [
                         'resource' => $resource,
-                        'url' => $resource->siteUrl($this->siteSlug),
+                        'url' => $resource->siteUrl($siteSlug),
                         'label' => $resource->displayTitle(),
                     ];
                 }
@@ -288,7 +289,7 @@ class Breadcrumbs extends AbstractHelper
                 elseif ($options['current']) {
                     $crumbs[] = [
                         'resource' => $page,
-                        'url' => $page->siteUrl($this->siteSlug),
+                        'url' => $page->siteUrl($siteSlug),
                         'label' => $page->title(),
                     ];
                 }
