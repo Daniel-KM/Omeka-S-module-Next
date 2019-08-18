@@ -17,6 +17,7 @@ $config = [
             'isHomePage' => View\Helper\IsHomePage::class,
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,
+            'primaryItemSet' =>  View\Helper\PrimaryItemSet::class,
             'searchFilters' => View\Helper\SearchFilters::class,
             'thumbnailUrl' => View\Helper\ThumbnailUrl::class,
             'userBar' => View\Helper\UserBar::class,
@@ -59,7 +60,7 @@ $config = [
     ],
     'next' => [
         'settings' => [
-            'next_breadcrumbs_property_itemset' => '',
+            'next_property_itemset' => '',
         ],
         'site_settings' => [
             'next_search_used_terms' => true,

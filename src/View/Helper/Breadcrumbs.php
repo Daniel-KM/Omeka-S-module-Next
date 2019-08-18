@@ -1,9 +1,8 @@
 <?php
 namespace Next\View\Helper;
 
-use Omeka\Api\Representation\ItemRepresentation;
-use Omeka\Api\Representation\SiteRepresentation;
 use Zend\Navigation\Page\AbstractPage;
+use Zend\Router\RouteMatch;
 use Zend\View\Helper\AbstractHelper;
 
 class Breadcrumbs extends AbstractHelper
@@ -168,7 +167,14 @@ class Breadcrumbs extends AbstractHelper
                     case 'media':
                         $item = $resource->item();
                         if ($options['itemset']) {
-                            $crumbs = $this->includeItemSetToCrumb($crumbs, $item, $site, $options['property_itemset']);
+                            $itemSet = $view->primaryItemSet($item, $site);
+                            if ($itemSet) {
+                                $crumbs[] = [
+                                    'resource' => $itemSet,
+                                    'url' => $itemSet->siteUrl($this->siteSlug),
+                                    'label' => $itemSet->displayTitle(),
+                                ];
+                            }
                         }
                         $crumbs[] = [
                             'resource' => $item,
@@ -179,9 +185,17 @@ class Breadcrumbs extends AbstractHelper
 
                     case 'items':
                         if ($options['itemset']) {
-                            $crumbs = $this->includeItemSetToCrumb($crumbs, $resource, $site, $options['property_itemset']);
+                            $itemSet = $view->primaryItemSet($resource, $site);
+                            if ($itemSet) {
+                                $crumbs[] = [
+                                    'resource' => $itemSet,
+                                    'url' => $itemSet->siteUrl($this->siteSlug),
+                                    'label' => $itemSet->displayTitle(),
+                                ];
+                            }
                         }
                         break;
+
                     case 'itemsets':
                         // Nothing to do.
                         break;
@@ -283,6 +297,7 @@ class Breadcrumbs extends AbstractHelper
 
         $partialName = $options['partial'];
         unset($options['partial']);
+
         return $view->partial(
             $partialName,
             [
@@ -292,63 +307,7 @@ class Breadcrumbs extends AbstractHelper
         );
     }
 
-    protected function includeItemSetToCrumb(
-        array $crumbs,
-        ItemRepresentation $item,
-        SiteRepresentation $site,
-        $propertyItemset
-    ) {
-        // Check only with the item sets of the site.
-        // Use item set id as key to simplify checks.
-        $itemSets = [];
-        foreach ($item->itemSets() as $itemSet) {
-            $itemSets[$itemSet->id()] = $itemSet;
-        }
-        $siteItemSets = [];
-        foreach ($site->siteItemSets() as $siteItemSet) {
-            $siteItemSets[$siteItemSet->itemSet()->id()] = null;
-        }
-        $itemSets = array_intersect_key($itemSets, $siteItemSets);
-
-        $count = count($itemSets);
-        if ($count === 1) {
-            $itemSet = reset($itemSets);
-            $crumbs[] = [
-                'resource' => $itemSet,
-                'url' => $itemSet->siteUrl($this->siteSlug),
-                'label' => $itemSet->displayTitle(),
-            ];
-        } elseif ($count && $propertyItemset) {
-            // Omeka manages differently the datatype when there is a resource
-            // template, so a check should be done for "resource:itemset"
-            // and "resource".
-            $value = $item->value($propertyItemset, ['type' => 'resource:itemset']);
-            if ($value) {
-                $itemSet = $value->valueResource();
-            } else {
-                $values = $item->value($propertyItemset, ['type' => 'resource', 'all' => true]);
-                foreach ($values as $value) {
-                    $valueResource = $value->valueResource();
-                    if ($valueResource->resourceName() === 'item_sets') {
-                        $itemSet = $valueResource;
-                        break;
-                    }
-                }
-            }
-            if (isset($itemSet)) {
-                $crumbs[] = [
-                    'resource' => $itemSet,
-                    'url' => $itemSet->siteUrl($this->siteSlug),
-                    'label' => $itemSet->displayTitle(),
-                ];
-            }
-        }
-        // Else no item set to include.
-
-        return $crumbs;
-    }
-
-    protected function extractController($routeMatch)
+    protected function extractController(RouteMatch $routeMatch)
     {
         $controllers = [
             'Omeka\Controller\Site\ItemSet' => 'item-set',

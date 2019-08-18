@@ -12,22 +12,11 @@ class SettingsFieldset extends Fieldset
     {
         $this
             ->add([
-                'name' => 'breadcrumbs',
-                'type' => Fieldset::class,
-                'options' => [
-                    'label' => 'Next Module : Breadcrumbs', // @translate
-                ],
-            ]);
-        // Fieldset is only for display currently.
-        // $fieldset = $this->get('breadcrumbs');
-        $fieldset = $this;
-        $fieldset
-            ->add([
-                'name' => 'next_breadcrumbs_property_itemset',
+                'name' => 'next_property_itemset',
                 'type' => PropertySelect::class,
                 'options' => [
-                    'label' => 'Property for parent item set of item', // @translate
-                    'info' => 'When an item is included in multiple item sets, the one that will be displayed will be the first item set in this property. If empty, the item set crumb will be skipped in that case.', // @translate
+                    'label' => 'Property to set primary item set', // @translate
+                    'info' => 'When an item is included in multiple item sets, the first one may be determined by this property.', // @translate
                     'empty_option' => '',
                     'term_as_value' => true,
                 ],

@@ -65,3 +65,11 @@ SQL;
             $config['next']['site_settings']['next_breadcrumbs_crumbs']);
     }
 }
+
+if (version_compare($oldVersion, '3.1.2.14', '<')) {
+    $settings->set(
+        'next_property_itemset',
+        $settings->get('next_breadcrumbs_property_itemset', $config['next']['settings']['next_property_itemset'])
+    );
+    $settings->delete('next_breadcrumbs_property_itemset');
+}
