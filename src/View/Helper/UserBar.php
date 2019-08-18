@@ -17,6 +17,11 @@ class UserBar extends AbstractHelper
     const PARTIAL_NAME = 'common/user-bar';
 
     /**
+     * The default partial view script.
+     */
+    const PARTIAL_NAME_GUEST = 'common/user-bar-guest';
+
+    /**
      * Render the user bar.
      *
      * @param string|null $partialName Name of view script, or a view model
@@ -41,9 +46,17 @@ class UserBar extends AbstractHelper
             return '';
         }
 
-        $links = $user ? $this->links($view, $site, $user) : [];
-
-        $partialName = $partialName ?: self::PARTIAL_NAME;
+        $plugins = $view->getHelperPluginManager();
+        $isGuest = $user
+            && $user->getRole() === 'guest'
+            && ($plugins->has('guestWidget') || $plugins->has('guestUserWidget'));
+        if ($isGuest) {
+            $links = [];
+            $partialName = $partialName ?: self::PARTIAL_NAME_GUEST;
+        } else {
+            $links = $this->links($view, $site, $user);
+            $partialName = $partialName ?: self::PARTIAL_NAME;
+        }
 
         return $view->partial(
             $partialName,
