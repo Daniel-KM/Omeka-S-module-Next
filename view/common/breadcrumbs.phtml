@@ -5,6 +5,7 @@
  * @var array $options The options provided to the helper, merged with default values.
  */
 
+$escape = $this->plugin('escapeHtml');
 $hyperlink = $this->plugin('hyperlink');
 
 $separator = ' ' . $options['separator'] . " \n";
@@ -25,6 +26,6 @@ $separator = ' ' . $options['separator'] . " \n";
     if ($options['current']):
         echo $separator;
     ?>
-        <span class="active"><?= $last['label'] ?></span>
+        <span class="active"><?= $escape($last['label']) ?></span>
     <?php endif; ?>
 </nav>
