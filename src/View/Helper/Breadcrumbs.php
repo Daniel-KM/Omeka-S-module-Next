@@ -298,7 +298,6 @@ class Breadcrumbs extends AbstractHelper
                 }
                 break;
 
-
             // For compatibility with old version of module Basket.
             case 'site/basket':
                 if ($plugins->has('guestWidget')) {
@@ -342,7 +341,7 @@ class Breadcrumbs extends AbstractHelper
                     'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
                     'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
                 ];
-                // No break.
+                // no break.
             case 'site/guest':
             case 'site/guest/anonymous':
             case 'site/guest/guest':

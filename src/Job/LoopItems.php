@@ -1,7 +1,6 @@
 <?php
 namespace Next\Job;
 
-use Next\Job\AbstractTask;
 use Omeka\Stdlib\Message;
 
 /**
@@ -15,7 +14,7 @@ class LoopItems extends AbstractTask
     /**
      * Limit for the loop to avoid heavy sql requests.
      *
-     * @var integer
+     * @var int
      */
     const BULK_LIMIT = 25;
 

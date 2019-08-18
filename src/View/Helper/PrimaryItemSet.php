@@ -8,7 +8,7 @@ use Zend\View\Helper\AbstractHelper;
 
 class PrimaryItemSet extends AbstractHelper
 {
-   /**
+    /**
      * Get the primary item set of an item.
      *
      * The item sets of an item are not ordered: they are not collections. The
