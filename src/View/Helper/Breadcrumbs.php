@@ -174,6 +174,15 @@ class Breadcrumbs extends AbstractHelper
             case 'site/resource-id':
                 /** @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource */
                 $resource = $vars->resource;
+                // In case of an exception in a block, the resource may be null.
+                if (!$resource) {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $view->serverUrl(true),
+                        'label' => 'Error', // @translate
+                    ];
+                    break;
+                }
                 $type = $resource->resourceName();
 
                 switch ($type) {
@@ -239,6 +248,15 @@ class Breadcrumbs extends AbstractHelper
             case 'site/page':
                 /** @var \Omeka\Api\Representation\SitePageRepresentation $page */
                 $page = $vars->page;
+                // In case of an exception in a block, the page may be null.
+                if (!$page) {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $view->serverUrl(true),
+                        'label' => 'Error', // @translate
+                    ];
+                    break;
+                }
                 if (!$options['homepage']) {
                     $homepage = version_compare(\Omeka\Module::VERSION, '1.4', '>=')
                         ? $site->homepage()
@@ -247,6 +265,7 @@ class Breadcrumbs extends AbstractHelper
                         $linkedPages = $site->linkedPages();
                         $homepage = $linkedPages ? current($linkedPages) : null;
                     }
+                    // This is the home page and home page is not wanted.
                     if ($homepage && $homepage->id() === $page->id()) {
                         return '';
                     }
