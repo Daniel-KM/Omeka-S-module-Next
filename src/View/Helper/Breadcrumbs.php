@@ -102,6 +102,8 @@ class Breadcrumbs extends AbstractHelper
             $crumbs = array_merge($crumbs, $options['prepend']);
         }
 
+        $label = null;
+
         switch ($matchedRouteName) {
             // Home page, without default site or defined home page.
             case 'top':
@@ -296,12 +298,24 @@ class Breadcrumbs extends AbstractHelper
                 }
                 break;
 
+
+            // For compatibility with old version of module Basket.
             case 'site/basket':
-                if ($plugins->has('guestUserWidget')) {
+                if ($plugins->has('guestWidget')) {
+                    $setting = $plugins->get('setting');
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $url('site/guest', ['site-slug' => $siteSlug, 'action' => 'me']),
+                        'label' => $translate($setting('guest_dashboard_label') ?: 'Dashboard'), // @translate
+                    ];
+                }
+                // For compatibility with old module GuestUser.
+                elseif ($plugins->has('guestUserWidget')) {
+                    $setting = $plugins->get('setting');
                     $crumbs[] = [
                         'resource' => null,
                         'url' => $url('site/guest-user', ['site-slug' => $siteSlug, 'action' => 'me']),
-                        'label' => $translate('My board'), // @translate
+                        'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
                     ];
                 }
                 if ($options['current']) {
@@ -314,6 +328,77 @@ class Breadcrumbs extends AbstractHelper
                 // Action can be "submit", "success" or "item-show".
                 if ($options['current']) {
                     $label = $translate('Collecting'); // @translate
+                }
+                break;
+
+            // For compatibility with old module GuestUser.
+            case 'site/guest-user':
+            case 'site/guest-user/anonymous':
+            case 'site/guest-user/guest':
+                $isOldGuestuser = true;
+                $setting = $plugins->get('setting');
+                $crumbs[] = [
+                    'resource' => null,
+                    'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
+                    'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
+                ];
+                // No break.
+            case 'site/guest':
+            case 'site/guest/anonymous':
+            case 'site/guest/guest':
+            case 'site/guest/basket':
+                if (empty($isOldGuestuser)) {
+                    $setting = $plugins->get('setting');
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $url('site/guest', ['site-slug' => $siteSlug]),
+                        'label' => $translate($setting('guest_dashboard_label') ?: 'Dashboard'), // @translate
+                    ];
+                }
+
+                if ($options['current']) {
+                    $action = $routeMatch->getParam('action', 'me');
+                    switch ($action) {
+                        case 'login':
+                            $label = $translate('Login'); // @translate
+                            break;
+                        case 'register':
+                            $label = $translate('Register'); // @translate
+                            break;
+                        case 'auth-error':
+                            $label = $translate('Authentication error'); // @translate
+                            break;
+                        case 'forgot-password':
+                            $label = $translate('Forgot password'); // @translate
+                            break;
+                        case 'confirm':
+                            $label = $translate('Confirm'); // @translate
+                            break;
+                        case 'confirm-email':
+                            $label = $translate('Confirm email'); // @translate
+                            break;
+                        case 'me':
+                            $label = $translate('Me'); // @translate
+                            break;
+                        case 'logout':
+                            $label = $translate('Logout'); // @translate
+                            break;
+                        case 'update-account':
+                            $label = $translate('Update account'); // @translate
+                            break;
+                        case 'update-email':
+                            $label = $translate('Update email'); // @translate
+                            break;
+                        case 'accept-terms':
+                            $label = $translate('Accept terms'); // @translate
+                            break;
+                        case 'basket':
+                            $label = $translate('Basket'); // @translate
+                            break;
+                        default:
+                            $label = $translate('User'); // @translate
+                            break;
+                    }
                 }
                 break;
 
