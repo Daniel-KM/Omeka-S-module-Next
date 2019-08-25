@@ -51,6 +51,19 @@ class SiteSettingsFieldset extends Fieldset
                     'id' => 'next_breadcrumbs_crumbs',
                 ],
             ])
+            // TODO Convert textarea into array before saving and vice-versa (see ConfigForm).
+            ->add([
+                'name' => 'next_breadcrumbs_prepend',
+                'type' => Element\Textarea::class,
+                'options' => [
+                    'label' => 'Prepended links', // @translate
+                    'info' => 'List of urls followed by a label, one by line, that will be prepended to the breadcrumb.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'next_breadcrumbs_prepend',
+                    'placeholder' => '/s/my-site/page/intermediate Example page',
+                ],
+            ])
             ->add([
                 'name' => 'next_breadcrumbs_separator',
                 'type' => Element\Text::class,

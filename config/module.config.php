@@ -70,6 +70,8 @@ $config = [
                 'current',
                 'itemset',
             ],
+            // TODO Convert this setting into an array of links for breadcrumbs.
+            'next_breadcrumbs_prepend' => '',
             'next_breadcrumbs_separator' => '&gt;',
         ],
     ],

@@ -98,6 +98,21 @@ class Breadcrumbs extends AbstractHelper
             ];
         }
 
+        $prepend = $siteSetting('next_breadcrumbs_prepend', []);
+        if ($prepend) {
+            if (!is_array($prepend)) {
+                $prepend = array_filter(array_map('trim', explode(
+                    "\n",
+                    str_replace(["\r\n", "\n\r", "\r"], ["\n", "\n", "\n"], $prepend)
+                )));
+                $prepend = array_filter(array_map(function($v) {
+                    list($url, $label) = explode(' ', $v, 2);
+                    return $label ? ['url' => $url, 'label' => $label] : null;
+                }, $prepend));
+            }
+            $crumbs = array_merge($crumbs, $prepend);
+        }
+
         if ($options['prepend']) {
             $crumbs = array_merge($crumbs, $options['prepend']);
         }
