@@ -4,6 +4,7 @@ namespace Next\View\Helper;
 use Omeka\Api\Representation\AbstractRepresentation;
 use Omeka\Api\Representation\AssetRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
+use Omeka\Api\Representation\SiteRepresentation;
 use Zend\View\Helper\AbstractHtmlElement;
 
 /**
@@ -29,6 +30,11 @@ class ThumbnailUrl extends AbstractHtmlElement
             if (!$representation) {
                 return;
             }
+        } elseif ($representation instanceof SiteRepresentation) {
+            $representation = $this->thumbnailUrlSite($representation);
+            if (!$representation) {
+                return;
+            }
         }
 
         if ($representation instanceof AssetRepresentation) {
@@ -46,6 +52,22 @@ class ThumbnailUrl extends AbstractHtmlElement
         return $primaryMedia
             ? $primaryMedia->thumbnailUrl($type)
             : null;
+    }
+
+    protected function thumbnailUrlSite(SiteRepresentation $site)
+    {
+        $view = $this->getView();
+        $api = $view->plugin('api');
+
+        // return $api->searchOne('media', ['site_id' => $site->id()])->getContent();
+
+        $pages = $api->search('site_pages', ['site_id' => $site->id()])->getContent();
+        foreach ($pages as $page) {
+            $representation = $this->thumbnailUrlPage($page);
+            if ($representation) {
+                return $representation;
+            }
+        }
     }
 
     protected function thumbnailUrlPage(SitePageRepresentation $page)
