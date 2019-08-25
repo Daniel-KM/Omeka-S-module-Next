@@ -462,7 +462,7 @@ class Module extends AbstractModule
         $event->getParam('inputFilter')
             ->get('next')
             ->add([
-                'name' => 'next_breadcrumbs_property_itemset',
+                'name' => 'next_property_itemset',
                 'required' => false,
             ]);
     }

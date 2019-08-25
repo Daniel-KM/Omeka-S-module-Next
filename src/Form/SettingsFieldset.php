@@ -21,7 +21,7 @@ class SettingsFieldset extends Fieldset
                     'term_as_value' => true,
                 ],
                 'attributes' => [
-                    'id' => 'next_breadcrumbs_property_itemset',
+                    'id' => 'next_property_itemset',
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Select a property…', // @translate
                 ],
