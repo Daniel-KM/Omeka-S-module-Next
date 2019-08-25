@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-19 00:00+0200\n"
+"POT-Creation-Date: 2019-08-26 00:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,44 +48,44 @@ msgstr ""
 msgid "The current page and recursive pages are forbidden."
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:308 src/View/Helper/Breadcrumbs.php:317
-#: src/View/Helper/Breadcrumbs.php:342 src/View/Helper/Breadcrumbs.php:354
+#: src/View/Helper/Breadcrumbs.php:319 src/View/Helper/Breadcrumbs.php:328
+#: src/View/Helper/Breadcrumbs.php:353 src/View/Helper/Breadcrumbs.php:365
 msgid "Dashboard"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:321 src/View/Helper/Breadcrumbs.php:395
+#: src/View/Helper/Breadcrumbs.php:332 src/View/Helper/Breadcrumbs.php:406
 msgid "Basket"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:329
+#: src/View/Helper/Breadcrumbs.php:340
 msgid "Collecting"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:365
+#: src/View/Helper/Breadcrumbs.php:376
 msgid "Register"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:368
+#: src/View/Helper/Breadcrumbs.php:379
 msgid "Authentication error"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:380
+#: src/View/Helper/Breadcrumbs.php:391
 msgid "Me"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:386
+#: src/View/Helper/Breadcrumbs.php:397
 msgid "Update account"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:389
+#: src/View/Helper/Breadcrumbs.php:400
 msgid "Update email"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:392
+#: src/View/Helper/Breadcrumbs.php:403
 msgid "Accept terms"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:412
+#: src/View/Helper/Breadcrumbs.php:423
 msgid "Current page"
 msgstr ""
 
@@ -279,11 +279,21 @@ msgstr ""
 msgid "Include item set for item"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:58
+#: src/Form/SiteSettingsFieldset.php:59
+msgid "Prepended links"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:60
+msgid ""
+"List of urls followed by a label, one by line, that will be prepended to the "
+"breadcrumb."
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:71
 msgid "Separator"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:59
+#: src/Form/SiteSettingsFieldset.php:72
 msgid ""
 "The separator between crumbs may be set as raw text or via css. it should be "
 "set as an html text (\"&gt;\")."
