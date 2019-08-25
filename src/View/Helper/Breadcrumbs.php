@@ -138,19 +138,15 @@ class Breadcrumbs extends AbstractHelper
                     if ($options['current']) {
                         $label = $translate('Search');
                     }
-                }
-                // In other cases, action is browse or unknown.
-                else {
-                    $controller = $this->extractController($routeMatch);
-                    if ($controller === 'browse') {
-                        if ($options['current']) {
-                            $label = $this->extractLabel($controller);
-                            $label = $translate($label);
-                        }
-                    } else {
-                        if ($options['current']) {
-                            $label = $translate('Unknown'); // @translate
-                        }
+                } elseif ($action === 'browse') {
+                    if ($options['current']) {
+                        $controller = $this->extractController($routeMatch);
+                        $label = $this->extractLabel($controller);
+                        $label = $translate($label);
+                    }
+                } else {
+                    if ($options['current']) {
+                        $label = $translate('Unknown'); // @translate
                     }
                 }
                 break;
