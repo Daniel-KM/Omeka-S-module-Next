@@ -59,15 +59,26 @@ class ThumbnailUrl extends AbstractHtmlElement
         $view = $this->getView();
         $api = $view->plugin('api');
 
-        // return $api->searchOne('media', ['site_id' => $site->id()])->getContent();
-
-        $pages = $api->search('site_pages', ['site_id' => $site->id()])->getContent();
+        // First media from pages in the order of the navigation.
+        $pages= $site->linkedPages();
         foreach ($pages as $page) {
             $representation = $this->thumbnailUrlPage($page);
             if ($representation) {
                 return $representation;
             }
         }
+
+        // Any other page in the site.
+        $pages = $site->notLinkedPages();
+        foreach ($pages as $page) {
+            $representation = $this->thumbnailUrlPage($page);
+            if ($representation) {
+                return $representation;
+            }
+        }
+
+        // Any media in the site.
+        return $api->searchOne('media', ['site_id' => $site->id()])->getContent();
     }
 
     protected function thumbnailUrlPage(SitePageRepresentation $page)
