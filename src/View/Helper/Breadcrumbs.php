@@ -61,7 +61,7 @@ class Breadcrumbs extends AbstractHelper
         $url = $plugins->get('url');
         $siteSetting = $plugins->get('siteSetting');
 
-        $crumbsSettings = $siteSetting('next_breadcrumbs_crumbs');
+        $crumbsSettings = $siteSetting('next_breadcrumbs_crumbs', false);
         // The multicheckbox skips keys of unset boxes, so they are added.
         if (is_array($crumbsSettings)) {
             $crumbsSettings = array_fill_keys($crumbsSettings, true) + [
@@ -70,6 +70,10 @@ class Breadcrumbs extends AbstractHelper
                 'current' => false,
                 'itemset' => false,
             ];
+        } else {
+            // This param has never been set in site settings, so use default
+            // values.
+            $crumbsSettings = [];
         }
 
         $defaults = $crumbsSettings + [
