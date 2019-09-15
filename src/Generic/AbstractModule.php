@@ -98,6 +98,9 @@ abstract class AbstractModule extends \Omeka\Module\AbstractModule
             return '';
         }
 
+        // Simplify config of modules.
+        $renderer->ckEditor();
+
         $settings = $services->get('Omeka\Settings');
 
         $this->initDataToPopulate($settings, 'config');
