@@ -109,7 +109,7 @@ class Breadcrumbs extends AbstractHelper
                     "\n",
                     str_replace(["\r\n", "\n\r", "\r"], ["\n", "\n", "\n"], $prepend)
                 )));
-                $prepend = array_filter(array_map(function($v) {
+                $prepend = array_filter(array_map(function ($v) {
                     list($url, $label) = explode(' ', $v, 2);
                     return $label ? ['url' => $url, 'label' => $label] : null;
                 }, $prepend));

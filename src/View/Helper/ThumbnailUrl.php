@@ -60,7 +60,7 @@ class ThumbnailUrl extends AbstractHtmlElement
         $api = $view->plugin('api');
 
         // First media from pages in the order of the navigation.
-        $pages= $site->linkedPages();
+        $pages = $site->linkedPages();
         foreach ($pages as $page) {
             $representation = $this->thumbnailUrlPage($page);
             if ($representation) {
