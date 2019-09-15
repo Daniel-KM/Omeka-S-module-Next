@@ -43,7 +43,7 @@ form, via a site setting (fix [#1423]).
 
 #### Citation
 
-Since 3.1.2.7, this feature has moved to module [Citation], that uses a partial
+Since 3.1.2.7, this feature has moved to module [Citation], that uses a template
 view to easily customize it. The view helper doesn’t change.
 
 #### Is home page
@@ -57,7 +57,7 @@ Determine the position of an item set in the site.
 #### Breadcrumbs
 
 A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.
-The default partial is `common/breadcrumbs.phtml`, so the breadcrumb can be
+The default template is `common/breadcrumbs.phtml`, so the breadcrumb can be
 themed. Some options are available too.
 By default, the breadcrumb for an item uses the first item set as the parent
 crumb. The first item set is the item set with the smallest id. If you want to

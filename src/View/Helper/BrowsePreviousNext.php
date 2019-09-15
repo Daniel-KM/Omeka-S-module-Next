@@ -56,7 +56,7 @@ class BrowsePreviousNext extends AbstractHelper
         $ui = $isAdmin ? 'admin' : 'public';
 
         $options += [
-            'partial' => null,
+            'template' => null,
             'upper' => true,
         ];
 
@@ -66,10 +66,10 @@ class BrowsePreviousNext extends AbstractHelper
         $lastBrowse = $options['upper'] ? $view->lastBrowsePage() : null;
         list($previous, $next) = $this->previousNext($resource, $query);
 
-        $partial = empty($options['partial']) ? 'common/browse-previous-next' : $options['partial'];
-        unset($options['partial']);
+        $template = empty($options['template']) ? 'common/browse-previous-next' : $options['template'];
+        unset($options['template']);
 
-        return $view->partial($partial, [
+        return $view->partial($template, [
             'resource' => $resource,
             'previous' => $previous,
             'next' => $next,

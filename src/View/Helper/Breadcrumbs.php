@@ -7,7 +7,7 @@ use Zend\View\Helper\AbstractHelper;
 
 class Breadcrumbs extends AbstractHelper
 {
-    protected $partial = 'common/breadcrumbs';
+    protected $template = 'common/breadcrumbs';
 
     /**
      * Prepare the breadcrumb via a partial for resources and pages.
@@ -30,7 +30,7 @@ class Breadcrumbs extends AbstractHelper
      * - property_itemset (string) Property where is set the first parent item
      *   set of an item when they are multiple.
      * - separator (string) Separator, escaped for html (default is "&gt;")
-     * - partial (string) The partial to use (default: "common/breadcrumbs")
+     * - template (string) The partial to use (default: "common/breadcrumbs")
      * Options are passed to the partial too.
      * @return string The html breadcrumb.
      */
@@ -80,7 +80,7 @@ class Breadcrumbs extends AbstractHelper
             'itemset' => true,
             'property_itemset' => $siteSetting('next_breadcrumbs_property_itemset'),
             'separator' => $siteSetting('next_breadcrumbs_separator', '&gt;'),
-            'partial' => $this->partial,
+            'template' => $this->template,
         ];
         $options += $defaults;
 
@@ -433,11 +433,11 @@ class Breadcrumbs extends AbstractHelper
             ];
         }
 
-        $partialName = $options['partial'];
-        unset($options['partial']);
+        $template = $options['template'];
+        unset($options['template']);
 
         return $view->partial(
-            $partialName,
+            $template,
             [
                 'crumbs' => $crumbs,
                 'options' => $options,
