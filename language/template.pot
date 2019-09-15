@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 00:00+0200\n"
+"POT-Creation-Date: 2019-00-00 00:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Generic/AbstractModule.php:483
+#: src/Generic/AbstractModule.php:486
 #, php-format
 msgid "This module requires the module \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:503
+#: src/Generic/AbstractModule.php:506
 #, php-format
 msgid "This module requires modules \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:571
+#: src/Generic/AbstractModule.php:574
 #, php-format
 msgid ""
 "The module \"%s\" was automatically deactivated because the dependencies are "
@@ -48,44 +48,44 @@ msgstr ""
 msgid "The current page and recursive pages are forbidden."
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:319 src/View/Helper/Breadcrumbs.php:328
-#: src/View/Helper/Breadcrumbs.php:353 src/View/Helper/Breadcrumbs.php:365
+#: src/View/Helper/Breadcrumbs.php:323 src/View/Helper/Breadcrumbs.php:332
+#: src/View/Helper/Breadcrumbs.php:357 src/View/Helper/Breadcrumbs.php:369
 msgid "Dashboard"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:332 src/View/Helper/Breadcrumbs.php:406
+#: src/View/Helper/Breadcrumbs.php:336 src/View/Helper/Breadcrumbs.php:410
 msgid "Basket"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:340
+#: src/View/Helper/Breadcrumbs.php:344
 msgid "Collecting"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:376
+#: src/View/Helper/Breadcrumbs.php:380
 msgid "Register"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:379
+#: src/View/Helper/Breadcrumbs.php:383
 msgid "Authentication error"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:391
+#: src/View/Helper/Breadcrumbs.php:395
 msgid "Me"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:397
+#: src/View/Helper/Breadcrumbs.php:401
 msgid "Update account"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:400
+#: src/View/Helper/Breadcrumbs.php:404
 msgid "Update email"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:403
+#: src/View/Helper/Breadcrumbs.php:407
 msgid "Accept terms"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:423
+#: src/View/Helper/Breadcrumbs.php:427
 msgid "Current page"
 msgstr ""
 
@@ -223,7 +223,7 @@ msgid ""
 "forbidden."
 msgstr ""
 
-#: src/Form/Element/AbstractGroupBySiteSelect.php:100
+#: src/Form/Element/AbstractGroupBySiteSelect.php:166
 msgid "[No site]"
 msgstr ""
 
