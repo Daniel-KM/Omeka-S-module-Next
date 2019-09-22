@@ -345,31 +345,9 @@ class Breadcrumbs extends AbstractHelper
                 }
                 break;
 
-            // For compatibility with old module GuestUser.
-            case 'site/guest-user':
+            // Routes "guest-user" are kept for the old module GuestUser.
             case 'site/guest-user/anonymous':
-            case 'site/guest-user/guest':
-                $isOldGuestuser = true;
-                $setting = $plugins->get('setting');
-                $crumbs[] = [
-                    'resource' => null,
-                    'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
-                    'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
-                ];
-                // no break.
-            case 'site/guest':
             case 'site/guest/anonymous':
-            case 'site/guest/guest':
-            case 'site/guest/basket':
-                if (empty($isOldGuestuser)) {
-                    $setting = $plugins->get('setting');
-                    $crumbs[] = [
-                        'resource' => null,
-                        'url' => $url('site/guest', ['site-slug' => $siteSlug]),
-                        'label' => $translate($setting('guest_dashboard_label') ?: 'Dashboard'), // @translate
-                    ];
-                }
-
                 if ($options['current']) {
                     $action = $routeMatch->getParam('action', 'me');
                     switch ($action) {
@@ -391,6 +369,38 @@ class Breadcrumbs extends AbstractHelper
                         case 'confirm-email':
                             $label = $translate('Confirm email'); // @translate
                             break;
+                        default:
+                            $label = $translate('User'); // @translate
+                            break;
+                    }
+                }
+                break;
+
+            // Routes "guest-user" are kept for the old module GuestUser.
+            case 'site/guest-user':
+            case 'site/guest-user/guest':
+                $isOldGuestuser = true;
+                $setting = $plugins->get('setting');
+                $crumbs[] = [
+                    'resource' => null,
+                    'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
+                    'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
+                ];
+                // no break.
+            case 'site/guest':
+            case 'site/guest/guest':
+            case 'site/guest/basket':
+                if (empty($isOldGuestuser)) {
+                    $setting = $plugins->get('setting');
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $url('site/guest', ['site-slug' => $siteSlug]),
+                        'label' => $translate($setting('guest_dashboard_label') ?: 'Dashboard'), // @translate
+                    ];
+                }
+                if ($options['current']) {
+                    $action = $routeMatch->getParam('action', 'me');
+                    switch ($action) {
                         case 'me':
                             $label = $translate('Me'); // @translate
                             break;
