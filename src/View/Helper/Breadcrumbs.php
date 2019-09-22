@@ -345,12 +345,18 @@ class Breadcrumbs extends AbstractHelper
                 }
                 break;
 
-            // Routes "guest-user" are kept for the old module GuestUser.
-            case 'site/guest-user/anonymous':
+            case 'site/guest':
             case 'site/guest/anonymous':
+            // Routes "guest-user" are kept for the old module GuestUser.
+            case 'site/guest-user':
+            case 'site/guest-user/anonymous':
                 if ($options['current']) {
                     $action = $routeMatch->getParam('action', 'me');
                     switch ($action) {
+                        case 'me':
+                            $setting = $plugins->get('setting');
+                            $label = $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'); // @translate
+                            break;
                         case 'login':
                             $label = $translate('Login'); // @translate
                             break;
@@ -376,22 +382,17 @@ class Breadcrumbs extends AbstractHelper
                 }
                 break;
 
-            // Routes "guest-user" are kept for the old module GuestUser.
-            case 'site/guest-user':
-            case 'site/guest-user/guest':
-                $isOldGuestuser = true;
-                $setting = $plugins->get('setting');
-                $crumbs[] = [
-                    'resource' => null,
-                    'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
-                    'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
-                ];
-                // no break.
-            case 'site/guest':
             case 'site/guest/guest':
             case 'site/guest/basket':
-                if (empty($isOldGuestuser)) {
-                    $setting = $plugins->get('setting');
+            case 'site/guest-user/guest':
+                $setting = $plugins->get('setting');
+                if ($matchedRouteName === 'site/guest-user/guest') {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
+                        'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
+                    ];
+                } else {
                     $crumbs[] = [
                         'resource' => null,
                         'url' => $url('site/guest', ['site-slug' => $siteSlug]),
@@ -401,9 +402,6 @@ class Breadcrumbs extends AbstractHelper
                 if ($options['current']) {
                     $action = $routeMatch->getParam('action', 'me');
                     switch ($action) {
-                        case 'me':
-                            $label = $translate('Me'); // @translate
-                            break;
                         case 'logout':
                             $label = $translate('Logout'); // @translate
                             break;
