@@ -7,7 +7,7 @@ use Zend\View\Helper\AbstractHelper;
 
 class Breadcrumbs extends AbstractHelper
 {
-    protected $template = 'common/breadcrumbs';
+    protected $defaultTemplate = 'common/breadcrumbs';
 
     /**
      * Prepare the breadcrumb via a partial for resources and pages.
@@ -84,7 +84,7 @@ class Breadcrumbs extends AbstractHelper
             'itemset' => true,
             'property_itemset' => $siteSetting('next_breadcrumbs_property_itemset'),
             'separator' => $siteSetting('next_breadcrumbs_separator', '&gt;'),
-            'template' => $this->template,
+            'template' => $this->defaultTemplate,
         ];
         $options += $defaults;
 
@@ -218,6 +218,7 @@ class Breadcrumbs extends AbstractHelper
                         break;
 
                     case 'itemsets':
+                    default:
                         // Nothing to do.
                         break;
                 }
