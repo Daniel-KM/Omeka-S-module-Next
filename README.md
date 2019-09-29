@@ -25,6 +25,12 @@ simplify edition and management of resources (fix [#1283], included in Omeka S 1
 The revert links are available too. They display the resource in the default
 site, or in the first one (fix [#1259]).
 
+#### Default order of items in item set
+
+Display resources in a specific order in the item set main page in front-end,
+for example by title or identifier. This option can be specified differently for
+each site.
+
 #### Random order of resources
 
 Display resources in a random order, for example for a carousel or a featured
@@ -52,7 +58,7 @@ Allow to check if the current page is the home page of the site, like in Omeka C
 
 #### Item set position
 
-Determine the position of an item set in the site.  
+Determine the position of an item set in the site.
 
 #### Breadcrumbs
 

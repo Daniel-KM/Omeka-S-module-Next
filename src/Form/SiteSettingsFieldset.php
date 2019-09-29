@@ -6,11 +6,25 @@ use Zend\Form\Fieldset;
 
 class SiteSettingsFieldset extends Fieldset
 {
-    protected $label = 'Next Module'; // @translate
+    protected $label = 'Next module'; // @translate
 
     public function init()
     {
         $this
+            ->add([
+                'name' => 'next_items_order_for_itemsets',
+                'type' => Element\Textarea::class,
+                'options' => [
+                    'label' => 'Default items order in each item set', // @translate
+                    'info' => 'Set order for item set, one by row, format "id,id,id property order". Use "0" for the default.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'next_items_order_for_itemsets',
+                    'placeholder' => '0 dcterms:identifier asc
+17,24 created desc
+73 dcterms:title asc',
+                ],
+            ])
             ->add([
                 'type' => Element\Checkbox::class,
                 'name' => 'next_search_used_terms',
@@ -44,7 +58,7 @@ class SiteSettingsFieldset extends Fieldset
                         'home' => 'Prepend home', // @translate
                         'homepage' => 'Display on home page', // @translate
                         'current' => 'Append current resource', // @translate
-                        'itemset' => 'Include item set for item', // @translate,
+                        'itemset' => 'Include main item set for item', // @translate,
                     ],
                 ],
                 'attributes' => [

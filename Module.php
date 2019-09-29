@@ -183,7 +183,7 @@ class Module extends AbstractModule
             $qb->orderBy('RAND()');
         }
 
-        // Advanced property sorts.
+        // Advanced property search.
         $this->buildPropertyQuery($qb, $query, $adapter);
     }
 
@@ -464,7 +464,38 @@ class Module extends AbstractModule
             ->add([
                 'name' => 'next_property_itemset',
                 'required' => false,
-            ]);
+            ])
+        ;
+    }
+
+    public function handleSiteSettings(Event $event)
+    {
+        parent::handleSiteSettings($event);
+
+        $services = $this->getServiceLocator();
+
+        $space = strtolower(__NAMESPACE__);
+
+        $settings = $services->get('Omeka\Settings\Site');
+        $orders = $settings->get('next_items_order_for_itemsets') ?: [];
+        $ordersString = '';
+        foreach ($orders as $ids => $order) {
+            $ordersString .= $ids . ' ' . $order['sort_by'];
+            if (isset($order['sort_order'])) {
+                $ordersString .= ' ' . $order['sort_order'];
+            }
+            $ordersString .= "\n";
+        }
+
+        /**
+         * @var \Omeka\Form\Element\RestoreTextarea $siteGroupsElement
+         * @var \Internationalisation\Form\SettingsFieldset $fieldset
+         */
+        $fieldset = $event->getTarget()
+            ->get($space);
+        $fieldset
+            ->get('next_items_order_for_itemsets')
+            ->setValue($ordersString);
     }
 
     public function handleSiteSettingsFilters(Event $event)
@@ -472,9 +503,50 @@ class Module extends AbstractModule
         $event->getParam('inputFilter')
             ->get('next')
             ->add([
+                'name' => 'next_items_order_for_itemsets',
+                'required' => false,
+                'filters' => [
+                    [
+                        'name' => \Zend\Filter\Callback::class,
+                        'options' => [
+                            'callback' => [$this, 'filterResourceOrder'],
+                        ],
+                    ],
+                ],
+            ])
+            ->add([
                 'name' => 'next_breadcrumbs_crumbs',
                 'required' => false,
-            ]);
+            ])
+        ;
+    }
+
+    public function filterResourceOrder($string)
+    {
+        $list = $this->stringToList($string);
+
+        // The setting is ordered by item set id for quicker check.
+        // "0" is the default order, so it is always single.
+        $result = [];
+        foreach ($list as $row) {
+            list($ids, $sortBy, $sortOrder) = array_filter(array_map('trim', explode(' ', $row, 3)));
+            $ids = trim($ids, ', ');
+            if (!strlen($ids) || empty($sortBy)) {
+                continue;
+            }
+            $ids = explode(',', $ids);
+            sort($ids);
+            $ids = in_array('0', $ids)
+                ? 0
+                : implode(',', $ids);
+            $result[$ids] = [
+                'sort_by' => $sortBy,
+                'sort_order' => strtolower($sortOrder) === 'desc' ? 'desc' : 'asc',
+            ];
+        }
+        ksort($result);
+
+        return $result;
     }
 
     /**
