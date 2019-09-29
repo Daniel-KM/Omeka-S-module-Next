@@ -592,6 +592,10 @@ class Module extends AbstractModule
         $where = '';
         $expr = $qb->expr();
 
+        $escape = function ($string) {
+            return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $string);
+        };
+
         foreach ($query['property'] as $queryRow) {
             if (!(
                 is_array($queryRow)
@@ -628,7 +632,7 @@ class Module extends AbstractModule
                     $positive = false;
                     // no break.
                 case 'in':
-                    $param = $adapter->createNamedParameter($qb, "%$value%");
+                    $param = $adapter->createNamedParameter($qb, '%' . $escape($value) . '%');
                     $predicateExpr = $expr->orX(
                         $expr->like("$valuesAlias.value", $param),
                         $expr->like("$valuesAlias.uri", $param)
@@ -655,7 +659,7 @@ class Module extends AbstractModule
                     $positive = false;
                     // no break.
                 case 'sw':
-                    $param = $adapter->createNamedParameter($qb, "$value%");
+                    $param = $adapter->createNamedParameter($qb, $escape($value) . '%');
                     $predicateExpr = $expr->orX(
                         $expr->like("$valuesAlias.value", $param),
                         $expr->like("$valuesAlias.uri", $param)
@@ -666,7 +670,7 @@ class Module extends AbstractModule
                     $positive = false;
                     // no break.
                 case 'ew':
-                    $param = $adapter->createNamedParameter($qb, "%$value");
+                    $param = $adapter->createNamedParameter($qb, '%' . $escape($value));
                     $predicateExpr = $expr->orX(
                         $expr->like("$valuesAlias.value", $param),
                         $expr->like("$valuesAlias.uri", $param)
