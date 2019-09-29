@@ -98,7 +98,7 @@ class Breadcrumbs extends AbstractHelper
             $crumbs[] = [
                 'resource' => $site,
                 'url' => $site->siteUrl($siteSlug),
-                'label' => $translate('Home'),
+                'label' => $translate('Home'), // @translate
             ];
         }
 
@@ -155,7 +155,7 @@ class Breadcrumbs extends AbstractHelper
                         'label' => $translate($label),
                     ];
                     if ($options['current']) {
-                        $label = $translate('Search');
+                        $label = $translate('Search'); // @translate
                     }
                 } elseif ($action === 'browse') {
                     if ($options['current']) {
