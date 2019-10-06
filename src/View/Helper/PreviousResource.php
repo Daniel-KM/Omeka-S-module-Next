@@ -1,69 +1,27 @@
 <?php
 namespace Next\View\Helper;
 
-use Doctrine\DBAL\Connection;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Api\Representation\MediaRepresentation;
 use Zend\View\Helper\AbstractHelper;
 
 class PreviousResource extends AbstractHelper
 {
-    /**
-     * @var Connection
-     */
-    protected $connection;
-
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
+    use NextPreviousResourceTrait;
 
     /**
      * Get the public resource immediately before the current one.
      *
      * @param AbstractResourceEntityRepresentation $resource
-     * @param array $query
-     * @return AbstractResourceEntityRepresentation
+     * @return AbstractResourceEntityRepresentation|null
      */
-    public function __invoke(AbstractResourceEntityRepresentation $resource, array $query = null)
+    public function __invoke(AbstractResourceEntityRepresentation $resource)
     {
         $resourceName = $resource->resourceName();
         if ($resourceName === 'media') {
             return $this->previousMedia($resource);
         }
-
-        $resourceTypes = [
-            'items' => \Omeka\Entity\Item::class,
-            'item_sets' => \Omeka\Entity\ItemSet::class,
-            'media' => \Omeka\Entity\Media::class,
-        ];
-        $resourceType = $resourceTypes[$resourceName];
-
-        $conn = $this->connection;
-        $qb = $conn->createQueryBuilder()
-            ->select('resource.id')
-            ->from('resource', 'resource')
-            // TODO Manage the visibility.
-            ->where('resource.is_public = 1')
-            ->andWhere('resource.resource_type = :resourceType')
-            ->setParameter(':resourceType', $resourceType)
-            ->andWhere('resource.id < :resource_id')
-            ->setParameter(':resource_id', $resource->id())
-            ->orderBy('resource.id', 'DESC')
-            ->setMaxResults(1);
-
-        // TODO Manage previous with site pool. No issue with a single site.
-        // $site = $this->currentSite();
-        // if ($site) {
-        // }
-
-        $stmt = $conn->executeQuery($qb, $qb->getParameters(), $qb->getParameterTypes());
-        $result = $stmt->fetchColumn();
-        if (!$result) {
-            return;
-        }
-
-        return $this->getView()->api()->read($resourceName, $result)->getContent();
+        return $this->previousOrNextResource($resource, '<');
     }
 
     protected function previousMedia(MediaRepresentation $media)
