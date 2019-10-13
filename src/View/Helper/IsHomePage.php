@@ -28,7 +28,8 @@ class IsHomePage extends AbstractHelper
         $homepage = $site->homepage();
         if ($homepage) {
             $params = $view->params()->fromRoute();
-            return $params['__CONTROLLER__'] === 'Page'
+            return isset($params['__CONTROLLER__'])
+                && $params['__CONTROLLER__'] === 'Page'
                 && $homepage->id() === $view->api()
                 ->read('site_pages', ['site' => $site->id(), 'slug' => $params['page-slug']])
                 ->getContent()->id();
