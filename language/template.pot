@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-00-00 00:00+0200\n"
+"POT-Creation-Date: 2019-10-14 00:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Generic/AbstractModule.php:486
+#: src/Generic/AbstractModule.php:498
 #, php-format
 msgid "This module requires the module \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:506
+#: src/Generic/AbstractModule.php:518
 #, php-format
 msgid "This module requires modules \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:574
+#: src/Generic/AbstractModule.php:586
 #, php-format
 msgid ""
 "The module \"%s\" was automatically deactivated because the dependencies are "
@@ -48,44 +48,41 @@ msgstr ""
 msgid "The current page and recursive pages are forbidden."
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:323 src/View/Helper/Breadcrumbs.php:332
-#: src/View/Helper/Breadcrumbs.php:357 src/View/Helper/Breadcrumbs.php:369
+#: src/View/Helper/Breadcrumbs.php:324 src/View/Helper/Breadcrumbs.php:333
+#: src/View/Helper/Breadcrumbs.php:359 src/View/Helper/Breadcrumbs.php:394
+#: src/View/Helper/Breadcrumbs.php:400
 msgid "Dashboard"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:336 src/View/Helper/Breadcrumbs.php:410
+#: src/View/Helper/Breadcrumbs.php:337 src/View/Helper/Breadcrumbs.php:419
 msgid "Basket"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:344
+#: src/View/Helper/Breadcrumbs.php:345
 msgid "Collecting"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:380
+#: src/View/Helper/Breadcrumbs.php:365
 msgid "Register"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:383
+#: src/View/Helper/Breadcrumbs.php:368
 msgid "Authentication error"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:395
-msgid "Me"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:401
+#: src/View/Helper/Breadcrumbs.php:410
 msgid "Update account"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:404
+#: src/View/Helper/Breadcrumbs.php:413
 msgid "Update email"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:407
+#: src/View/Helper/Breadcrumbs.php:416
 msgid "Accept terms"
 msgstr ""
 
-#: src/View/Helper/Breadcrumbs.php:427
+#: src/View/Helper/Breadcrumbs.php:436
 msgid "Current page"
 msgstr ""
 
@@ -227,7 +224,7 @@ msgstr ""
 msgid "[No site]"
 msgstr ""
 
-#: src/Form/SettingsFieldset.php:9 src/Form/SiteSettingsFieldset.php:9
+#: src/Form/SettingsFieldset.php:9
 msgid "Next Module"
 msgstr ""
 
@@ -245,55 +242,69 @@ msgstr ""
 msgid "Select a property…"
 msgstr ""
 
+#: src/Form/SiteSettingsFieldset.php:9
+msgid "Next module"
+msgstr ""
+
 #: src/Form/SiteSettingsFieldset.php:18
-msgid "List only used properties and resources classes"
+msgid "Default items order in each item set"
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:19
+msgid ""
+"Set order for item set, one by row, format \"id,id,id property order\". Use "
+"\"0\" for the default."
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:32
+msgid "List only used properties and resources classes"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:33
 msgid ""
 "Restrict the list of properties and resources classes to the used ones in "
 "advanced search form (for properties, when option \"templates\" is not used)."
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:31
+#: src/Form/SiteSettingsFieldset.php:45
 msgid "Next module : Breadcrumbs"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:42
+#: src/Form/SiteSettingsFieldset.php:56
 msgid "Crumbs"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:44
+#: src/Form/SiteSettingsFieldset.php:58
 msgid "Prepend home"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:45
+#: src/Form/SiteSettingsFieldset.php:59
 msgid "Display on home page"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:46
+#: src/Form/SiteSettingsFieldset.php:60
 msgid "Append current resource"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:47
-msgid "Include item set for item"
+#: src/Form/SiteSettingsFieldset.php:61
+msgid "Include main item set for item"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:59
+#: src/Form/SiteSettingsFieldset.php:73
 msgid "Prepended links"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:60
+#: src/Form/SiteSettingsFieldset.php:74
 msgid ""
 "List of urls followed by a label, one by line, that will be prepended to the "
 "breadcrumb."
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:71
+#: src/Form/SiteSettingsFieldset.php:85
 msgid "Separator"
 msgstr ""
 
-#: src/Form/SiteSettingsFieldset.php:72
+#: src/Form/SiteSettingsFieldset.php:86
 msgid ""
 "The separator between crumbs may be set as raw text or via css. it should be "
 "set as an html text (\"&gt;\")."
