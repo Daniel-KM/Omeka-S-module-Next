@@ -49,7 +49,7 @@ class MvcListeners extends AbstractListenerAggregate
         // For performance, the check uses a single strpos.
         $specificOrder = null;
         $idString = ',' . $itemSetId . ',';
-        foreach($orders as $ids => $order) {
+        foreach ($orders as $ids => $order) {
             if (strpos(',' . $ids . ',', $idString) !== false) {
                 $specificOrder = $order;
                 break;
