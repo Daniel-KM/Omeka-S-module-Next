@@ -119,6 +119,13 @@ Warning: This feature is still available, but is improved in module [Bulk Edit].
 - From the site permissions to the user page (fix [#1301]).
 - From the list of jobs to each log (fix [#1156]).
 
+#### Better identification of media types for xml and zip files
+
+In Omeka core, all xml files are identified as `text/xml` and zip files as `application/zip`,
+so it’s not possible to make a distinction between a mets file and an ead file,
+or to identify an epub, that is a zipped xhtml. This feature is required to use
+the module [Verovio] when files don’t use the extension "mei" ([#1464]).
+
 ### Backend
 
 #### Cron tasks
@@ -225,10 +232,12 @@ Copyright
 [#1283]: https://github.com/omeka/omeka-s/issues/1283
 [#1301]: https://github.com/omeka/omeka-s/issues/1301
 [#1371]: https://github.com/omeka/omeka-s/issues/1371
+[#1464]: https://github.com/omeka/omeka-s/issues/1464
 [Citation]: https://github.com/Daniel-KM/Omeka-S-module-Citation
 [Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
 [Block Plus]: https://github.com/Daniel-KM/Omeka-S-module-BlockPlus
 [Bulk Edit]: https://github.com/Daniel-KM/Omeka-S-module-BulkEdit
+[Verovio]: https://github.com/Daniel-KM/Omeka-S-module-Verovio
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
