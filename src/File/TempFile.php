@@ -74,6 +74,9 @@ class TempFile extends \Omeka\File\TempFile
         if ($this->mediaType === 'text/xml' || $this->mediaType === 'application/xml') {
             $this->mediaType = $this->getMediaTypeXml() ?: $this->mediaType;
         }
+        if ($this->mediaType === 'application/zip') {
+            $this->mediaType = $this->getMediaTypeZip() ?: $this->mediaType;
+        }
         return $this->mediaType;
     }
 
@@ -142,6 +145,25 @@ class TempFile extends \Omeka\File\TempFile
 
         return isset($this->xmlMediaTypes[$type])
             ? $this->xmlMediaTypes[$type]
+            : null;
+    }
+
+    /**
+     * Extract a more precise zipped media type when possible.
+     *
+     * In many cases, the media type is saved in a uncompressed file "mimetype"
+     * at the beginning of the zip file. If present, get it.
+     *
+     * @return string
+     */
+    protected function getMediaTypeZip()
+    {
+        $filepath = $this->getTempPath();
+        $handle = fopen($filepath, 'rb');
+        $contents = fread($handle, 256);
+        fclose($handle);
+        return substr($contents, 30, 8) === 'mimetype'
+            ? substr($contents, 38, strpos($contents, 'PK', 38) - 38)
             : null;
     }
 }
