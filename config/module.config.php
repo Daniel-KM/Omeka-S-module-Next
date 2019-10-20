@@ -9,6 +9,9 @@ $config = [
         'invokables' => [
             Mvc\MvcListeners::class => Mvc\MvcListeners::class,
         ],
+        'factories' => [
+            'Omeka\File\TempFileFactory' => Service\File\TempFileFactoryFactory::class,
+        ],
     ],
     'view_manager' => [
         'template_path_stack' => [
