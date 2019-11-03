@@ -588,6 +588,212 @@ class Module extends AbstractModule
         if (!isset($query['property']) || !is_array($query['property'])) {
             return;
         }
+
+        $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+        if ($isOldOmeka) {
+            return $this->buildPropertyQueryOld($qb, $query, $adapter);
+        }
+
+        $valuesJoin = 'omeka_root.values';
+        $where = '';
+        $expr = $qb->expr();
+
+        $escape = function ($string) {
+            return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $string);
+        };
+
+        foreach ($query['property'] as $queryRow) {
+            if (!(
+                is_array($queryRow)
+                && array_key_exists('property', $queryRow)
+                && array_key_exists('type', $queryRow)
+            )) {
+                continue;
+            }
+            $propertyId = $queryRow['property'];
+            $queryType = $queryRow['type'];
+            $joiner = isset($queryRow['joiner']) ? $queryRow['joiner'] : null;
+            $value = isset($queryRow['text']) ? $queryRow['text'] : null;
+
+            if (!strlen($value) && $queryType !== 'nex' && $queryType !== 'ex') {
+                continue;
+            }
+
+            $valuesAlias = $adapter->createAlias();
+            $positive = true;
+
+            switch ($queryType) {
+                case 'neq':
+                    $positive = false;
+                    // no break.
+                case 'eq':
+                    $param = $adapter->createNamedParameter($qb, $value);
+                    $subqueryAlias = $adapter->createAlias();
+                    $subquery = $adapter->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select("$subqueryAlias.id")
+                        ->from('Omeka\Entity\Resource', $subqueryAlias)
+                        ->where($expr->eq("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->eq("$valuesAlias.value", $param),
+                        $expr->eq("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nin':
+                    $positive = false;
+                    // no break.
+                case 'in':
+                    $param = $adapter->createNamedParameter($qb, '%' . $escape($value) . '%');
+                    $subqueryAlias = $adapter->createAlias();
+                    $subquery = $adapter->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select("$subqueryAlias.id")
+                        ->from('Omeka\Entity\Resource', $subqueryAlias)
+                        ->where($expr->like("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nlist':
+                    $positive = false;
+                    // no break.
+                case 'list':
+                    $list = is_array($value) ? $value : explode("\n", $value);
+                    $list = array_filter(array_map('trim', $list), 'strlen');
+                    if (empty($list)) {
+                        continue 2;
+                    }
+                    $param = $adapter->createNamedParameter($qb, $list);
+                    $subqueryAlias = $adapter->createAlias();
+                    $subquery = $adapter->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select("$subqueryAlias.id")
+                        ->from('Omeka\Entity\Resource', $subqueryAlias)
+                        ->where($expr->eq("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->in("$valuesAlias.value", $param),
+                        $expr->in("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nsw':
+                    $positive = false;
+                    // no break.
+                case 'sw':
+                    $param = $adapter->createNamedParameter($qb, $escape($value) . '%');
+                    $subqueryAlias = $adapter->createAlias();
+                    $subquery = $adapter->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select("$subqueryAlias.id")
+                        ->from('Omeka\Entity\Resource', $subqueryAlias)
+                        ->where($expr->like("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'new':
+                    $positive = false;
+                    // no break.
+                case 'ew':
+                    $param = $adapter->createNamedParameter($qb, '%' . $escape($value));
+                    $subqueryAlias = $adapter->createAlias();
+                    $subquery = $adapter->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select("$subqueryAlias.id")
+                        ->from('Omeka\Entity\Resource', $subqueryAlias)
+                        ->where($expr->like("$subqueryAlias.title", $param));
+                    $predicateExpr = $expr->orX(
+                        $expr->in("$valuesAlias.valueResource", $subquery->getDQL()),
+                        $expr->like("$valuesAlias.value", $param),
+                        $expr->like("$valuesAlias.uri", $param)
+                    );
+                    break;
+
+                case 'nres':
+                    $positive = false;
+                    // no break.
+                case 'res':
+                    $predicateExpr = $expr->eq(
+                        "$valuesAlias.valueResource",
+                        $adapter->createNamedParameter($qb, $value)
+                    );
+                    break;
+
+                case 'nex':
+                    $positive = false;
+                    // no break.
+                case 'ex':
+                    $predicateExpr = $expr->isNotNull("$valuesAlias.id");
+                    break;
+
+                default:
+                    continue 2;
+            }
+
+            $joinConditions = [];
+            // Narrow to specific property, if one is selected
+            if ($propertyId) {
+                if (is_numeric($propertyId)) {
+                    $propertyId = (int) $propertyId;
+                } else {
+                    $property = $adapter->getPropertyByTerm($propertyId);
+                    if ($property) {
+                        $propertyId = $property->getId();
+                    } else {
+                        $propertyId = 0;
+                    }
+                }
+                $joinConditions[] = $expr->eq("$valuesAlias.property", (int) $propertyId);
+            }
+
+            if ($positive) {
+                $whereClause = '(' . $predicateExpr . ')';
+            } else {
+                $joinConditions[] = $predicateExpr;
+                $whereClause = $expr->isNull("$valuesAlias.id");
+            }
+
+            if ($joinConditions) {
+                $qb->leftJoin($valuesJoin, $valuesAlias, 'WITH', $expr->andX(...$joinConditions));
+            } else {
+                $qb->leftJoin($valuesJoin, $valuesAlias);
+            }
+
+            if ($where == '') {
+                $where = $whereClause;
+            } elseif ($joiner == 'or') {
+                $where .= " OR $whereClause";
+            } else {
+                $where .= " AND $whereClause";
+            }
+        }
+
+        if ($where) {
+            $qb->andWhere($where);
+        }
+    }
+
+    /**
+     * Old version to build a property query.
+     *
+     * @param QueryBuilder $qb
+     * @param array $query
+     * @param AbstractResourceEntityAdapter $adapter
+     */
+    protected function buildPropertyQueryOld(QueryBuilder $qb, array $query, AbstractResourceEntityAdapter $adapter)
+    {
+        if (!isset($query['property']) || !is_array($query['property'])) {
+            return;
+        }
         $valuesJoin = $adapter->getEntityClass() . '.values';
         $where = '';
         $expr = $qb->expr();
