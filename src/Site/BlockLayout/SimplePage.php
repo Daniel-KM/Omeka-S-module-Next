@@ -112,11 +112,21 @@ class SimplePage extends AbstractBlockLayout
         } catch (\Omeka\Api\Exception\PermissionDeniedException $e) {
             return '';
         }
+
+        /** @var \Omeka\Api\Representation\SitePageRepresentation $simplePage */
         $simplePage = $response->getContent();
 
-        return $view->partial('omeka/site/page/content', [
-            'page' => $simplePage,
-        ]);
+        // The page cannot be rendered by the partial directly, because some
+        // cases should be fixed.
+
+        // @see \Omeka\Controller\Site\PageController::showAction()
+        $contentView = new \Zend\View\Model\ViewModel;
+        $contentView->setVariable('site', $simplePage->site());
+        $contentView->setVariable('page', $simplePage);
+        $contentView->setTemplate('omeka/site/page/content');
+        // This fixes the block Table Of Contents.
+        $contentView->setVariable('pageViewModel', $contentView);
+        return $view->render($contentView);
     }
 
     public function getFulltextText(PhpRenderer $view, SitePageBlockRepresentation $block)
