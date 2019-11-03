@@ -207,13 +207,17 @@ SQL;
 
         // Begin building the search query.
         $entityClass = $adapter->getEntityClass();
+
+        $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+        $alias = $isOldOmeka ? $entityClass : 'omeka_root';
+
         // $adapter->index = 0;
         $qb = $adapter->getEntityManager()
             ->createQueryBuilder()
-            ->select($entityClass)
-            ->from($entityClass, $entityClass);
+            ->select($alias)
+            ->from($entityClass, $alias);
         $adapter->buildQuery($qb, $query);
-        $qb->groupBy("$entityClass.id");
+        $qb->groupBy("$alias.id");
 
         // Trigger the search.query event.
         $event = new Event('api.search.query', $adapter, [
@@ -226,11 +230,11 @@ SQL;
         // adapters add, always sort by entity ID.
         $adapter->sortQuery($qb, $query);
         $adapter->limitQuery($qb, $query);
-        $qb->addOrderBy("$entityClass.id", $query['sort_order']);
+        $qb->addOrderBy("$alias.id", $query['sort_order']);
 
         // Keep only the id.
         $qb
-            ->select($entityClass . '.id');
+            ->select($alias . '.id');
 
         return $qb;
     }

@@ -53,13 +53,16 @@ trait NextPreviousResourceTrait
 
         // Visibility is automatically managed.
 
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
+
         $entityManager = $this->adapter->getEntityManager();
         $qb = $entityManager->createQueryBuilder()
-            ->select($resourceType . '.id')
-            ->from($resourceType, $resourceType)
-            ->andWhere($resourceType . '.id ' . $lowerOrGreaterThan . ' :resource_id')
+            ->select($alias . '.id')
+            ->from($resourceType, $alias)
+            ->andWhere($alias . '.id ' . $lowerOrGreaterThan . ' :resource_id')
             ->setParameter(':resource_id', $resource->id())
-            ->orderBy($resourceType . '.id', $lowerOrGreaterThan === '<' ? 'DESC' : 'ASC')
+            ->orderBy($alias . '.id', $lowerOrGreaterThan === '<' ? 'DESC' : 'ASC')
             ->setMaxResults(1);
 
         if ($this->site) {
@@ -101,12 +104,15 @@ trait NextPreviousResourceTrait
         // Avoid potential infinite recursion.
         unset($params['site_id']);
 
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? 'Omeka\Entity\Item' : 'omeka_root';
+
         $this->adapter->buildQuery($qb, $params);
 
         if ($this->getView()->siteSetting('browse_attached_items', false)) {
             $siteBlockAttachmentsAlias = $this->adapter->createAlias();
             $qb->innerJoin(
-                'Omeka\Entity\Item.siteBlockAttachments',
+                $alias . '.siteBlockAttachments',
                 $siteBlockAttachmentsAlias
             );
             $sitePageBlockAlias = $this->adapter->createAlias();
@@ -126,7 +132,7 @@ trait NextPreviousResourceTrait
             );
             $qb->andWhere($qb->expr()->eq(
                 "$siteAlias.id",
-                $this->createNamedParameter($qb, $this->site->id()))
+                $this->adapter->createNamedParameter($qb, $this->site->id()))
             );
         }
     }
@@ -143,14 +149,17 @@ trait NextPreviousResourceTrait
             return;
         }
 
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
+        $alias = $isOldOmeka ? 'Omeka\Entity\ItemSet' : 'omeka_root';
+
         $siteItemSetsAlias = $this->adapter->createAlias();
         $qb->innerJoin(
-            'Omeka\Entity\ItemSet.siteItemSets',
+            $alias . '.siteItemSets',
             $siteItemSetsAlias
         );
         $qb->andWhere($qb->expr()->eq(
             "$siteItemSetsAlias.site",
-            $this->createNamedParameter($qb, $this->site->id()))
+            $this->adapter->createNamedParameter($qb, $this->site->id()))
         );
         $qb->addOrderBy("$siteItemSetsAlias.position", 'ASC');
     }
