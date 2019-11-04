@@ -54,7 +54,7 @@ trait NextPreviousResourceTrait
         // Visibility is automatically managed.
 
         $isOldOmeka = \Omeka\Module::VERSION < 2;
-        $alias = $isOldOmeka ? $this->getEntityClass() : 'omeka_root';
+        $alias = $isOldOmeka ? $this->adapter->getEntityClass() : 'omeka_root';
 
         $entityManager = $this->adapter->getEntityManager();
         $qb = $entityManager->createQueryBuilder()
