@@ -193,16 +193,19 @@ class Module extends AbstractModule
 
         // This key is used by PropertySelect.
         if (!empty($query['used'])) {
+            $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+            $alias = $isOldOmeka ? \Omeka\Entity\Property::class : 'omeka_root';
+
             $adapter = $event->getTarget();
             $qb = $event->getParam('queryBuilder');
             $expr = $qb->expr();
 
             $valuesAlias = $adapter->createAlias();
             $qb->innerJoin(
-                'Omeka\Entity\Property.values',
+                $alias . '.values',
                 $valuesAlias,
                 \Doctrine\ORM\Query\Expr\Join::WITH,
-                $expr->eq("$valuesAlias.property", 'Omeka\Entity\Property.id')
+                $expr->eq($valuesAlias . '.property', $alias . '.id')
             );
         }
     }
@@ -213,22 +216,28 @@ class Module extends AbstractModule
 
         // This key is used by ResourceClassSelect.
         if (!empty($query['used'])) {
+            $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+            $alias = $isOldOmeka ? \Omeka\Entity\ResourceClass::class : 'omeka_root';
+
             $adapter = $event->getTarget();
             $qb = $event->getParam('queryBuilder');
             $expr = $qb->expr();
 
             $resourceAlias = $adapter->createAlias();
             $qb->innerJoin(
-                'Omeka\Entity\ResourceClass.resources',
+                $alias . '.resources',
                 $resourceAlias,
                 \Doctrine\ORM\Query\Expr\Join::WITH,
-                $expr->eq("$resourceAlias.resourceClass", 'Omeka\Entity\ResourceClass.id')
+                $expr->eq($resourceAlias . '.resourceClass', $alias . '.id')
             );
         }
     }
 
     public function apiSearchQuerySitePage(Event $event)
     {
+        $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+        $alias = $isOldOmeka ? \Omeka\Entity\SitePage::class : 'omeka_root';
+
         $adapter = $event->getTarget();
         $qb = $event->getParam('queryBuilder');
         $expr = $qb->expr();
@@ -236,19 +245,19 @@ class Module extends AbstractModule
 
         if (isset($query['slug'])) {
             $qb->andWhere($expr->eq(
-                'Omeka\Entity\SitePage.slug',
+                $alias . '.slug',
                 $adapter->createNamedParameter($qb, $query['slug'])
             ));
         }
 
         if (isset($query['site_id'])) {
-            $qb->andWhere($expr->eq('Omeka\Entity\SitePage.site', $query['site_id']));
+            $qb->andWhere($expr->eq($alias . '.site', $query['site_id']));
         }
 
         if (isset($query['site_slug'])) {
             $siteAlias = $adapter->createAlias();
             $qb->innerJoin(
-                'Omeka\Entity\SitePage.site',
+                $alias . '.site',
                 $siteAlias
             );
             $qb->andWhere($expr->eq(
