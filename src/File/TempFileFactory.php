@@ -1,8 +1,12 @@
 <?php
 namespace Next\File;
 
+use Zend\EventManager\EventManagerAwareTrait;
+
 class TempFileFactory extends \Omeka\File\TempFileFactory
 {
+    use EventManagerAwareTrait;
+
     public function build()
     {
         // Return \Next\File\TempFile.
