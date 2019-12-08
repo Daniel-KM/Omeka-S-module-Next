@@ -8,6 +8,9 @@ use Zend\View\Renderer\RendererInterface;
 
 /**
  * View helper for rendering the user bar.
+ *
+ * This is the copy of \Guest\View\Helper\UserBar, so improvements in core and
+ * specific code of Guest can be used together with module Next too.
  */
 class UserBar extends AbstractHelper
 {
@@ -120,22 +123,24 @@ class UserBar extends AbstractHelper
 
         $routeParams = $params->fromRoute();
         if ($controller === 'page') {
-            $links[] = [
-                'resource' => $controller,
-                'action' => 'browse',
-                'text' => $translate($mapPluralLabels[$controller]),
-                'url' => $url('admin/site/slug/action', ['site-slug' => $site->slug(), 'action' => 'page']),
-            ];
-            $page = empty($routeParams['page-slug'])
-                ? $site->homepage()
-                : $view->api()->read('site_pages', ['site' => $site->id(), 'slug' => $routeParams['page-slug']])->getContent();
-            if ($page && $page->userIsAllowed('edit')) {
+            if ($routeParams['action'] === 'show') {
                 $links[] = [
                     'resource' => $controller,
-                    'action' => 'edit',
-                    'text' => $translate('Edit'),
-                    'url' => $page->adminUrl('edit'),
+                    'action' => 'browse',
+                    'text' => $translate($mapPluralLabels[$controller]),
+                    'url' => $url('admin/site/slug/action', ['site-slug' => $site->slug(), 'action' => 'page']),
                 ];
+                $page = empty($routeParams['page-slug'])
+                    ? $site->homepage()
+                    : $view->api()->read('site_pages', ['site' => $site->id(), 'slug' => $routeParams['page-slug']])->getContent();
+                if ($page && $page->userIsAllowed('edit')) {
+                    $links[] = [
+                        'resource' => $controller,
+                        'action' => 'edit',
+                        'text' => $translate('Edit'),
+                        'url' => $page->adminUrl('edit'),
+                    ];
+                }
             }
         } else {
             $action = $params->fromRoute('action');
