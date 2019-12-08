@@ -20,14 +20,19 @@ class DefaultSiteSlugFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        $defaultSiteId = $services->get('Omeka\Settings')->get('default_site');
         $api = $services->get('Omeka\ApiManager');
+        $defaultSiteId = $services->get('Omeka\Settings')->get('default_site');
         if ($defaultSiteId) {
-            $slugs = $api->search('sites', ['id' => $defaultSiteId], ['returnScalar' => 'slug'])->getContent();
+            try {
+                $response = $api->read('sites', ['id' => $defaultSiteId], [], ['responseContent' => 'resource']);
+                $slug = $response->getContent()->getSlug();
+            } catch (\Omeka\Api\Exception\NotFoundException $e) {
+                $slug = '';
+            }
         } else {
-            $slugs = $api->search('sites', ['limit' => 1], ['returnScalar' => 'slug'])->getContent();
+            $slugs = $api->search('sites', ['limit' => 1, 'sort_by' => 'id'], ['returnScalar' => 'slug'])->getContent();
+            $slug = (string) reset($slugs);
         }
-        $defaultSiteSlug = (string) reset($slugs);
-        return new DefaultSiteSlug($defaultSiteSlug);
+        return new DefaultSiteSlug($slug);
     }
 }
