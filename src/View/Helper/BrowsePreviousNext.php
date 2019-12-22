@@ -208,7 +208,7 @@ SQL;
         // Begin building the search query.
         $entityClass = $adapter->getEntityClass();
 
-        $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? $entityClass : 'omeka_root';
 
         // $adapter->index = 0;

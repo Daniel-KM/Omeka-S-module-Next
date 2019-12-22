@@ -193,7 +193,7 @@ class Module extends AbstractModule
 
         // This key is used by PropertySelect.
         if (!empty($query['used'])) {
-            $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+            $isOldOmeka = \Omeka\Module::VERSION < 2;
             $alias = $isOldOmeka ? \Omeka\Entity\Property::class : 'omeka_root';
 
             $adapter = $event->getTarget();
@@ -216,7 +216,7 @@ class Module extends AbstractModule
 
         // This key is used by ResourceClassSelect.
         if (!empty($query['used'])) {
-            $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+            $isOldOmeka = \Omeka\Module::VERSION < 2;
             $alias = $isOldOmeka ? \Omeka\Entity\ResourceClass::class : 'omeka_root';
 
             $adapter = $event->getTarget();
@@ -235,7 +235,7 @@ class Module extends AbstractModule
 
     public function apiSearchQuerySitePage(Event $event)
     {
-        $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? \Omeka\Entity\SitePage::class : 'omeka_root';
 
         $adapter = $event->getTarget();
@@ -598,7 +598,7 @@ class Module extends AbstractModule
             return;
         }
 
-        $isOldOmeka = strtok(\Omeka\Module::VERSION, '.') < 2;
+        $isOldOmeka = \Omeka\Module::VERSION < 2;
         if ($isOldOmeka) {
             return $this->buildPropertyQueryOld($qb, $query, $adapter);
         }
