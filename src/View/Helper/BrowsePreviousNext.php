@@ -177,7 +177,7 @@ SQL;
     }
 
     /**
-     * Copy of AbstractEntityAdapter::search() to get a prepared query builder.
+     * Copy of \Omeka\Api\Adapter\AbstractEntityAdapter::search() to get a prepared query builder.
      *
      * @todo Trigger all api manager events (api.execute.pre, etc.).
      *
@@ -232,9 +232,13 @@ SQL;
         $adapter->limitQuery($qb, $query);
         $qb->addOrderBy("$alias.id", $query['sort_order']);
 
-        // Keep only the id.
-        $qb
-            ->select($alias . '.id');
+        if ($isOldOmeka) {
+            // Keep only the id.
+            // This is not possible with Omeka 2, since \Omeka\Module::searchFulltext()
+            // adds a specific select.
+            $qb
+                ->select($alias . '.id');
+        }
 
         return $qb;
     }
