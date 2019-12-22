@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-14 00:00+0200\n"
+"POT-Creation-Date: 2019-12-23 00:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Generic/AbstractModule.php:498
+#: src/Generic/AbstractModule.php:518
 #, php-format
 msgid "This module requires the module \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:518
+#: src/Generic/AbstractModule.php:538
 #, php-format
 msgid "This module requires modules \"%s\"."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:586
+#: src/Generic/AbstractModule.php:606
 #, php-format
 msgid ""
 "The module \"%s\" was automatically deactivated because the dependencies are "
@@ -60,6 +60,10 @@ msgstr ""
 
 #: src/View/Helper/Breadcrumbs.php:345
 msgid "Collecting"
+msgstr ""
+
+#: src/View/Helper/Breadcrumbs.php:362
+msgid "Login"
 msgstr ""
 
 #: src/View/Helper/Breadcrumbs.php:365
@@ -187,19 +191,19 @@ msgid ""
 "Next."
 msgstr ""
 
-#: Module.php:421
+#: Module.php:430
 msgid "Trim property values"
 msgstr ""
 
-#: Module.php:422
+#: Module.php:431
 msgid "Remove initial and trailing whitespace of all values of all properties"
 msgstr ""
 
-#: Module.php:435
+#: Module.php:444
 msgid "Deduplicate property values case insensitively"
 msgstr ""
 
-#: Module.php:436
+#: Module.php:445
 msgid ""
 "Deduplicate values of all properties, case INsensitively. Trimming values "
 "before is recommended, because values are checked strictly."
