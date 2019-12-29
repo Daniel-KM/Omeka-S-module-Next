@@ -29,6 +29,11 @@ class MvcListeners extends AbstractListenerAggregate
             return;
         }
 
+        $services = $event->getApplication()->getServiceManager();
+        if (!$services->get('Omeka\Status')->isSiteRequest()) {
+            return;
+        }
+
         // Don't process if an order is set.
         $request = $event->getRequest();
         /** @var \Zend\Stdlib\Parameters $query */
@@ -37,7 +42,6 @@ class MvcListeners extends AbstractListenerAggregate
             return;
         }
 
-        $services = $event->getApplication()->getServiceManager();
         $siteSettings = $services->get('Omeka\Settings\Site');
         $orders = $siteSettings->get('next_items_order_for_itemsets');
         if (empty($orders)) {
