@@ -49,8 +49,8 @@ form, via a site setting (fix [#1423]).
 
 #### Citation
 
-Since 3.1.2.7, this feature has moved to module [Citation], that uses a template
-view to easily customize it. The view helper doesn’t change.
+Since 3.1.2.7, this feature has moved to module [Bibliography], that uses a
+template view to easily customize it. The view helper doesn’t change.
 
 #### Is home page
 
@@ -125,6 +125,16 @@ In Omeka core, all xml files are identified as `text/xml` and zip files as `appl
 so it’s not possible to make a distinction between a mets file and an ead file,
 or to identify an epub, that is a zipped xhtml. This feature is required to use
 the module [Verovio] when files don’t use the extension "mei" ([#1464]).
+
+#### Better display of json output in api
+
+The json standard doesn’t require to escape anything, except ", "" and control
+characters. But php and Zend escape many other characters by default : tags,
+ampersand, apostrophe and overall the slashes "/" and the unicode characters,
+making json unreadable in many cases, whereas it’s designed to be readable by
+people and machines. So this feature displays the api output as unicode and
+unescaped, so it can be readable by people who don’t have a json viewer in their
+browser ([#1493]).
 
 ### Backend
 
@@ -217,7 +227,7 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018-2019 (see [Daniel-KM] on GitHub)
+* Copyright Daniel Berthereau, 2018-2020 (see [Daniel-KM] on GitHub)
 
 
 [Omeka S]: https://omeka.org/s
@@ -233,7 +243,8 @@ Copyright
 [#1301]: https://github.com/omeka/omeka-s/issues/1301
 [#1371]: https://github.com/omeka/omeka-s/issues/1371
 [#1464]: https://github.com/omeka/omeka-s/issues/1464
-[Citation]: https://github.com/Daniel-KM/Omeka-S-module-Citation
+[#1493]: https://github.com/omeka/omeka-s/issues/1493
+[Bibliography]: https://github.com/Daniel-KM/Omeka-S-module-Bibliography
 [Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
 [Block Plus]: https://github.com/Daniel-KM/Omeka-S-module-BlockPlus
 [Bulk Edit]: https://github.com/Daniel-KM/Omeka-S-module-BulkEdit
