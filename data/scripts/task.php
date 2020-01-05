@@ -108,7 +108,7 @@ $entityManager = $services->get('Omeka\EntityManager');
 $user = $entityManager->find(User::class, $userId);
 if (empty($user)) {
     $message = new Message(
-        'The user #%d is set for the cron task "%s", but doesn’t exist.', // @translate
+        'The user #%d is set for the task "%s", but doesn’t exist.', // @translate
         $userId,
         $taskName
     );
@@ -121,26 +121,26 @@ if (!empty($basePath)) {
 
 $services->get('Omeka\AuthenticationService')->getStorage()->write($user);
 
-// Since it’s a job, not prepared as a job, the logger should be prepared here.
+// Finalize the preparation of the job / task.
+$job->setOwner($user);
+$job->setClass($taskClass);
+
+// Since it’s a job not prepared as a job, the logger should be prepared here.
 /** @var \Omeka\Module\Module $module */
 $module = $services->get('Omeka\ModuleManager')->getModule('Log');
 if ($module && $module->getState() === \Omeka\Module\Manager::STATE_ACTIVE) {
     $referenceIdProcessor = new \Zend\Log\Processor\ReferenceId();
-    $referenceIdProcessor->setReferenceId('Task: ' . $taskName . ' [' . (new \DateTime())->format('Ymd-His') . ']');
+    $referenceIdProcessor->setReferenceId('task/' . $taskName . '/' . (new \DateTime())->format('Ymd-His'));
     $logger->addProcessor($referenceIdProcessor);
 
     $userIdProcessor = new \Log\Processor\UserId($user);
     $logger->addProcessor($userIdProcessor);
 }
 
-// Finalize the preparation of the task / job.
-$job->setOwner($user);
-$job->setClass($taskClass);
-
 try {
-    $logger->info('Task: Start');
+    $logger->info('Task is starting.');
     $task->perform();
-    $logger->info('Task: End');
+    $logger->info('Task ended.');
 } catch (\Exception $e) {
-    $logger->err(sprintf('Task: Error: %s', $e));
+    $logger->err($e);
 }
