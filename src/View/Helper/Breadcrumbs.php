@@ -228,12 +228,16 @@ class Breadcrumbs extends AbstractHelper
                 break;
 
             case 'site/item-set':
-                // In Omeka S, item set show is a redirect to item browse with a
-                // special partial.
                 if ($options['current']) {
+                    $action = $routeMatch->getParam('action', 'browse');
+                    // In Omeka S, item set show is a redirect to item browse
+                    // with a special partial, so normally, there is no "show",
+                    // except with specific redirection.
                     /** @var \Omeka\Api\Representation\ItemSetRepresentation $resource */
                     $resource = $vars->itemSet;
-                    $label = $resource->displayTitle();
+                    if ($resource) {
+                        $label = $resource->displayTitle();
+                    }
                 }
                 break;
 
