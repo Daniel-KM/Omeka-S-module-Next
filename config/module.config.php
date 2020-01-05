@@ -46,6 +46,8 @@ $config = [
     'form_elements' => [
         'invokables' => [
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
+            Form\SearchFormFieldset::class => Form\SearchFormFieldset::class,
+            Form\SimplePageFieldset::class => Form\SimplePageFieldset::class,
         ],
         'factories' => [
             Form\Element\SitesPageSelect::class => Service\Form\Element\SitesPageSelectFactory::class,
