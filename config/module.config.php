@@ -8,6 +8,7 @@ $config = [
     'service_manager' => [
         'invokables' => [
             Mvc\MvcListeners::class => Mvc\MvcListeners::class,
+            'Omeka\ViewApiJsonRenderer' => View\Renderer\ApiJsonRenderer::class,
         ],
         'factories' => [
             'Omeka\File\TempFileFactory' => Service\File\TempFileFactoryFactory::class,
