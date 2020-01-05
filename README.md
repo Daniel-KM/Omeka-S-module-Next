@@ -114,6 +114,10 @@ insensitive by default).
 
 Warning: This feature is still available, but is improved in module [Bulk Edit].
 
+#### Choice of columns in admin browse view
+
+An option is added to select the metadata to display in the main browse view (fix [#1497]).
+
 #### New links
 
 - From the site permissions to the user page (fix [#1301]).
@@ -244,6 +248,7 @@ Copyright
 [#1371]: https://github.com/omeka/omeka-s/issues/1371
 [#1464]: https://github.com/omeka/omeka-s/issues/1464
 [#1493]: https://github.com/omeka/omeka-s/issues/1493
+[#1497]: https://github.com/omeka/omeka-s/issues/1497
 [Bibliography]: https://github.com/Daniel-KM/Omeka-S-module-Bibliography
 [Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
 [Block Plus]: https://github.com/Daniel-KM/Omeka-S-module-BlockPlus
