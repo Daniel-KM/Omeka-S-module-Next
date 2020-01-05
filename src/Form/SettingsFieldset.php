@@ -2,11 +2,17 @@
 namespace Next\Form;
 
 use Omeka\Form\Element\PropertySelect;
+use Omeka\Settings\Settings;
 use Zend\Form\Fieldset;
 
 class SettingsFieldset extends Fieldset
 {
     protected $label = 'Next Module'; // @translate
+
+    /**
+     * @var Settings
+     */
+    protected $settings;
 
     public function init()
     {
@@ -42,7 +48,7 @@ class SettingsFieldset extends Fieldset
             ])
             // Check is done in filter.
             ->add([
-                'name' => 'columns_browse',
+                'name' => 'next_columns_browse',
                 'type' => PropertySelect::class,
                 'options' => [
                     'label' => 'Columns for browse views', // @translate
@@ -51,9 +57,9 @@ class SettingsFieldset extends Fieldset
                     'prepend_value_options' => $prependedValues,
                 ],
                 'attributes' => [
-                    'id' => 'columns-browse',
+                    'id' => 'next-columns-browse',
                     // TODO Keep the original order of the columns via js.
-                    'value' => array_values($this->settings->get('columns_browse', [])) ?: $defaultColumnsBrowse,
+                    'value' => array_values($this->getSettings()->get('next_columns_browse', [])) ?: $defaultColumnsBrowse,
                     'required' => false,
                     'multiple' => true,
                     'class' => 'chosen-select',
@@ -61,5 +67,21 @@ class SettingsFieldset extends Fieldset
                 ],
             ])
         ;
+    }
+
+    /**
+     * @param Settings $settings
+     */
+    public function setSettings(Settings $settings)
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * @return Settings
+     */
+    public function getSettings()
+    {
+        return $this->settings;
     }
 }

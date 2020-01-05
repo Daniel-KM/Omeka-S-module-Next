@@ -51,6 +51,7 @@ $config = [
         ],
         'factories' => [
             Form\Element\SitesPageSelect::class => Service\Form\Element\SitesPageSelectFactory::class,
+            Form\SettingsFieldset::class => Service\Form\SettingsFieldsetFactory::class,
         ],
     ],
     'controller_plugins' => [
@@ -75,6 +76,11 @@ $config = [
     'next' => [
         'settings' => [
             'next_property_itemset' => '',
+            'next_columns_browse' => [
+                'resource_class_label',
+                'owner_name',
+                'created',
+            ],
         ],
         'site_settings' => [
             'next_items_order_for_itemsets' => [],

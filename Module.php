@@ -481,13 +481,13 @@ class Module extends AbstractModule
         $form = $event->getTarget();
         $hasColumnsBrowse = $form->get('general')->has('columns_browse');
         if ($hasColumnsBrowse) {
-            $form->get('next')->remove('columns_browse');
+            $form->get('next')->remove('next_columns_browse');
         } else {
-            $columnsBrowse = $form->get('next')->get('columns_browse')->getValueOptions();
+            $columnsBrowse = $form->get('next')->get('next_columns_browse')->getValueOptions();
             $inputFilter
                 ->get('next')
                 ->add([
-                    'name' => 'columns_browse',
+                    'name' => 'next_columns_browse',
                     'required' => false,
                     'filters' => [
                         [
