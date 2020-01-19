@@ -1,6 +1,9 @@
 <?php
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
+$hyperlink = $this->plugin('hyperlink');
+$url = $this->plugin('url');
+
 $this->htmlElement('body')->appendAttribute('class', 'jobs browse');
 $sortHeadings = [
     [
@@ -45,7 +48,7 @@ $sortHeadings = [
         <?php foreach ($jobs as $job): ?>
         <?php
         if ($owner = $job->owner()) {
-            $ownerText = $this->hyperlink($owner->email(), $this->url(
+            $ownerText = $hyperlink($owner->email(), $url(
                 'admin/id',
                 [
                     'controller' => 'user',
@@ -62,9 +65,12 @@ $sortHeadings = [
             <td><?php echo $escape($this->i18n()->dateFormat($job->started(), null, \Omeka\View\Helper\i18n::DATE_FORMAT_SHORT)); ?></td>
             <td><?php echo $escape($job->jobClass()); ?></td>
             <td><?php if ($job->log()): ?>
-            <?php echo $this->hyperlink($translate($job->statusLabel()), $this->url('admin/id', ['controller' => 'job', 'action' => 'log', 'id' => $job->id()]), ['target' => '_blank']); ?>
+            <?php echo $hyperlink($translate($job->statusLabel()), $url('admin/id', ['controller' => 'job', 'action' => 'log', 'id' => $job->id()]), ['target' => '_blank']); ?>
             <?php else: ?>
             <?php echo $escape($translate($job->statusLabel())); ?>
+            <?php endif; ?>
+            <?php if (method_exists($job, 'step') && $step = $job->step()): ?>
+            - <?php echo $step; ?> / <?php echo $job->totalSteps(); ?>
             <?php endif; ?>
             </td>
             <td><?php echo $ownerText; ?></td>
