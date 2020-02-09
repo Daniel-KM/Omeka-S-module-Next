@@ -96,6 +96,7 @@ class ThumbnailUrl extends AbstractHelper
             'itemWithMetadata',
             // BlockPlus.
             'assets',
+            'pageMetadata',
             'resourceText',
         ];
 
@@ -138,6 +139,17 @@ class ThumbnailUrl extends AbstractHelper
                         }
                         break;
 
+                    // TODO Always use the page metadata cover if there is one, even if it's not the first block.
+                    case 'pageMetadata':
+                        $asset = $block->dataValue('cover');
+                        if ($asset) {
+                            try {
+                                /** @var \Omeka\Api\Representation\AssetRepresentation $asset */
+                                return $api->read('assets', $asset)->getContent();
+                            } catch (\Omeka\Api\Exception\NotFoundException $e) {
+                            }
+                        }
+                        // no break;
                     case 'assets':
                         $assets = $block->dataValue('assets', []);
                         foreach ($assets as $assetData) {
@@ -146,8 +158,7 @@ class ThumbnailUrl extends AbstractHelper
                             }
                             try {
                                 /** @var \Omeka\Api\Representation\AssetRepresentation $asset */
-                                $asset = $api->read('assets', $assetData['asset'])->getContent();
-                                return $asset;
+                                return $api->read('assets', $assetData['asset'])->getContent();
                             } catch (\Omeka\Api\Exception\NotFoundException $e) {
                             }
                         }
