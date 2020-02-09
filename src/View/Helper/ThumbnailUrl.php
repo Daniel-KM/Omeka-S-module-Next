@@ -5,12 +5,12 @@ use Omeka\Api\Representation\AbstractRepresentation;
 use Omeka\Api\Representation\AssetRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
-use Zend\View\Helper\AbstractHtmlElement;
+use Zend\View\Helper\AbstractHelper;
 
 /**
  * View helper to get a thumbnail url.
  */
-class ThumbnailUrl extends AbstractHtmlElement
+class ThumbnailUrl extends AbstractHelper
 {
     /**
      * Get a thumbnail url of a representation.
