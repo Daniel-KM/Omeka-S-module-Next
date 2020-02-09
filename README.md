@@ -47,6 +47,13 @@ properties: start with, end with, in list (fix [#1274], [#1276]).
 Display only the used properties and resources classes in the advanced search
 form, via a site setting (fix [#1423]).
 
+In some cases, a change is required in the theme. In the files `themes/my-theme/common/advanced-search/properties.phtml`
+and `themes/my-theme/common/advanced-search/resource-classes.phtml`, add this option
+below `apply_templates`:
+```php
+    'used_terms' => $this->siteSetting('next_search_used_terms'),
+```
+
 #### Citation
 
 Since 3.1.2.7, this feature has moved to module [Bibliography], that uses a
