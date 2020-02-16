@@ -59,6 +59,7 @@ class SiteSettingsFieldset extends Fieldset
                         'homepage' => 'Display on home page', // @translate
                         'current' => 'Append current resource', // @translate
                         'itemset' => 'Include main item set for item', // @translate,
+                        'collections' => 'Include "Collections"', // @translate,
                     ],
                 ],
                 'attributes' => [

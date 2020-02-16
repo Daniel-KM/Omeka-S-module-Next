@@ -69,6 +69,7 @@ class Breadcrumbs extends AbstractHelper
                 'homepage' => false,
                 'current' => false,
                 'itemset' => false,
+                'collections' => false,
             ];
         } else {
             // This param has never been set in site settings, so use default
@@ -82,6 +83,7 @@ class Breadcrumbs extends AbstractHelper
             'prepend' => [],
             'current' => true,
             'itemset' => true,
+            'collections' => true,
             'property_itemset' => $siteSetting('next_breadcrumbs_property_itemset'),
             'separator' => $siteSetting('next_breadcrumbs_separator', '&gt;'),
             'template' => $this->defaultTemplate,
@@ -144,6 +146,17 @@ class Breadcrumbs extends AbstractHelper
                 // Only actions "browse" and "search" are available in public.
                 $action = $routeMatch->getParam('action', 'browse');
                 if ($action === 'search') {
+                    if ($options['collections']) {
+                        $crumbs[] = [
+                            'resource' => null,
+                            'url' => $url(
+                                'site/resource',
+                                ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
+                            ),
+                            'label' => $translate('Collections'),
+                        ];
+                    }
+
                     $controller = $this->extractController($routeMatch);
                     $label = $this->extractLabel($controller);
                     $crumbs[] = [
@@ -158,8 +171,19 @@ class Breadcrumbs extends AbstractHelper
                         $label = $translate('Search'); // @translate
                     }
                 } elseif ($action === 'browse') {
+                    $controller = $this->extractController($routeMatch);
+                    if ($options['collections'] && $controller !== 'item-set') {
+                        $crumbs[] = [
+                            'resource' => null,
+                            'url' => $url(
+                                'site/resource',
+                                ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
+                            ),
+                            'label' => $translate('Collections'),
+                        ];
+                    }
+
                     if ($options['current']) {
-                        $controller = $this->extractController($routeMatch);
                         $label = $this->extractLabel($controller);
                         $label = $translate($label);
                     }
@@ -188,6 +212,17 @@ class Breadcrumbs extends AbstractHelper
                     case 'media':
                         $item = $resource->item();
                         if ($options['itemset']) {
+                            if ($options['collections']) {
+                                $crumbs[] = [
+                                    'resource' => null,
+                                    'url' => $url(
+                                        'site/resource',
+                                        ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
+                                    ),
+                                    'label' => $translate('Collections'),
+                                ];
+                            }
+
                             $itemSet = $view->primaryItemSet($item, $site);
                             if ($itemSet) {
                                 $crumbs[] = [
@@ -205,6 +240,17 @@ class Breadcrumbs extends AbstractHelper
                         break;
 
                     case 'items':
+                        if ($options['collections']) {
+                            $crumbs[] = [
+                                'resource' => null,
+                                'url' => $url(
+                                    'site/resource',
+                                    ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
+                                ),
+                                'label' => $translate('Collections'),
+                            ];
+                        }
+
                         if ($options['itemset']) {
                             $itemSet = $view->primaryItemSet($resource, $site);
                             if ($itemSet) {
@@ -217,9 +263,18 @@ class Breadcrumbs extends AbstractHelper
                         }
                         break;
 
-                    case 'itemsets':
+                    case 'item_sets':
                     default:
-                        // Nothing to do.
+                        if ($options['collections']) {
+                            $crumbs[] = [
+                                'resource' => null,
+                                'url' => $url(
+                                    'site/resource',
+                                    ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
+                                ),
+                                'label' => $translate('Collections'),
+                            ];
+                        }
                         break;
                 }
                 if ($options['current']) {
@@ -228,6 +283,17 @@ class Breadcrumbs extends AbstractHelper
                 break;
 
             case 'site/item-set':
+                if ($options['collections']) {
+                    $crumbs[] = [
+                        'resource' => null,
+                        'url' => $url(
+                            'site/resource',
+                            ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
+                        ),
+                        'label' => $translate('Collections'),
+                    ];
+                }
+
                 if ($options['current']) {
                     $action = $routeMatch->getParam('action', 'browse');
                     // In Omeka S, item set show is a redirect to item browse
