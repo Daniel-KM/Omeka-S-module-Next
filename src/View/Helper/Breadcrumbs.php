@@ -388,19 +388,21 @@ class Breadcrumbs extends AbstractHelper
             case 'site/basket':
                 if ($plugins->has('guestWidget')) {
                     $setting = $plugins->get('setting');
+                    $label = $siteSetting('guest_dashboard_label') ?: $setting('guest_dashboard_label');
                     $crumbs[] = [
                         'resource' => null,
                         'url' => $url('site/guest', ['site-slug' => $siteSlug, 'action' => 'me']),
-                        'label' => $translate($setting('guest_dashboard_label') ?: 'Dashboard'), // @translate
+                        'label' => $label ?: $translate('Dashboard'), // @translate
                     ];
                 }
                 // For compatibility with old module GuestUser.
                 elseif ($plugins->has('guestUserWidget')) {
                     $setting = $plugins->get('setting');
+                    $label = $siteSetting('guest_dashboard_label') ?: $setting('guest_dashboard_label');
                     $crumbs[] = [
                         'resource' => null,
                         'url' => $url('site/guest-user', ['site-slug' => $siteSlug, 'action' => 'me']),
-                        'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
+                        'label' => $label ?: $translate('Dashboard'), // @translate
                     ];
                 }
                 if ($options['current']) {
@@ -457,17 +459,18 @@ class Breadcrumbs extends AbstractHelper
             case 'site/guest/basket':
             case 'site/guest-user/guest':
                 $setting = $plugins->get('setting');
+                $label = $siteSetting('guest_dashboard_label') ?: $setting('guest_dashboard_label');
                 if ($matchedRouteName === 'site/guest-user/guest') {
                     $crumbs[] = [
                         'resource' => null,
                         'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
-                        'label' => $translate($setting('guestuser_dashboard_label') ?: 'Dashboard'), // @translate
+                        'label' => $$label ?: $translate('Dashboard'), // @translate
                     ];
                 } else {
                     $crumbs[] = [
                         'resource' => null,
                         'url' => $url('site/guest', ['site-slug' => $siteSlug]),
-                        'label' => $translate($setting('guest_dashboard_label') ?: 'Dashboard'), // @translate
+                        'label' => $$label ?: $translate('Dashboard'), // @translate
                     ];
                 }
                 if ($options['current']) {
