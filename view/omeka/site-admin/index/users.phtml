@@ -1,7 +1,7 @@
 <?php
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
-$this->headScript()->appendFile($this->assetUrl('js/site-users.js', 'Omeka'));
+$this->headScript()->appendFile($this->assetUrl('js/site-users.js', 'Omeka'), 'text/javascript', ['defer' => 'defer']);
 $this->htmlElement('body')->appendAttribute('class', 'sites users');
 $form->prepare();
 $delete = $translate('Delete');
