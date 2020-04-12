@@ -112,12 +112,22 @@ class BrowsePreviousNext extends AbstractHelper
 
         // Convert query builder parameters into standard pdo parameters.
         $parameters = [];
+
+        $quote = function($v) {
+            if (strpos($v, "'")) {
+                // Direct sql quotation uses two single quotes, not a backslash.
+                $v = $this->connection->quote($v);
+                return str_replace("\'", "''", $v);
+            }
+            return $this->connection->quote($v);
+        };
+
         foreach ($qb->getParameters()->toArray() as $param) {
             $paramValue = $param->getValue();
             if (is_array($paramValue)) {
-                $paramValue = implode(',', array_map([$this->connection, 'quote'], $paramValue));
+                $paramValue = implode(',', array_map($quote, $paramValue));
             } elseif ($param->getType() !== \Doctrine\DBAL\Types\Type::INTEGER) {
-                $paramValue = $this->connection->quote($paramValue);
+                $paramValue = $quote($paramValue);
             }
             $parameters[':' . $param->getName()] = $paramValue;
         }
