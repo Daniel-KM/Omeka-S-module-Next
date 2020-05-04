@@ -3,6 +3,7 @@ namespace Next\Form;
 
 use Omeka\Form\Element\PropertySelect;
 use Omeka\Settings\Settings;
+use Zend\Form\Element;
 use Zend\Form\Fieldset;
 
 class SettingsFieldset extends Fieldset
@@ -64,6 +65,17 @@ class SettingsFieldset extends Fieldset
                     'multiple' => true,
                     'class' => 'chosen-select',
                     'data-placeholder' => 'Select columns…', // @translate
+                ],
+            ])
+            ->add([
+                'name' => 'next_prevnext_disable',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'label' => 'Disable previous/next', // @translate
+                    'info' => 'An issue exists on some versions of mysql database (mariadb is working fine).', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'next-prevnext-disable',
                 ],
             ])
         ;

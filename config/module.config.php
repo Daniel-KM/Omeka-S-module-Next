@@ -81,6 +81,7 @@ $config = [
                 'owner_name',
                 'created',
             ],
+            'next_prevnext_disable' => false,
         ],
         'site_settings' => [
             'next_items_order_for_itemsets' => [],

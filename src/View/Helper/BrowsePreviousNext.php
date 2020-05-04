@@ -51,6 +51,12 @@ class BrowsePreviousNext extends AbstractHelper
     public function __invoke(AbstractResourceEntityRepresentation $resource, array $options = [])
     {
         $view = $this->getView();
+
+        // FIXME Fix the query below with @rownum on mysql (works on mariadb).
+        if ($view->setting('next_prevnext_disable')) {
+            return;
+        }
+
         $params = $view->params();
         $isAdmin = (bool) $params->fromRoute('__ADMIN__');
         $ui = $isAdmin ? 'admin' : 'public';
@@ -141,12 +147,12 @@ class BrowsePreviousNext extends AbstractHelper
         $sql = <<<SQL
 SELECT y.position
 FROM (
-    SELECT x.id_0 as id, @rownum := @rownum + 1 AS position
+    SELECT x.id_0 AS id, @rownum := @rownum + 1 AS position
     FROM (
         $sqlQuery
-    ) x
-    JOIN (SELECT @rownum := 0) row
-) y
+    ) AS x
+    JOIN (SELECT @rownum := 0) AS row
+) AS y
 WHERE y.id = ?;
 SQL;
         $stmt = $this->connection->prepare($sql);
@@ -161,12 +167,12 @@ SQL;
         $sql = <<<SQL
 SELECT y.position, y.id
 FROM (
-    SELECT x.id_0 as id, @rownum := @rownum + 1 AS position
+    SELECT x.id_0 AS id, @rownum := @rownum + 1 AS position
     FROM (
         $sqlQuery
-    ) x
-    JOIN (SELECT @rownum := 0) row
-) y
+    ) AS x
+    JOIN (SELECT @rownum := 0) AS row
+) AS y
 WHERE y.position >= ? AND y.position <= ?
 LIMIT 3;
 SQL;
