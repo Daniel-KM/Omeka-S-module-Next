@@ -104,6 +104,12 @@ class Module extends AbstractModule
         }
 
         $sharedEventManager->attach(
+            \Search\Controller\IndexController::class,
+            'view.layout',
+            [$this, 'handleViewBrowse']
+        );
+
+        $sharedEventManager->attach(
             \Omeka\Api\Adapter\PropertyAdapter::class,
             'api.search.query',
             [$this, 'apiSearchQueryProperty']
