@@ -1,31 +1,21 @@
 <?php
 /**
  * @var \Zend\View\Renderer\PhpRenderer $this
- * @var array $crumbs Each crumb is an array with "url", "label", "resource", if any.
- * @var array $options The options provided to the helper, merged with default values.
+ * @var \Omeka\Api\Representation\SiteRepresentation $site
+ * @var Zend\Navigation\Navigation $breadcrumbs
+ * @var array $options Options provided to the helper, merged with default values.
+ * @var array $crumbs Flat list of crumb, that is an array with "label", "uri", "resource", if any.
+ * @deprecated $crumbs is kept for old themes, not in this partial (see old releases).
  */
 
-$escape = $this->plugin('escapeHtml');
-$hyperlink = $this->plugin('hyperlink');
-
+// Quick hack to insert a span if it is the current page (simpler to theme, and simpler than creating a specific partial).
 $separator = ' ' . $options['separator'] . " \n";
+$html = $this->navigation()->breadcrumbs($breadcrumbs)->setSeparator($separator);
+if ($options['current'] && $lastLinkPos = mb_strrpos($html, '</a>' . $separator)):
+    $html = mb_substr($html, 0, $lastLinkPos + 4 + mb_strlen($separator)) . '<span class="active">' . mb_substr($html, $lastLinkPos + 4 + mb_strlen($separator)) . '</span>';
+endif;
 ?>
 
 <nav id="breadcrumb" class="breadcrumbs">
-    <?php
-    // Remove the last crumb, that should not be a link.
-    if ($options['current']):
-        $last = array_pop($crumbs);
-    endif;
-
-    foreach ($crumbs as &$crumb):
-        $crumb = $hyperlink($crumb['label'], $crumb['url']);
-    endforeach;
-    echo implode($separator, $crumbs);
-
-    if ($options['current']):
-        echo $separator;
-    ?>
-        <span class="active"><?= $escape($last['label']) ?></span>
-    <?php endif; ?>
+    <?= $html ?>
 </nav>

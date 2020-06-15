@@ -1,6 +1,7 @@
 <?php
 namespace Next\View\Helper;
 
+use Zend\Navigation\Navigation;
 use Zend\Navigation\Page\AbstractPage;
 use Zend\Router\RouteMatch;
 use Zend\View\Helper\AbstractHelper;
@@ -14,9 +15,9 @@ class Breadcrumbs extends AbstractHelper
      *
      * For pages, the output is the same than the default Omeka breadcrumbs.
      *
-     * @todo Manage the case when there is no default site.
      * @todo Manage the case where the home page is not a page and the editor doesn't want breadcrumb on it.
-     * @todo Use the standard Breadcrumbs helper instead of conversion into a partial? It will rights and translator. See \Zend\View\Helper\Navigation\Breadcrumbs
+     *
+     * @link https://docs.laminas.dev/laminas-navigation/helpers/breadcrumbs/
      *
      * @params array $options Managed options:
      * - home (bool) Prepend home (true by default)
@@ -42,19 +43,15 @@ class Breadcrumbs extends AbstractHelper
          */
         $view = $this->getView();
 
-        $vars = $view->vars();
-        if (isset($vars->site)) {
-            $site = $vars->site;
-        } else {
-            // In some case, there is no vars (see ItemController for search).
-            $site = $view->currentSite();
-            if (!$site) {
-                return '';
-            }
+        // In some case, there is no vars (see ItemController for search).
+        $site = $this->currentSite();
+        if (!$site) {
+            return '';
         }
 
         // To set the site slug make creation of next urls quicker internally.
         $siteSlug = $site->slug();
+        $vars = $view->vars();
 
         $plugins = $view->getHelperPluginManager();
         $translate = $plugins->get('translate');
@@ -94,13 +91,15 @@ class Breadcrumbs extends AbstractHelper
         $routeMatch = $site->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
+        // Use a standard Zend/Laminas navigation breadcrumb.
+        // The crumb is built flat and converted into a hierarchical one below.
         $crumbs = [];
 
         if ($options['home']) {
             $crumbs[] = [
-                'resource' => $site,
-                'url' => $site->siteUrl($siteSlug),
                 'label' => $translate('Home'), // @translate
+                'uri' => $site->siteUrl($siteSlug),
+                'resource' => $site,
             ];
         }
 
@@ -125,9 +124,9 @@ class Breadcrumbs extends AbstractHelper
 
                 if (!$options['home'] != $options['current']) {
                     $crumbs[] = [
-                        'resource' => $site,
-                        'url' => $site->siteUrl($siteSlug),
                         'label' => $translate('Home'),
+                        'uri' => $site->siteUrl($siteSlug),
+                        'resource' => $site,
                     ];
                 }
                 break;
@@ -138,24 +137,24 @@ class Breadcrumbs extends AbstractHelper
                 if ($action === 'search') {
                     if ($options['collections']) {
                         $crumbs[] = [
-                            'resource' => null,
-                            'url' => $url(
+                            'label' => $translate('Collections'),
+                            'uri' => $url(
                                 'site/resource',
                                 ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
                             ),
-                            'label' => $translate('Collections'),
+                            'resource' => null,
                         ];
                     }
 
                     $controller = $this->extractController($routeMatch);
                     $label = $this->extractLabel($controller);
                     $crumbs[] = [
-                        'resource' => null,
-                        'url' => $url(
+                        'label' => $translate($label),
+                        'uri' => $url(
                             $matchedRouteName,
                             ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
                         ),
-                        'label' => $translate($label),
+                        'resource' => null,
                     ];
                     if ($options['current']) {
                         $label = $translate('Search'); // @translate
@@ -164,12 +163,12 @@ class Breadcrumbs extends AbstractHelper
                     $controller = $this->extractController($routeMatch);
                     if ($options['collections'] && $controller !== 'item-set') {
                         $crumbs[] = [
-                            'resource' => null,
-                            'url' => $url(
+                            'label' => $translate('Collections'),
+                            'uri' => $url(
                                 'site/resource',
                                 ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
                             ),
-                            'label' => $translate('Collections'),
+                            'resource' => null,
                         ];
                     }
 
@@ -190,9 +189,9 @@ class Breadcrumbs extends AbstractHelper
                 // In case of an exception in a block, the resource may be null.
                 if (!$resource) {
                     $crumbs[] = [
-                        'resource' => null,
-                        'url' => $view->serverUrl(true),
                         'label' => 'Error', // @translate
+                        'uri' => $view->serverUrl(true),
+                        'resource' => null,
                     ];
                     break;
                 }
@@ -204,40 +203,40 @@ class Breadcrumbs extends AbstractHelper
                         if ($options['itemset']) {
                             if ($options['collections']) {
                                 $crumbs[] = [
-                                    'resource' => null,
-                                    'url' => $url(
+                                    'label' => $translate('Collections'),
+                                    'uri' => $url(
                                         'site/resource',
                                         ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
                                     ),
-                                    'label' => $translate('Collections'),
+                                    'resource' => null,
                                 ];
                             }
 
                             $itemSet = $view->primaryItemSet($item, $site);
                             if ($itemSet) {
                                 $crumbs[] = [
-                                    'resource' => $itemSet,
-                                    'url' => $itemSet->siteUrl($siteSlug),
                                     'label' => $itemSet->displayTitle(),
+                                    'uri' => $itemSet->siteUrl($siteSlug),
+                                    'resource' => $itemSet,
                                 ];
                             }
                         }
                         $crumbs[] = [
-                            'resource' => $item,
-                            'url' => $item->siteUrl($siteSlug),
                             'label' => $item->displayTitle(),
+                            'uri' => $item->siteUrl($siteSlug),
+                            'resource' => $item,
                         ];
                         break;
 
                     case 'items':
                         if ($options['collections']) {
                             $crumbs[] = [
-                                'resource' => null,
-                                'url' => $url(
+                                'label' => $translate('Collections'),
+                                'uri' => $url(
                                     'site/resource',
                                     ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
                                 ),
-                                'label' => $translate('Collections'),
+                                'resource' => null,
                             ];
                         }
 
@@ -245,9 +244,9 @@ class Breadcrumbs extends AbstractHelper
                             $itemSet = $view->primaryItemSet($resource, $site);
                             if ($itemSet) {
                                 $crumbs[] = [
-                                    'resource' => $itemSet,
-                                    'url' => $itemSet->siteUrl($siteSlug),
                                     'label' => $itemSet->displayTitle(),
+                                    'uri' => $itemSet->siteUrl($siteSlug),
+                                    'resource' => $itemSet,
                                 ];
                             }
                         }
@@ -257,12 +256,12 @@ class Breadcrumbs extends AbstractHelper
                     default:
                         if ($options['collections']) {
                             $crumbs[] = [
-                                'resource' => null,
-                                'url' => $url(
+                                'label' => $translate('Collections'),
+                                'uri' => $url(
                                     'site/resource',
                                     ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
                                 ),
-                                'label' => $translate('Collections'),
+                                'resource' => null,
                             ];
                         }
                         break;
@@ -275,12 +274,12 @@ class Breadcrumbs extends AbstractHelper
             case 'site/item-set':
                 if ($options['collections']) {
                     $crumbs[] = [
-                        'resource' => null,
-                        'url' => $url(
+                        'label' => $translate('Collections'),
+                        'uri' => $url(
                             'site/resource',
                             ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
                         ),
-                        'label' => $translate('Collections'),
+                        'resource' => null,
                     ];
                 }
 
@@ -303,9 +302,9 @@ class Breadcrumbs extends AbstractHelper
                 // In case of an exception in a block, the page may be null.
                 if (!$page) {
                     $crumbs[] = [
-                        'resource' => null,
-                        'url' => $view->serverUrl(true),
                         'label' => 'Error', // @translate
+                        'uri' => $view->serverUrl(true),
+                        'resource' => null,
                     ];
                     break;
                 }
@@ -331,6 +330,7 @@ class Breadcrumbs extends AbstractHelper
                  * @var \Zend\View\Helper\Navigation $nav
                  * @var \Zend\Navigation\Navigation $container
                  * @see \Zend\View\Helper\Navigation\Breadcrumbs::renderPartialModel()
+                 * @todo Use the container directly, prepending root pages.
                  */
                 $nav = $site->publicNav();
                 $container = $nav->getContainer();
@@ -341,9 +341,9 @@ class Breadcrumbs extends AbstractHelper
                     $parents = [];
                     if ($options['current']) {
                         $parents[] = [
-                            'resource' => $page,
-                            'url' => $active->getHref(),
                             'label' => $active->getLabel(),
+                            'uri' => $active->getHref(),
+                            'resource' => $page,
                         ];
                     }
 
@@ -353,9 +353,9 @@ class Breadcrumbs extends AbstractHelper
                         }
 
                         $parents[] = [
-                            'resource' => null,
-                            'url' => $parent->getHref(),
                             'label' => $parent->getLabel(),
+                            'uri' => $parent->getHref(),
+                            'resource' => null,
                         ];
 
                         // Break if at the root of the given container.
@@ -380,9 +380,9 @@ class Breadcrumbs extends AbstractHelper
                     $setting = $plugins->get('setting');
                     $label = $siteSetting('guest_dashboard_label') ?: $setting('guest_dashboard_label');
                     $crumbs[] = [
-                        'resource' => null,
-                        'url' => $url('site/guest', ['site-slug' => $siteSlug, 'action' => 'me']),
                         'label' => $label ?: $translate('Dashboard'), // @translate
+                        'uri' => $url('site/guest', ['site-slug' => $siteSlug, 'action' => 'me']),
+                        'resource' => null,
                     ];
                 }
                 // For compatibility with old module GuestUser.
@@ -390,9 +390,9 @@ class Breadcrumbs extends AbstractHelper
                     $setting = $plugins->get('setting');
                     $label = $siteSetting('guest_dashboard_label') ?: $setting('guest_dashboard_label');
                     $crumbs[] = [
-                        'resource' => null,
-                        'url' => $url('site/guest-user', ['site-slug' => $siteSlug, 'action' => 'me']),
                         'label' => $label ?: $translate('Dashboard'), // @translate
+                        'uri' => $url('site/guest-user', ['site-slug' => $siteSlug, 'action' => 'me']),
+                        'resource' => null,
                     ];
                 }
                 if ($options['current']) {
@@ -452,15 +452,15 @@ class Breadcrumbs extends AbstractHelper
                 $label = $siteSetting('guest_dashboard_label') ?: $setting('guest_dashboard_label');
                 if ($matchedRouteName === 'site/guest-user/guest') {
                     $crumbs[] = [
+                        'label' => $label ?: $translate('Dashboard'), // @translate
+                        'uri' => $url('site/guest-user', ['site-slug' => $siteSlug]),
                         'resource' => null,
-                        'url' => $url('site/guest-user', ['site-slug' => $siteSlug]),
-                        'label' => $$label ?: $translate('Dashboard'), // @translate
                     ];
                 } else {
                     $crumbs[] = [
+                        'label' => $label ?: $translate('Dashboard'), // @translate
+                        'uri' => $url('site/guest', ['site-slug' => $siteSlug]),
                         'resource' => null,
-                        'url' => $url('site/guest', ['site-slug' => $siteSlug]),
-                        'label' => $$label ?: $translate('Dashboard'), // @translate
                     ];
                 }
                 if ($options['current']) {
@@ -503,20 +503,27 @@ class Breadcrumbs extends AbstractHelper
 
         if ($options['current'] && isset($label)) {
             $crumbs[] = [
-                'resource' => null,
-                'url' => $view->serverUrl(true),
                 'label' => $label,
+                'uri' => $view->serverUrl(true),
+                'resource' => null,
             ];
         }
 
         $template = $options['template'];
         unset($options['template']);
 
+        /** @see \Omeka\Api\Representation\SiteRepresentation::publicNav() */
+
+        $nested = $this->nestedPages($crumbs);
+
         return $view->partial(
             $template,
             [
-                'crumbs' => $crumbs,
+                'site' => $site,
+                'breadcrumbs' => new Navigation($nested),
                 'options' => $options,
+                // Keep the crumbs for compatibility with old themes.
+                'crumbs' => $crumbs,
             ]
         );
     }
@@ -547,5 +554,44 @@ class Breadcrumbs extends AbstractHelper
         return isset($labels[$controller])
             ? $labels[$controller]
             : $controller;
+    }
+
+    protected function nestedPages($flat)
+    {
+        $nested = [];
+        $last = count($flat) - 1;
+        foreach (array_values($flat) as $level => $sub) {
+            if ($level === 0) {
+                $nested[] = $sub;
+                $current = &$nested[0];
+            } else {
+                $current = $sub;
+            }
+            $current['pages'] = [];
+            // Resource should be an instance of \Zend\Permissions\Acl\Resource\ResourceInterface.
+            unset($current['resource']);
+            if ($level !== $last) {
+                $current['pages'][] = null;
+                $current = &$current['pages'][0];
+            } else {
+                // Active is required at least for the last page, else the
+                // container won't render anything.
+                $current['active'] = true;
+            }
+        }
+        return $nested;
+    }
+
+    /**
+     * Get the current site from the view.
+     *
+     * @return \Omeka\Api\Representation\SiteRepresentation|null
+     */
+    protected function currentSite()
+    {
+        $view = $this->getView();
+        return isset($view->site)
+            ? $view->site
+            : $view->getHelperPluginManager()->get('Zend\View\Helper\ViewModel')->getRoot()->getVariable('site');
     }
 }
