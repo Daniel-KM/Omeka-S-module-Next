@@ -73,3 +73,15 @@ if (version_compare($oldVersion, '3.1.2.14', '<')) {
     );
     $settings->delete('next_breadcrumbs_property_itemset');
 }
+
+if (version_compare($oldVersion, '3.1.2.30', '<')) {
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
+    $sites = $api->search('sites')->getContent();
+    foreach ($sites as $site) {
+        $siteSettings->setTargetId($site->id());
+        $string = $siteSettings->get('next_breadcrumbs_prepend');
+        $siteSettings->set('next_breadcrumbs_prepend',
+            $this->filterBreadcrumbsPrepend($string));
+    }
+}

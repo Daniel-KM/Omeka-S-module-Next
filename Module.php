@@ -548,8 +548,6 @@ class Module extends AbstractModule
 
         $services = $this->getServiceLocator();
 
-        $space = strtolower(__NAMESPACE__);
-
         $settings = $services->get('Omeka\Settings\Site');
         $orders = $settings->get('next_items_order_for_itemsets') ?: [];
         $ordersString = '';
@@ -561,15 +559,25 @@ class Module extends AbstractModule
             $ordersString .= "\n";
         }
 
+        $settings = $services->get('Omeka\Settings\Site');
+        $prepends = $settings->get('next_breadcrumbs_prepend') ?: [];
+        $prependsString = '';
+        foreach ($prepends as $prepend) {
+            $prependsString .= $prepend['uri'] . ' ' . $prepend['label'] . "\n";
+        }
+
         /**
          * @var \Omeka\Form\Element\RestoreTextarea $siteGroupsElement
          * @var \Internationalisation\Form\SettingsFieldset $fieldset
          */
         $fieldset = $event->getTarget()
-            ->get($space);
+            ->get('next');
         $fieldset
             ->get('next_items_order_for_itemsets')
             ->setValue($ordersString);
+        $fieldset
+            ->get('next_breadcrumbs_prepend')
+            ->setValue($prependsString);
     }
 
     public function handleSiteSettingsFilters(Event $event)
@@ -591,6 +599,18 @@ class Module extends AbstractModule
             ->add([
                 'name' => 'next_breadcrumbs_crumbs',
                 'required' => false,
+            ])
+            ->add([
+                'name' => 'next_breadcrumbs_prepend',
+                'required' => false,
+                'filters' => [
+                    [
+                        'name' => \Zend\Filter\Callback::class,
+                        'options' => [
+                            'callback' => [$this, 'filterBreadcrumbsPrepend'],
+                        ],
+                    ],
+                ],
             ])
         ;
     }
@@ -621,6 +641,17 @@ class Module extends AbstractModule
         ksort($result);
 
         return $result;
+    }
+
+    public function filterBreadcrumbsPrepend($string)
+    {
+        return array_filter(array_map(function ($v) {
+            list($uri, $label) = array_map('trim', explode(' ', $v, 2));
+            if (!strlen($label)) {
+                $label = $uri;
+            }
+            return ['label' => $label, 'uri' => $uri];
+        }, $this->stringToList($string)));
     }
 
     /**
