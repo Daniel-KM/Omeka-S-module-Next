@@ -185,8 +185,10 @@ class Module extends AbstractModule
         $query = $event->getParam('request')->getContent();
 
         // Add the random sort.
-        if (isset($query['sort_by']) && $query['sort_by'] === 'random') {
-            $qb->orderBy('RAND()');
+        if (\Omeka\Module::VERSION < '1.4.0') {
+            if (isset($query['sort_by']) && $query['sort_by'] === 'random') {
+                $qb->orderBy('RAND()');
+            }
         }
 
         // Advanced property search.
