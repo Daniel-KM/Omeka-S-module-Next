@@ -447,6 +447,7 @@ class Breadcrumbs extends AbstractHelper
 
             case 'site/guest/guest':
             case 'site/guest/basket':
+            case 'site/guest/selection':
             case 'site/guest-user/guest':
                 $setting = $plugins->get('setting');
                 $label = $siteSetting('guest_dashboard_label') ?: $setting('guest_dashboard_label');
@@ -480,6 +481,9 @@ class Breadcrumbs extends AbstractHelper
                             break;
                         case 'basket':
                             $label = $translate('Basket'); // @translate
+                            break;
+                        case 'selection':
+                            $label = $translate('Selection'); // @translate
                             break;
                         default:
                             $label = $translate('User'); // @translate
