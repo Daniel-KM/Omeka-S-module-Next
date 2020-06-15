@@ -77,9 +77,9 @@ $config = [
         'settings' => [
             'next_property_itemset' => '',
             'next_columns_browse' => [
-                'resource_class_label',
-                'owner_name',
-                'created',
+                'resource_class_label' => 'resource_class_label',
+                'owner_name' => 'owner_name',
+                'created' => 'created',
             ],
             'next_prevnext_disable' => false,
         ],
@@ -92,7 +92,7 @@ $config = [
                 'current',
                 'itemset',
             ],
-            // TODO Convert this setting into an array of links for breadcrumbs.
+            // TODO Convert this setting into an array of links for breadcrumbs. Or better, into a Laminas nav.
             'next_breadcrumbs_prepend' => '',
             'next_breadcrumbs_separator' => '&gt;',
         ],
