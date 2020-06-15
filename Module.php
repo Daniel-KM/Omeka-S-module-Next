@@ -258,8 +258,18 @@ class Module extends AbstractModule
             ));
         }
 
-        if (isset($query['site_id'])) {
-            $qb->andWhere($expr->eq($alias . '.site', $query['site_id']));
+        if (\Omeka\Module::VERSION < '2.0.0') {
+            if (isset($query['site_id']) && is_numeric($query['site_id'])) {
+                $siteAlias = $adapter->createAlias();
+                $qb->innerJoin(
+                    $alias . '.site',
+                    $siteAlias
+                );
+                $qb->andWhere($expr->eq(
+                    $siteAlias . '.id',
+                    $adapter->createNamedParameter($qb, $query['site_id']))
+                );
+            }
         }
 
         if (isset($query['site_slug'])) {
@@ -269,7 +279,7 @@ class Module extends AbstractModule
                 $siteAlias
             );
             $qb->andWhere($expr->eq(
-                "$siteAlias.slug",
+                $siteAlias . '.slug',
                 $adapter->createNamedParameter($qb, $query['site_slug'])
             ));
         }
