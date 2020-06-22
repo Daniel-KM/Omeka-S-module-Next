@@ -93,6 +93,7 @@ $config = [
                 'itemset',
             ],
             'next_breadcrumbs_prepend' => [],
+            'next_breadcrumbs_collections_url' => '',
             'next_breadcrumbs_separator' => '&gt;',
         ],
     ],

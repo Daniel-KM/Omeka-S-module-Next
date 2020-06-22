@@ -80,6 +80,18 @@ class SiteSettingsFieldset extends Fieldset
                 ],
             ])
             ->add([
+                'name' => 'next_breadcrumbs_collections_url',
+                'type' => Element\Text::class,
+                'options' => [
+                    'label' => 'Url for collections', // @translate
+                    'info' => 'The url to use for the link "Collections", if set above. Let empty to use the default one.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'next_breadcrumbs_collections_url',
+                    'placeholder' => '/s/my-site/search?resource-type=item_sets',
+                ],
+            ])
+            ->add([
                 'name' => 'next_breadcrumbs_separator',
                 'type' => Element\Text::class,
                 'options' => [
