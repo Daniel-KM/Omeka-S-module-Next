@@ -258,7 +258,7 @@ class Module extends AbstractModule
             ));
         }
 
-        if (\Omeka\Module::VERSION < '2.0.0') {
+        if ($isOldOmeka) {
             if (isset($query['site_id']) && is_numeric($query['site_id'])) {
                 $siteAlias = $adapter->createAlias();
                 $qb->innerJoin(
@@ -481,7 +481,14 @@ class Module extends AbstractModule
         $ui = $params->fromRoute('__ADMIN__') ? 'admin' : 'public';
         // Why not use $this->getServiceLocator()->get('Request')->getServer()->get('REQUEST_URI')?
         $session->lastBrowsePage[$ui] = $_SERVER['REQUEST_URI'];
-        $session->lastQuery[$ui] = $params->fromQuery();
+        // Remove any csrf key.
+        $query = $params->fromQuery();
+        foreach (array_keys($query) as $key) {
+            if (substr($key, -4) === 'csrf') {
+                unset($query[$key]);
+            }
+        }
+        $session->lastQuery[$ui] = $query;
     }
 
     public function handleMainSettingsFilters(Event $event)
