@@ -260,9 +260,12 @@ class Breadcrumbs extends AbstractHelper
 
             case 'site/page':
                 /** @var \Omeka\Api\Representation\SitePageRepresentation $page */
-                $page = $vars->page;
-                // In case of an exception in a block, the page may be null.
-                if (!$page) {
+                // The page should exist because the breadcrumbs use its view.
+                // But in case of an exception in a block, the page may be null.
+                try {
+                    // Api doesn't allow to search one page by slug.
+                    $page = $view->api()->read('site_pages', ['site' => $site->id(), 'slug' => $view->params()->fromRoute('page-slug')])->getContent();
+                } catch (\Omeka\Api\Exception\NotFoundException $e) {
                     $this->crumbs[] = [
                         'label' => 'Error', // @translate
                         'uri' => $view->serverUrl(true),
