@@ -56,10 +56,10 @@ class SiteSettingsFieldset extends Fieldset
                     'label' => 'Crumbs', // @translate
                     'value_options' => [
                         'home' => 'Prepend home', // @translate
-                        'homepage' => 'Display on home page', // @translate
-                        'current' => 'Append current resource', // @translate
-                        'itemset' => 'Include main item set for item', // @translate,
                         'collections' => 'Include "Collections"', // @translate,
+                        'itemset' => 'Include main item set for item', // @translate,
+                        'current' => 'Append current resource', // @translate
+                        'homepage' => 'Display on home page', // @translate
                     ],
                 ],
                 'attributes' => [

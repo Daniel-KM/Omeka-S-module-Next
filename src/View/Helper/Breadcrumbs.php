@@ -21,15 +21,17 @@ class Breadcrumbs extends AbstractHelper
      *
      * @params array $options Managed options:
      * - home (bool) Prepend home (true by default)
-     * - homepage (bool) Display the breadcrumbs on the home page (false by
-     *   default)
      * - prepend (array) A list of crumbs to insert after home
-     * - current (bool) Append current resource if any (true by default; always
-     *   true for pages currently)
+     * - collections (bool) Insert a link to the list of collections (item-set/browse
+     *   or search page for item sets if set).
      * - itemset (bool) Insert the first item set as crumb for an item (true by
      *   default)
+     * - current (bool) Append current resource if any (true by default; always
+     *   true for pages currently)
      * - property_itemset (string) Property where is set the first parent item
      *   set of an item when they are multiple.
+     * - homepage (bool) Display the breadcrumbs on the home page (false by
+     *   default)
      * - separator (string) Separator, escaped for html (default is "&gt;")
      * - template (string) The partial to use (default: "common/breadcrumbs")
      * Options are passed to the partial too.
@@ -63,10 +65,10 @@ class Breadcrumbs extends AbstractHelper
         if (is_array($crumbsSettings)) {
             $crumbsSettings = array_fill_keys($crumbsSettings, true) + [
                 'home' => false,
-                'homepage' => false,
-                'current' => false,
-                'itemset' => false,
                 'collections' => false,
+                'itemset' => false,
+                'current' => false,
+                'homepage' => false,
             ];
         } else {
             // This param has never been set in site settings, so use default
@@ -76,12 +78,12 @@ class Breadcrumbs extends AbstractHelper
 
         $defaults = $crumbsSettings + [
             'home' => true,
-            'homepage' => false,
             'prepend' => [],
-            'current' => true,
-            'itemset' => true,
             'collections' => true,
+            'itemset' => true,
+            'current' => true,
             'property_itemset' => $siteSetting('next_breadcrumbs_property_itemset'),
+            'homepage' => false,
             'separator' => $siteSetting('next_breadcrumbs_separator', '&gt;'),
             'template' => $this->defaultTemplate,
         ];
@@ -371,6 +373,38 @@ class Breadcrumbs extends AbstractHelper
                 // The page is not in the navigation menu, so it's a root page.
                 elseif ($options['current']) {
                     $label = $page->title();
+                }
+                break;
+
+            case substr($matchedRouteName, 0, 12) === 'search-page-':
+                if ($options['collections']) {
+                    $crumbs[] = [
+                        'label' => $translate('Collections'),
+                        'uri' => $url(
+                            'site/resource',
+                            ['site-slug' => $siteSlug, 'controller' => 'item-set', 'action' => 'browse']
+                            ),
+                        'resource' => null,
+                    ];
+                }
+                // Manage the case where the search page is used for item set,
+                // like item/browse for item-set/show.
+                if ($options['itemset']) {
+                    $itemSet = $routeMatch->getParam('item-set-id', null) ?: $view->params()->fromQuery('collection');
+                } else {
+                    $itemSet = null;
+                }
+                if ($itemSet) {
+                    $itemSet = $view->api()->read('item_sets', ['id' => $itemSet])->getContent();
+                    $crumbs[] = [
+                        'label' => $itemSet->displayTitle(),
+                        'uri' => $itemSet->siteUrl($siteSlug),
+                        'resource' => $itemSet,
+                    ];
+                    // Display page?
+                }
+                if ($options['current']) {
+                    $label = $translate('Search'); // @translate
                 }
                 break;
 
