@@ -85,3 +85,19 @@ if (version_compare($oldVersion, '3.1.2.30', '<')) {
             $this->filterBreadcrumbsPrepend($string));
     }
 }
+
+if (version_compare($oldVersion, '3.1.2.31', '<')) {
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
+    $sites = $api->search('sites')->getContent();
+    foreach ($sites as $site) {
+        $siteSettings->setTargetId($site->id());
+        $crumbs = $siteSettings->get('next_breadcrumbs_crumbs', []);
+        $homepage = array_search('homepage', $crumbs);
+        if ($homepage !== false) {
+            unset($crumbs[$homepage]);
+            $siteSettings->set('next_breadcrumbs_crumbs', $crumbs);
+            $siteSettings->set('next_breadcrumbs_homepage', true);
+        }
+    }
+}

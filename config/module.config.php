@@ -88,13 +88,14 @@ $config = [
             'next_search_used_terms' => true,
             'next_breadcrumbs_crumbs' => [
                 'home',
-                // 'homepage',
-                'current',
+                'collections',
                 'itemset',
+                'current',
             ],
             'next_breadcrumbs_prepend' => [],
             'next_breadcrumbs_collections_url' => '',
             'next_breadcrumbs_separator' => '&gt;',
+            'next_breadcrumbs_homepage' => false,
         ],
     ],
 ];

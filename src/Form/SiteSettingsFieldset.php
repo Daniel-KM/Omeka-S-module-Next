@@ -59,7 +59,6 @@ class SiteSettingsFieldset extends Fieldset
                         'collections' => 'Include "Collections"', // @translate,
                         'itemset' => 'Include main item set for item', // @translate,
                         'current' => 'Append current resource', // @translate
-                        'homepage' => 'Display on home page', // @translate
                     ],
                 ],
                 'attributes' => [
@@ -101,6 +100,16 @@ class SiteSettingsFieldset extends Fieldset
                 'attributes' => [
                     'id' => 'next_breadcrumbs_separator',
                     'placeholder' => '&gt;',
+                ],
+            ])
+            ->add([
+                'name' => 'next_breadcrumbs_homepage',
+                'type' => Element\Checkbox::class,
+                'options' => [
+                    'label' => 'Display on home page', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'next_breadcrumbs_homepage',
                 ],
             ]);
     }

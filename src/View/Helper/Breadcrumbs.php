@@ -70,7 +70,6 @@ class Breadcrumbs extends AbstractHelper
                 'collections' => false,
                 'itemset' => false,
                 'current' => false,
-                'homepage' => false,
             ];
         } else {
             // This param has never been set in site settings, so use default
