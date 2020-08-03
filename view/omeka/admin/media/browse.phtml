@@ -111,7 +111,13 @@ $userIsAllowedBatchDelete = $this->userIsAllowed('Omeka\Api\Adapter\MediaAdapter
                     echo $escape($translate($media->displayResourceClassLabel()));
                     break;
                 case 'resource_template_label':
-                    echo $escape($translate($media->displayResourceTemplateLabel()));
+                    if (method_exists($media, 'displayResourceTemplateLabel')):
+                        $label = $media->displayResourceTemplateLabel();
+                    else:
+                        $template = $media->resourceTemplate();
+                        $label = $template ? $template->label() : null;
+                    endif;
+                    echo $label ? $escape($translate($label)) : '';
                     break;
                 case 'owner_name':
                     if ($owner = $media->owner()) {
