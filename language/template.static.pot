@@ -1,0 +1,11 @@
+msgid "First"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Last"
+msgstr ""

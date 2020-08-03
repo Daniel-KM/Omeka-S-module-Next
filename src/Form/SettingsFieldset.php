@@ -37,7 +37,7 @@ class SettingsFieldset extends Fieldset
                 'type' => PropertySelect::class,
                 'options' => [
                     'label' => 'Property to set primary item set', // @translate
-                    'info' => 'When an item is included in multiple item sets, the first one may be determined by this property.', // @translate
+                    'info' => 'When an item is included in multiple item sets, the main one may be determined by this property.', // @translate
                     'empty_option' => '',
                     'term_as_value' => true,
                 ],

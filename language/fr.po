@@ -3,29 +3,29 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-03 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-08-06 11:35+0200\n"
+"Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
+"Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4\n"
 
 #: src/Generic/AbstractModule.php:601
 #, php-format
 msgid "This module requires the module \"%s\"."
-msgstr ""
+msgstr "Ce module requiert le module « %s »."
 
 #: src/Generic/AbstractModule.php:621
 #, php-format
 msgid "This module requires modules \"%s\"."
-msgstr ""
+msgstr "Ce module requiert les modules « %s »."
 
 #: src/Generic/AbstractModule.php:689
 #, php-format
@@ -33,114 +33,120 @@ msgid ""
 "The module \"%s\" was automatically deactivated because the dependencies are "
 "unavailable."
 msgstr ""
+"Le module « %s » a été automatiquement désactivé car ses dépendances ne sont "
+"plus disponibles."
 
 #: src/Site/BlockLayout/SimplePage.php:89
 msgid "Choose any page from any site."
-msgstr ""
+msgstr "Choisir une page de n’importe quel site."
 
 #: src/Site/BlockLayout/SimplePage.php:90
 msgid ""
 "If a page of a private site is selected, it will be hidden on the public "
 "side."
 msgstr ""
+"Si une page d’un site privé est choisie, elle sera cachée dans la partie "
+"publique."
 
 #: src/Site/BlockLayout/SimplePage.php:91
 msgid "The current page and recursive pages are forbidden."
 msgstr ""
+"La page en cours ou qui se trouve récursivement dans une autre page ne peut "
+"être choisie."
 
 #: src/View/Helper/Breadcrumbs.php:373 src/View/Helper/Breadcrumbs.php:383
 #: src/View/Helper/Breadcrumbs.php:411 src/View/Helper/Breadcrumbs.php:446
 #: src/View/Helper/Breadcrumbs.php:452
 msgid "Dashboard"
-msgstr ""
+msgstr "Tableau de bord"
 
 #: src/View/Helper/Breadcrumbs.php:389 src/View/Helper/Breadcrumbs.php:473
 msgid "Basket"
-msgstr ""
+msgstr "Panier"
 
 #: src/View/Helper/Breadcrumbs.php:397
 msgid "Collecting"
-msgstr ""
+msgstr "Collectes"
 
 #: src/View/Helper/Breadcrumbs.php:414
 msgid "Login"
-msgstr ""
+msgstr "Identifiez-vous"
 
 #: src/View/Helper/Breadcrumbs.php:417
 msgid "Register"
-msgstr ""
+msgstr "Inscrivez-vous"
 
 #: src/View/Helper/Breadcrumbs.php:420
 msgid "Authentication error"
-msgstr ""
+msgstr "Erreur d’authentification"
 
 #: src/View/Helper/Breadcrumbs.php:464
 msgid "Update account"
-msgstr ""
+msgstr "Mettre à jour le compte"
 
 #: src/View/Helper/Breadcrumbs.php:467
 msgid "Update email"
-msgstr ""
+msgstr "Mettre à jour l’email"
 
 #: src/View/Helper/Breadcrumbs.php:470
 msgid "Accept terms"
-msgstr ""
+msgstr "Accepter les termes et conditions"
 
 #: src/View/Helper/Breadcrumbs.php:476
 msgid "Selection"
-msgstr ""
+msgstr "Sélection"
 
 #: src/View/Helper/Breadcrumbs.php:493
 msgid "Current page"
-msgstr ""
+msgstr "Page actuelle"
 
 #: src/View/Helper/Breadcrumbs.php:528
 msgid "Collections"
-msgstr ""
+msgstr "Collections"
 
 #: src/View/Helper/SearchFilters.php:36
 #: view/common/advanced-search/properties.phtml:84
 msgid "starts with"
-msgstr ""
+msgstr "commence par"
 
 #: src/View/Helper/SearchFilters.php:37
 #: view/common/advanced-search/properties.phtml:85
 msgid "does not start with"
-msgstr ""
+msgstr "ne commence pas par"
 
 #: src/View/Helper/SearchFilters.php:38
 #: view/common/advanced-search/properties.phtml:86
 msgid "ends with"
-msgstr ""
+msgstr "se termine par"
 
 #: src/View/Helper/SearchFilters.php:39
 #: view/common/advanced-search/properties.phtml:87
 msgid "does not end with"
-msgstr ""
+msgstr "ne se termine pas par"
 
 #: view/admin/media/show-details-renderer.phtml:12
 msgid "Renderer"
-msgstr ""
+msgstr "Rendu"
 
 #: view/common/browse-previous-next.phtml:15
 msgid "Previous resource"
-msgstr ""
+msgstr "Ressource précédente"
 
 #: view/common/browse-previous-next.phtml:17
 msgid "No previous resource"
-msgstr ""
+msgstr "Pas de ressource précédente"
 
 #: view/common/browse-previous-next.phtml:21
 msgid "Back to last browse page"
-msgstr ""
+msgstr "Revenir à la dernière page"
 
 #: view/common/browse-previous-next.phtml:25
 msgid "Next resource"
-msgstr ""
+msgstr "Ressource suivante"
 
 #: view/common/browse-previous-next.phtml:27
 msgid "No next resource"
-msgstr ""
+msgstr "Pas de ressource suivante"
 
 #: view/omeka/admin/item-set/browse.phtml:179
 #: view/omeka/admin/item-set/browse.phtml:197
@@ -148,65 +154,74 @@ msgstr ""
 msgid ""
 "%s: this action will permanently delete %s item sets and cannot be undone."
 msgstr ""
+"%s : cette action supprimera les %s collections de manière définitive et ne "
+"pourra pas être annulée."
 
 #: view/omeka/admin/item-set/show.phtml:35 view/omeka/admin/item/show.phtml:24
 #: view/omeka/admin/media/show.phtml:20
 msgid "Public view"
-msgstr ""
+msgstr "Vue publique"
 
 #: view/omeka/admin/item/browse.phtml:179
 #: view/omeka/admin/item/browse.phtml:197
 #, php-format
 msgid "%s: this action will permanently delete %s items and cannot be undone."
 msgstr ""
+"%s : cette action supprimera les %s contenus de manière définitive et ne "
+"pourra pas être annulée."
 
 #: view/omeka/admin/job/browse.phtml:40
 msgid "Id / Params"
-msgstr ""
+msgstr "Id / Paramètres"
 
 #: view/omeka/admin/job/browse.phtml:43
 msgid "Status / Log"
-msgstr ""
+msgstr "Statut / Journal"
 
 #: view/omeka/admin/media/browse.phtml:173
 #: view/omeka/admin/media/browse.phtml:191
 #, php-format
 msgid "%s: this action will permanently delete %s medias and cannot be undone."
 msgstr ""
+"%s : cette action supprimera %s médias de manière définitive et ne pourra "
+"pas être annulée."
 
 #: view/omeka/site-admin/index/users.phtml:43
 #: view/omeka/site-admin/index/users.phtml:89
 msgid "User to be removed"
-msgstr ""
+msgstr "Utilisateur à supprimer"
 
 #: data/scripts/task.php:33
 #, php-format
 msgid "The script \"%s\" must be run from the command line."
-msgstr ""
+msgstr "Le script « %s » doit être lancé depuis la ligne de commandes."
 
 #: data/scripts/task.php:60
 msgid ""
 "Required options: -t --task / -u --user-id\n"
 "Optional option: -b --base-path"
 msgstr ""
+"Options obligatoires : -t --task / -u --user-id\n"
+"Option facultative : -b --base-path"
 
 #: data/scripts/task.php:69
 msgid "The task name must be set and exist."
-msgstr ""
+msgstr "Le nom de la tâche doit être indiqué et exister."
 
 #: data/scripts/task.php:94
 #, php-format
 msgid "The task \"%s\" should be set and exist."
-msgstr ""
+msgstr "La tâche « %s » doit être définie et exister."
 
 #: data/scripts/task.php:102
 msgid "The user id must be set and exist."
-msgstr ""
+msgstr "L’identifiant de l’utilisateur doit être indiqué et exister."
 
 #: data/scripts/task.php:111
 #, php-format
 msgid "The user #%d is set for the task \"%s\", but doesn’t exist."
 msgstr ""
+"L’utilisateur #%d est défini pour la tâche « %s », mais il n’existe pas."
 
 #: data/scripts/upgrade.php:28
 #, php-format
@@ -214,6 +229,9 @@ msgid ""
 "Some features were moved and improved in a new module %sBulkEdit%s: trim "
 "metadata and deduplicate metadata. They are still available in module Next."
 msgstr ""
+"Certaines fonctionnalités ont été déplacées dans le nouveau module %sBulkEdit"
+"%s : nettoyer les espaces et dédoublonner les valeurs. Ils sont toujours "
+"disponibles dans le module Next."
 
 #: data/scripts/upgrade.php:40
 #, php-format
@@ -222,32 +240,39 @@ msgid ""
 "SearchForm block and SimplePage block. They are still available in module "
 "Next."
 msgstr ""
+"Certaines fonctionnalités ont été déplacées dans le nouveau module "
+"%sBlockPlus%s : les blocs Recherche et Simple page. Ils sont toujours "
+"disponibles dans le module Next."
 
 #: Module.php:448
 msgid "Trim property values"
-msgstr ""
+msgstr "Nettoyer les espaces des valeurs"
 
 #: Module.php:449
 msgid "Remove initial and trailing whitespace of all values of all properties"
 msgstr ""
+"Supprimer les espaces de début et de fin pour toutes les valeurs de toutes "
+"les propriétés"
 
 #: Module.php:462
 msgid "Deduplicate property values case insensitively"
-msgstr ""
+msgstr "Dédoublonner les valeurs des propriétés sans tenir compte de la casse"
 
 #: Module.php:463
 msgid ""
 "Deduplicate values of all properties, case INsensitively. Trimming values "
 "before is recommended, because values are checked strictly."
 msgstr ""
+"Dédoublonner les valeurs de toutes les propriétés, sans tenir compte de la "
+"casse. Il est recommandé de nettoyer les espaces auparavant."
 
 #: src/Form/SearchFormFieldset.php:16
 msgid "Block title"
-msgstr ""
+msgstr "Titre du bloc"
 
 #: src/Form/SearchFormFieldset.php:17
 msgid "Heading for the block, if any."
-msgstr ""
+msgstr "Entête du bloc, si présent."
 
 #: src/Form/SimplePageFieldset.php:16
 msgid ""
@@ -255,183 +280,205 @@ msgid ""
 "will be hidden on the public site. The current page and recursive pages are "
 "forbidden."
 msgstr ""
+"Les sites privés sont indiqués avec une « * ». Si une page privée est "
+"choisie, elle sera cachée au public. La page courante et les pages qui la "
+"contiennent récursivement sont interdites."
 
 #: src/Form/Element/AbstractGroupBySiteSelect.php:166
 msgid "[No site]"
-msgstr ""
+msgstr "[Pas de site]"
 
 #: src/Form/SettingsFieldset.php:11
 msgid "Next Module"
-msgstr ""
+msgstr "Module Next"
 
 #: src/Form/SettingsFieldset.php:26
 msgid "Internal id"
-msgstr ""
+msgstr "Id interne"
 
 #: src/Form/SettingsFieldset.php:27
 msgid "Resource class"
-msgstr ""
+msgstr "Classe de ressource"
 
 #: src/Form/SettingsFieldset.php:31
 msgid "Modified"
-msgstr ""
+msgstr "Modifié"
 
 #: src/Form/SettingsFieldset.php:39
 msgid "Property to set primary item set"
-msgstr ""
+msgstr "Propriété utilisée pour définir la collection principale"
 
 #: src/Form/SettingsFieldset.php:40
 msgid ""
 "When an item is included in multiple item sets, the main one may be "
 "determined by this property."
 msgstr ""
+"Quand un contenu est inclu dans plusieurs collections, la principale peut "
+"être déterminée par cette propriété."
 
 #: src/Form/SettingsFieldset.php:47
 msgid "Select a property…"
-msgstr ""
+msgstr "Choisir une propriété…"
 
 #: src/Form/SettingsFieldset.php:55
 msgid "Columns for browse views"
-msgstr ""
+msgstr "Colonnes pour les vues en liste"
 
 #: src/Form/SettingsFieldset.php:56
 msgid "These columns will be used in the admin resource browse views."
 msgstr ""
+"Ces colonnes seront utilisées dans les vues de listes de ressources en admin."
 
 #: src/Form/SettingsFieldset.php:67
 msgid "Select columns…"
-msgstr ""
+msgstr "Choisir les colonnes…"
 
 #: src/Form/SettingsFieldset.php:74
 msgid "Disable previous/next"
-msgstr ""
+msgstr "Désactiver précédent/suivant"
 
 #: src/Form/SettingsFieldset.php:75
 msgid ""
 "An issue exists on some versions of mysql database (mariadb is working fine)."
 msgstr ""
+"Un problème existe avec certaines versions de mysql (mariadb fonctionne "
+"correctement)."
 
 #: src/Form/SiteSettingsFieldset.php:9
 msgid "Next module"
-msgstr ""
+msgstr "Module Next"
 
 #: src/Form/SiteSettingsFieldset.php:18
 msgid "Default items order in each item set"
-msgstr ""
+msgstr "Ordre des contenus dans chaque collection"
 
 #: src/Form/SiteSettingsFieldset.php:19
 msgid ""
 "Set order for item set, one by row, format \"id,id,id property order\". Use "
 "\"0\" for the default."
 msgstr ""
+"Indiquer l’ordre pour chaque collection, une par ligne, selon le format « id,"
+"id,id ordre de la propriété ». Utiliser « 0 » pour l’ordre par défaut."
 
 #: src/Form/SiteSettingsFieldset.php:32
 msgid "List only used properties and resources classes"
-msgstr ""
+msgstr "Lister seulement les propriétés et les classes utilisées"
 
 #: src/Form/SiteSettingsFieldset.php:33
 msgid ""
 "Restrict the list of properties and resources classes to the used ones in "
 "advanced search form (for properties, when option \"templates\" is not used)."
 msgstr ""
+"Restreindre la liste des propriétés et des classes à celles utilisées dans "
+"le formulaire de recherche avancée (pour les propriétés, lorsque l’option "
+"« modèles de ressource » n’est pas utilisée)."
 
 #: src/Form/SiteSettingsFieldset.php:45
 msgid "Next module : Breadcrumbs"
-msgstr ""
+msgstr "Module Next : Fil d’Ariane"
 
 #: src/Form/SiteSettingsFieldset.php:56
 msgid "Crumbs"
-msgstr ""
+msgstr "Fil d’Ariane"
 
 #: src/Form/SiteSettingsFieldset.php:58
 msgid "Prepend home"
-msgstr ""
+msgstr "Ajouter la page d’accueil au début"
 
 #: src/Form/SiteSettingsFieldset.php:59
 msgid "Include \"Collections\""
-msgstr ""
+msgstr "Inclure « Collections »"
 
 #: src/Form/SiteSettingsFieldset.php:60
 msgid "Include main item set for item"
-msgstr ""
+msgstr "Inclure la collection principale du contenu"
 
 #: src/Form/SiteSettingsFieldset.php:61
 msgid "Append current resource"
-msgstr ""
+msgstr "Ajouter la ressource en cours"
 
 #: src/Form/SiteSettingsFieldset.php:73
 msgid "Prepended links"
-msgstr ""
+msgstr "Liens à ajouter au début"
 
 #: src/Form/SiteSettingsFieldset.php:74
 msgid ""
 "List of urls followed by a label, one by line, that will be prepended to the "
 "breadcrumb."
 msgstr ""
+"Liste des urls suivies par un label, un par ligne, qui seront ajoutées au "
+"début du fil d’Ariane."
 
 #: src/Form/SiteSettingsFieldset.php:85
 msgid "Url for collections"
-msgstr ""
+msgstr "Url pour les collections"
 
 #: src/Form/SiteSettingsFieldset.php:86
 msgid ""
 "The url to use for the link \"Collections\", if set above. Let empty to use "
 "the default one."
 msgstr ""
+"L’url à utiliser pour le lien « Collections », si ajouté ci-dessus. Laisser "
+"vide pour utiliser l’url par défaut."
 
 #: src/Form/SiteSettingsFieldset.php:97
 msgid "Separator"
-msgstr ""
+msgstr "Séparateur"
 
 #: src/Form/SiteSettingsFieldset.php:98
 msgid ""
 "The separator between crumbs may be set as raw text or via css. it should be "
 "set as an html text (\"&gt;\")."
 msgstr ""
+"Le séparateur entre les éléments du fil d’Ariane doit être indiqué en tant "
+"que texte brut ou via les css. Il doit être indiqué comme chaîne html "
+"(« &gt; »)."
 
 #: src/Form/SiteSettingsFieldset.php:109
 msgid "Display on home page"
-msgstr ""
+msgstr "Afficher sur la page d’accueil"
 
 #: src/Job/LoopItems.php:39
 msgid "No resource to process."
-msgstr ""
+msgstr "Aucune ressource à traiter."
 
 #: src/Job/LoopItems.php:45
 #, php-format
 msgid "Processing %d resources."
-msgstr ""
+msgstr "Traitement de %d ressources."
 
 #: src/Job/LoopItems.php:66
 #, php-format
 msgid "The job \"%s\" was stopped."
-msgstr ""
+msgstr "La tâche « %s » a été arrêtée."
 
 #: src/Job/LoopItems.php:89
 #, php-format
 msgid "End of the job: %d/%d processed."
-msgstr ""
+msgstr "Fin de la tâche. %d/%d traités."
 
 #: src/Site/BlockLayout/SearchForm.php:17
 msgid "Search simple form"
-msgstr ""
+msgstr "Formulaire de recherche simple"
 
 #: src/Site/BlockLayout/SimplePage.php:34
 msgid "Simple page"
-msgstr ""
+msgstr "Simple page"
 
 #: src/Site/BlockLayout/SimplePage.php:42
 msgid "A page should be selected to create a simple page."
-msgstr ""
+msgstr "Une page doit être sélectionnée pour créer un bloc Simple page."
 
 #: src/Site/BlockLayout/SimplePage.php:47
 msgid "A simple page cannot be inside itself."
-msgstr ""
+msgstr "Une simple page ne peut pas être à l’intérieur d’elle-même."
 
 #: src/Site/BlockLayout/SimplePage.php:55
 #: src/Site/BlockLayout/SimplePage.php:61
 msgid "A simple page cannot use a page that uses it recursively as a block."
 msgstr ""
+"Une simple page ne peut pas utiliser une page qui l’utilise récursivement "
+"dans un bloc."
 
 #: src/Site/BlockLayout/SimplePage.php:106
 #, php-format
@@ -439,9 +486,14 @@ msgid ""
 "Simple page block #%d of page \"%s\" of site \"%s\" should be updated: it "
 "refers to a removed page."
 msgstr ""
+"Le bloc Simple page #%d de la page « %s » du site « %s » doit être mis à "
+"jour: il fait référence à une page supprimée."
 
 msgid "First"
-msgstr ""
+msgstr "Premier"
 
 msgid "Last"
-msgstr ""
+msgstr "Dernier"
+
+#~ msgid "Optional option: -b --base-path"
+#~ msgstr "Option facultative : -b --base-path"
