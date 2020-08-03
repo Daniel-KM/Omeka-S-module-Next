@@ -119,7 +119,7 @@ class BrowsePreviousNext extends AbstractHelper
         // Convert query builder parameters into standard pdo parameters.
         $parameters = [];
 
-        $quote = function($v) {
+        $quote = function ($v) {
             if (strpos($v, "'")) {
                 // Direct sql quotation uses two single quotes, not a backslash.
                 $v = $this->connection->quote($v);
