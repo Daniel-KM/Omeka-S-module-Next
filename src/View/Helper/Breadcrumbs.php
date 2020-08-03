@@ -198,14 +198,14 @@ class Breadcrumbs extends AbstractHelper
                             $itemSet = $view->primaryItemSet($item, $site);
                             if ($itemSet) {
                                 $this->crumbs[] = [
-                                    'label' => $itemSet->displayTitle(),
+                                    'label' => (string) $itemSet->displayTitle(),
                                     'uri' => $itemSet->siteUrl($siteSlug),
                                     'resource' => $itemSet,
                                 ];
                             }
                         }
                         $this->crumbs[] = [
-                            'label' => $item->displayTitle(),
+                            'label' => (string) $item->displayTitle(),
                             'uri' => $item->siteUrl($siteSlug),
                             'resource' => $item,
                         ];
@@ -220,7 +220,7 @@ class Breadcrumbs extends AbstractHelper
                             $itemSet = $view->primaryItemSet($resource, $site);
                             if ($itemSet) {
                                 $this->crumbs[] = [
-                                    'label' => $itemSet->displayTitle(),
+                                    'label' => (string) $itemSet->displayTitle(),
                                     'uri' => $itemSet->siteUrl($siteSlug),
                                     'resource' => $itemSet,
                                 ];
@@ -236,7 +236,7 @@ class Breadcrumbs extends AbstractHelper
                         break;
                 }
                 if ($options['current']) {
-                    $label = $resource->displayTitle();
+                    $label = (string) $resource->displayTitle();
                 }
                 break;
 
@@ -253,7 +253,7 @@ class Breadcrumbs extends AbstractHelper
                     /** @var \Omeka\Api\Representation\ItemSetRepresentation $resource */
                     $resource = $vars->itemSet;
                     if ($resource) {
-                        $label = $resource->displayTitle();
+                        $label = (string) $resource->displayTitle();
                     }
                 }
                 break;
@@ -353,7 +353,7 @@ class Breadcrumbs extends AbstractHelper
                 if ($itemSet) {
                     $itemSet = $view->api()->read('item_sets', ['id' => $itemSet])->getContent();
                     $this->crumbs[] = [
-                        'label' => $itemSet->displayTitle(),
+                        'label' => (string) $itemSet->displayTitle(),
                         'uri' => $itemSet->siteUrl($siteSlug),
                         'resource' => $itemSet,
                     ];
