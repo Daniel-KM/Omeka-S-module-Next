@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Job;
 
 use Omeka\Stdlib\Message;
@@ -18,7 +18,7 @@ class LoopItems extends AbstractTask
      */
     const BULK_LIMIT = 25;
 
-    public function perform()
+    public function perform(): void
     {
         /**
          * @var \Omeka\Mvc\Controller\Plugin\Logger $logger

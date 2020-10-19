@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
+use Laminas\View\Helper\AbstractHelper;
 use Omeka\Api\Representation\ItemRepresentation;
 use Omeka\Api\Representation\ItemSetRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
-use Laminas\View\Helper\AbstractHelper;
 
 class PrimaryItemSet extends AbstractHelper
 {

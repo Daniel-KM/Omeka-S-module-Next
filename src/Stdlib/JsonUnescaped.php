@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Stdlib;
 
-use SplQueue;
 use Laminas\Json\Json;
+use SplQueue;
 
 /**
  * Class for encoding to and decoding from JSON.

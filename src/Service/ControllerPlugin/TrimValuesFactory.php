@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Service\ControllerPlugin;
 
 use Interop\Container\ContainerInterface;
-use Next\Mvc\Controller\Plugin\TrimValues;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Next\Mvc\Controller\Plugin\TrimValues;
 
 class TrimValuesFactory implements FactoryInterface
 {

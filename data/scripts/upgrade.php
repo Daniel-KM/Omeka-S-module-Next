@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next;
 
-use Omeka\Stdlib\Message;
 use Omeka\Mvc\Controller\Plugin\Messenger;
+use Omeka\Stdlib\Message;
 
 /**
  * @var Module $this
@@ -16,7 +16,7 @@ use Omeka\Mvc\Controller\Plugin\Messenger;
  */
 $services = $serviceLocator;
 $settings = $services->get('Omeka\Settings');
-$config = require dirname(dirname(__DIR__)) . '/config/module.config.php';
+$config = require dirname(__DIR__, 2) . '/config/module.config.php';
 $connection = $services->get('Omeka\Connection');
 $entityManager = $services->get('Omeka\EntityManager');
 $plugins = $services->get('ControllerPluginManager');

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Prepare the application to process a task, usually via cron.
  *
@@ -20,7 +20,7 @@ namespace Omeka;
 use Omeka\Entity\User;
 use Omeka\Stdlib\Message;
 
-require dirname(dirname(dirname(dirname(__DIR__)))) . '/bootstrap.php';
+require dirname(__DIR__, 4) . '/bootstrap.php';
 
 $application = \Omeka\Mvc\Application::init(require OMEKA_PATH . '/application/config/application.config.php');
 $services = $application->getServiceManager();
@@ -41,7 +41,8 @@ $shortopts = 'h:t:u:b::';
 $longopts = ['help', 'task:', 'user-id:', 'base-path::'];
 $options = getopt($shortopts, $longopts);
 
-foreach ($options as $key => $value) switch ($key) {
+foreach ($options as $key => $value) {
+    switch ($key) {
     case 't':
     case 'task':
         $taskName = $value;
@@ -63,12 +64,13 @@ Optional option: -b --base-path' // @translate
         echo $translator->translate($message) . PHP_EOL;
         exit();
 }
+}
 
 if (empty($taskName)) {
     $message = new Message(
         'The task name must be set and exist.' // @translate
     );
-    exit($translator->translate($message). PHP_EOL);
+    exit($translator->translate($message) . PHP_EOL);
 }
 
 // TODO Use a plugin manager (but tasks / jobs may not be registered).

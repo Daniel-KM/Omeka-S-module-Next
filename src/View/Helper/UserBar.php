@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
-use Omeka\Api\Representation\SiteRepresentation;
-use Omeka\Entity\User;
 use Laminas\View\Helper\AbstractHelper;
 use Laminas\View\Renderer\RendererInterface;
+use Omeka\Api\Representation\SiteRepresentation;
+use Omeka\Entity\User;
 
 /**
  * View helper for rendering the user bar.

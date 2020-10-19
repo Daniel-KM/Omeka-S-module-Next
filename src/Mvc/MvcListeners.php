@@ -1,13 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Mvc;
 
-use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\AbstractListenerAggregate;
+use Laminas\EventManager\EventManagerInterface;
 use Laminas\Mvc\MvcEvent;
 
 class MvcListeners extends AbstractListenerAggregate
 {
-    public function attach(EventManagerInterface $events, $priority = 1)
+    public function attach(EventManagerInterface $events, $priority = 1): void
     {
         $this->listeners[] = $events->attach(
             MvcEvent::EVENT_ROUTE,
@@ -21,7 +21,7 @@ class MvcListeners extends AbstractListenerAggregate
      *
      * @param MvcEvent $event
      */
-    public function handleItemSetShow(MvcEvent $event)
+    public function handleItemSetShow(MvcEvent $event): void
     {
         $routeMatch = $event->getRouteMatch();
         $matchedRouteName = $routeMatch->getMatchedRouteName();

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
 use Laminas\Navigation\Navigation;
@@ -259,11 +259,11 @@ class Breadcrumbs extends AbstractHelper
                 break;
 
             case 'site/page':
-                /** @var \Omeka\Api\Representation\SitePageRepresentation $page */
                 // The page should exist because the breadcrumbs use its view.
                 // But in case of an exception in a block, the page may be null.
                 try {
                     // Api doesn't allow to search one page by slug.
+                    /** @var \Omeka\Api\Representation\SitePageRepresentation $page */
                     $page = $view->api()->read('site_pages', ['site' => $site->id(), 'slug' => $view->params()->fromRoute('page-slug')])->getContent();
                 } catch (\Omeka\Api\Exception\NotFoundException $e) {
                     $this->crumbs[] = [
@@ -507,7 +507,6 @@ class Breadcrumbs extends AbstractHelper
         unset($options['template']);
 
         /** @see \Omeka\Api\Representation\SiteRepresentation::publicNav() */
-
         $nested = $this->nestedPages($this->crumbs);
 
         return $view->partial(
@@ -522,7 +521,7 @@ class Breadcrumbs extends AbstractHelper
         );
     }
 
-    protected function crumbCollections(array $options, $translate, $url, $siteSlug)
+    protected function crumbCollections(array $options, $translate, $url, $siteSlug): void
     {
         $this->crumbs[] = [
             'label' => $translate('Collections'),

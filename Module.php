@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next;
 
 if (!class_exists(\Generic\AbstractModule::class)) {
@@ -9,13 +9,13 @@ if (!class_exists(\Generic\AbstractModule::class)) {
 
 use Doctrine\ORM\QueryBuilder;
 use Generic\AbstractModule;
-use Omeka\Api\Adapter\AbstractResourceEntityAdapter;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Form\Element;
 use Laminas\ModuleManager\ModuleEvent;
 use Laminas\ModuleManager\ModuleManager;
 use Laminas\Session\Container;
+use Omeka\Api\Adapter\AbstractResourceEntityAdapter;
 
 /**
  * Next
@@ -30,13 +30,13 @@ class Module extends AbstractModule
 {
     const NAMESPACE = __NAMESPACE__;
 
-    public function init(ModuleManager $moduleManager)
+    public function init(ModuleManager $moduleManager): void
     {
         $moduleManager->getEventManager()
             ->attach(ModuleEvent::EVENT_MERGE_CONFIG, [$this, 'onMergeConfig']);
     }
 
-    public function onMergeConfig(ModuleEvent $event)
+    public function onMergeConfig(ModuleEvent $event): void
     {
         // When module BulkEdit is installed and enabled, its controller plugins
         // should be used, not the Next ones.
@@ -51,7 +51,7 @@ class Module extends AbstractModule
         $configListener->setMergedConfig($config);
     }
 
-    public function attachListeners(SharedEventManagerInterface $sharedEventManager)
+    public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
     {
         $adapters = [
             \Omeka\Api\Adapter\ItemAdapter::class,
@@ -178,7 +178,7 @@ class Module extends AbstractModule
         );
     }
 
-    public function apiSearchQuery(Event $event)
+    public function apiSearchQuery(Event $event): void
     {
         $adapter = $event->getTarget();
         $qb = $event->getParam('queryBuilder');
@@ -195,7 +195,7 @@ class Module extends AbstractModule
         $this->buildPropertyQuery($qb, $query, $adapter);
     }
 
-    public function apiSearchQueryProperty(Event $event)
+    public function apiSearchQueryProperty(Event $event): void
     {
         $query = $event->getParam('request')->getContent();
 
@@ -218,7 +218,7 @@ class Module extends AbstractModule
         }
     }
 
-    public function apiSearchQueryResourceClass(Event $event)
+    public function apiSearchQueryResourceClass(Event $event): void
     {
         $query = $event->getParam('request')->getContent();
 
@@ -241,7 +241,7 @@ class Module extends AbstractModule
         }
     }
 
-    public function apiSearchQuerySitePage(Event $event)
+    public function apiSearchQuerySitePage(Event $event): void
     {
         $isOldOmeka = \Omeka\Module::VERSION < 2;
         $alias = $isOldOmeka ? \Omeka\Entity\SitePage::class : 'omeka_root';
@@ -285,7 +285,7 @@ class Module extends AbstractModule
         }
     }
 
-    public function formVocabMemberSelectQuery(Event $event)
+    public function formVocabMemberSelectQuery(Event $event): void
     {
         $selectElement = $event->getTarget();
         if ($selectElement->getOption('used_terms')) {
@@ -304,7 +304,7 @@ class Module extends AbstractModule
      * @param Event $event
      * @deprecated Use module BulkEdit.
      */
-    public function handleResourceProcessPre(Event $event)
+    public function handleResourceProcessPre(Event $event): void
     {
         if ($this->isModuleActive('BulkEdit')) {
             return;
@@ -390,7 +390,7 @@ class Module extends AbstractModule
      * @param Event $event
      * @deprecated Use module BulkEdit.
      */
-    public function handleResourceBatchUpdatePost(Event $event)
+    public function handleResourceBatchUpdatePost(Event $event): void
     {
         if ($this->isModuleActive('BulkEdit')) {
             return;
@@ -422,7 +422,7 @@ class Module extends AbstractModule
         }
     }
 
-    public function handleViewShowSidebarMedia(Event $event)
+    public function handleViewShowSidebarMedia(Event $event): void
     {
         $view = $event->getTarget();
         $resource = $view->resource;
@@ -433,7 +433,7 @@ class Module extends AbstractModule
      * @param Event $event
      * @deprecated Use module BulkEdit.
      */
-    public function formAddElementsResourceBatchUpdateForm(Event $event)
+    public function formAddElementsResourceBatchUpdateForm(Event $event): void
     {
         if ($this->isModuleActive('BulkEdit')) {
             return;
@@ -470,7 +470,7 @@ class Module extends AbstractModule
         ]);
     }
 
-    public function handleViewBrowse(Event $event)
+    public function handleViewBrowse(Event $event): void
     {
         $session = new Container('Next');
         if (!isset($session->lastBrowsePage)) {
@@ -491,7 +491,7 @@ class Module extends AbstractModule
         $session->lastQuery[$ui] = $query;
     }
 
-    public function handleMainSettingsFilters(Event $event)
+    public function handleMainSettingsFilters(Event $event): void
     {
         $inputFilter = $event->getParam('inputFilter');
         $inputFilter
@@ -545,11 +545,10 @@ class Module extends AbstractModule
                         ],
                     ],
                 ]);
-            ;
         }
     }
 
-    public function handleSiteSettings(Event $event)
+    public function handleSiteSettings(Event $event): void
     {
         parent::handleSiteSettings($event);
 
@@ -587,7 +586,7 @@ class Module extends AbstractModule
             ->setValue($prependsString);
     }
 
-    public function handleSiteSettingsFilters(Event $event)
+    public function handleSiteSettingsFilters(Event $event): void
     {
         $event->getParam('inputFilter')
             ->get('next')
@@ -901,7 +900,7 @@ class Module extends AbstractModule
      * @param array $query
      * @param AbstractResourceEntityAdapter $adapter
      */
-    protected function buildPropertyQueryOld(QueryBuilder $qb, array $query, AbstractResourceEntityAdapter $adapter)
+    protected function buildPropertyQueryOld(QueryBuilder $qb, array $query, AbstractResourceEntityAdapter $adapter): void
     {
         if (!isset($query['property']) || !is_array($query['property'])) {
             return;

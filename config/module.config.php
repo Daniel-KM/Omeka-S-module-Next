@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next;
 
 $config = [
@@ -108,7 +108,7 @@ if ($isBelow14) {
 
 // Avoid to override existing modules.
 
-if (!file_exists(dirname(dirname(__DIR__)) . '/BlockPlus/Module.php')) {
+if (!file_exists(dirname(__DIR__, 2) . '/BlockPlus/Module.php')) {
     // Deprecated Use module BlockPlus.
     $config['block_layouts'] = [
         'invokables' => [

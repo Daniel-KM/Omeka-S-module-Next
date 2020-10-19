@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
-use Omeka\Api\Representation\AbstractResourceRepresentation;
 use Laminas\View\Helper\AbstractHelper;
+use Omeka\Api\Representation\AbstractResourceRepresentation;
 
 /**
  * View helper to return the url to the public default site page of a resource.

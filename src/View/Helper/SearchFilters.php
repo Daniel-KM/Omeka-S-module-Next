@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
-use Omeka\Api\Exception\NotFoundException;
 use Laminas\View\Helper\AbstractHelper;
+use Omeka\Api\Exception\NotFoundException;
 
 /**
  * View helper for rendering search filters.

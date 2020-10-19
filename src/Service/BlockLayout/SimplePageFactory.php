@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Service\BlockLayout;
 
 use Interop\Container\ContainerInterface;
-use Next\Site\BlockLayout\SimplePage;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Next\Site\BlockLayout\SimplePage;
 
 /**
  * @deprecated Use the same feature in module BlockPlus.

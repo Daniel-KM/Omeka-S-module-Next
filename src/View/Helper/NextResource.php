@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
+use Laminas\View\Helper\AbstractHelper;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Api\Representation\MediaRepresentation;
-use Laminas\View\Helper\AbstractHelper;
 
 class NextResource extends AbstractHelper
 {

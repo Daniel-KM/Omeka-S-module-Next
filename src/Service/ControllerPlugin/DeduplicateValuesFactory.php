@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Service\ControllerPlugin;
 
 use Interop\Container\ContainerInterface;
-use Next\Mvc\Controller\Plugin\DeduplicateValues;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Next\Mvc\Controller\Plugin\DeduplicateValues;
 
 class DeduplicateValuesFactory implements FactoryInterface
 {

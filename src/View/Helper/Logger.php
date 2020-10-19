@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
 use Laminas\Log\LoggerInterface;

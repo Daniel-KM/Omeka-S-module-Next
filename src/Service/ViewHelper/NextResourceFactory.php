@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Service\ViewHelper;
 
 use Interop\Container\ContainerInterface;
-use Next\View\Helper\NextResource;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Next\View\Helper\NextResource;
 
 class NextResourceFactory implements FactoryInterface
 {

@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Service\Form;
 
 use Interop\Container\ContainerInterface;
-use Next\Form\SettingsFieldset;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Next\Form\SettingsFieldset;
 
 class SettingsFieldsetFactory implements FactoryInterface
 {

@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
+use Laminas\View\Helper\AbstractHelper;
 use Omeka\Api\Representation\AbstractRepresentation;
 use Omeka\Api\Representation\AssetRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
-use Laminas\View\Helper\AbstractHelper;
 
 /**
  * View helper to get a thumbnail url.
@@ -110,7 +110,7 @@ class ThumbnailUrl extends AbstractHelper
                     case 'itemShowCase':
                     case 'itemWithMetadata':
                     case 'resourceText':
-                        /** @var \Omeka\Api\Representation\SiteBlockAttachmentRepresentation $attachement */
+                        /** @var \Omeka\Api\Representation\SiteBlockAttachmentRepresentation[] $attachements */
                         $attachments = $block->attachments();
                         if (empty($attachments)) {
                             break;
@@ -144,7 +144,7 @@ class ThumbnailUrl extends AbstractHelper
                         $asset = $block->dataValue('cover');
                         if ($asset) {
                             try {
-                                /** @var \Omeka\Api\Representation\AssetRepresentation $asset */
+                                /* @var \Omeka\Api\Representation\AssetRepresentation $asset */
                                 return $api->read('assets', $asset)->getContent();
                             } catch (\Omeka\Api\Exception\NotFoundException $e) {
                             }
@@ -157,7 +157,7 @@ class ThumbnailUrl extends AbstractHelper
                                 continue;
                             }
                             try {
-                                /** @var \Omeka\Api\Representation\AssetRepresentation $asset */
+                                /* @var \Omeka\Api\Representation\AssetRepresentation $asset */
                                 return $api->read('assets', $assetData['asset'])->getContent();
                             } catch (\Omeka\Api\Exception\NotFoundException $e) {
                             }

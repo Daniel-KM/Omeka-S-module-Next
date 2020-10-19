@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Form;
 
-use Omeka\Form\Element\PropertySelect;
-use Omeka\Settings\Settings;
 use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
+use Omeka\Form\Element\PropertySelect;
+use Omeka\Settings\Settings;
 
 class SettingsFieldset extends Fieldset
 {
@@ -15,7 +15,7 @@ class SettingsFieldset extends Fieldset
      */
     protected $settings;
 
-    public function init()
+    public function init(): void
     {
         $defaultColumnsBrowse = [
             'resource_class_label',
@@ -84,7 +84,7 @@ class SettingsFieldset extends Fieldset
     /**
      * @param Settings $settings
      */
-    public function setSettings(Settings $settings)
+    public function setSettings(Settings $settings): void
     {
         $this->settings = $settings;
     }

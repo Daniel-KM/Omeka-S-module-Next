@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Service\Form\Element;
 
 use Interop\Container\ContainerInterface;
-use Next\Form\Element\SitesPageSelect;
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Next\Form\Element\SitesPageSelect;
 
 class SitesPageSelectFactory implements FactoryInterface
 {

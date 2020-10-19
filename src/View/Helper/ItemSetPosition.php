@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
-use Omeka\Api\Representation\ItemSetRepresentation;
 use Laminas\View\Helper\AbstractHelper;
+use Omeka\Api\Representation\ItemSetRepresentation;
 
 class ItemSetPosition extends AbstractHelper
 {

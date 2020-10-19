@@ -1,6 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Site\BlockLayout;
 
+use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Api\Manager as ApiManager;
 use Omeka\Api\Representation\SitePageBlockRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
@@ -9,7 +10,6 @@ use Omeka\Entity\SitePage;
 use Omeka\Entity\SitePageBlock;
 use Omeka\Site\BlockLayout\AbstractBlockLayout;
 use Omeka\Stdlib\ErrorStore;
-use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @deprecated Use the same feature in module BlockPlus.
@@ -34,7 +34,7 @@ class SimplePage extends AbstractBlockLayout
         return 'Simple page'; // @translate
     }
 
-    public function onHydrate(SitePageBlock $block, ErrorStore $errorStore)
+    public function onHydrate(SitePageBlock $block, ErrorStore $errorStore): void
     {
         $simplePage = (int) $block->getData()['page'] ?: $this->defaultSettings['page'];
 

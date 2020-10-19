@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Form;
 
-use Next\Form\Element\SitesPageSelect;
 use Laminas\Form\Fieldset;
+use Next\Form\Element\SitesPageSelect;
 
 class SimplePageFieldset extends Fieldset
 {
-    public function init()
+    public function init(): void
     {
         $this->add([
             'name' => 'o:block[__blockIndex__][o:data][page]',

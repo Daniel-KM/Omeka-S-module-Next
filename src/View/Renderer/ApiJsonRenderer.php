@@ -1,15 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Renderer;
 
 use JsonSerializable;
-use Next\Stdlib\JsonUnescaped as Json;
-use Omeka\Api\Exception\ValidationException;
-use Omeka\Api\Response;
-use Traversable;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\View\Exception;
 use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ModelInterface as Model;
+use Next\Stdlib\JsonUnescaped as Json;
+use Omeka\Api\Exception\ValidationException;
+use Omeka\Api\Response;
+use Traversable;
 
 /**
  * JSON renderer for API responses.

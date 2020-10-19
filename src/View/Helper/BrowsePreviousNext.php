@@ -1,14 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use Omeka\Api\Adapter\Manager as ApiAdapterManager;
-use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
-use Omeka\Api\Request;
 use Laminas\EventManager\Event;
 use Laminas\Session\Container;
 use Laminas\View\Helper\AbstractHelper;
+use Omeka\Api\Adapter\Manager as ApiAdapterManager;
+use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
+use Omeka\Api\Request;
 
 class BrowsePreviousNext extends AbstractHelper
 {

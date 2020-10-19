@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\View\Helper;
 
 use Doctrine\ORM\QueryBuilder;
@@ -41,7 +41,7 @@ trait NextPreviousResourceTrait
     {
         $resourceName = $resource->resourceName();
 
-        /** @var \Omeka\Api\Adapter\AbstractResourceEntityAdapter $adapter */
+        /* @var \Omeka\Api\Adapter\AbstractResourceEntityAdapter $adapter */
         $this->adapter = $this->adapterManager->get($resourceName);
 
         $resourceTypes = [
@@ -91,7 +91,7 @@ trait NextPreviousResourceTrait
      * @see \Omeka\Api\Adapter\ItemAdapter::buildQuery()
      * @param QueryBuilder $qb
      */
-    protected function filterItemsBySite(QueryBuilder $qb)
+    protected function filterItemsBySite(QueryBuilder $qb): void
     {
         if (!$this->adapter || !$this->site) {
             return;
@@ -143,7 +143,7 @@ trait NextPreviousResourceTrait
      * @see \Omeka\Api\Adapter\ItemSetAdapter::buildQuery()
      * @param QueryBuilder $qb
      */
-    protected function filterItemSetsBySite(QueryBuilder $qb)
+    protected function filterItemSetsBySite(QueryBuilder $qb): void
     {
         if (!$this->adapter || !$this->site) {
             return;

@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Next\Service\File;
 
-use Next\File\TempFileFactory;
-use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Next\File\TempFileFactory;
 
 class TempFileFactoryFactory implements FactoryInterface
 {
