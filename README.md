@@ -8,67 +8,11 @@ Next (module for Omeka S)
 to be a full module. They may be integrated in the next release of Omeka S, or
 not.
 
-Features
---------
+
+Features (all versions)
+-----------------------
 
 ### Public
-
-#### Simple page
-
-Allow to use a page as a block, so the same page can be use in multiple sites,
-for example the page "About" or "Privacy". Of course, the page is a standard
-page and can be more complex with multiple blocks. May be fun.
-This is an equivalent for the [shortcode as a page] in Omeka classic too.
-This block is now managed by module [Block Plus] since version 3.1.2.12.
-
-#### Direct links in user bar
-
-Display direct links to the current resource in the public user bar in order to
-simplify edition and management of resources (fix [#1283], included in Omeka S 1.4).
-The revert links are available too. They display the resource in the default
-site, or in the first one (fix [#1259]).
-
-#### Default order of items in item set
-
-Display resources in a specific order in the item set main page in front-end,
-for example by title or identifier. This option can be specified differently for
-each site.
-
-#### Random order of resources
-
-Display resources in a random order, for example for a carousel or a featured
-resource. Simply add `sort_by=random` to the query when needed, in particular
-in the page block `Browse preview` (fix [#1281]).
-
-#### Advanced search by start with, end with, or in list
-
-Allow to do more advanced search in public or admin board on values of the
-properties: start with, end with, in list (fix [#1274], [#1276]).
-
-#### Advanced search with list of used properties and resource classes.
-
-Display only the used properties and resources classes in the advanced search
-form, via a site setting (fix [#1423]).
-
-In some cases, a change is required in the theme. In the files `themes/my-theme/common/advanced-search/properties.phtml`
-and `themes/my-theme/common/advanced-search/resource-classes.phtml`, add this option
-below `apply_templates`:
-```php
-    'used_terms' => $this->siteSetting('next_search_used_terms'),
-```
-
-#### Citation
-
-Since 3.1.2.7, this feature has moved to module [Bibliography], that uses a
-template view to easily customize it. The view helper doesn’t change.
-
-#### Is home page
-
-Allow to check if the current page is the home page of the site, like in Omeka Classic.
-
-#### Item set position
-
-Determine the position of an item set in the site.
 
 #### Breadcrumbs
 
@@ -83,46 +27,39 @@ settings, or in the options of the view helper.
 #### Previous/Next resources
 
 Allow to get the previous or the next resources, that simplifies browsing like
-in Omeka Classic. Set by default in admin board for items.
-
-#### Thumbnail url
-
-Allow to get the url of the thumbnail of a resource, a page or a site. The core
-allows to get only the full image tag.
+in Omeka Classic. An option allows to use it in admin board.
 
 #### Last browse page
 
-Add a button in admin resources pages to go back to the last list of results. It
-allows to browse inside item sets, items or media after a search without losing
-the search results. A helper allows to get the same feature in public front-end.
+Allow to go back to the last list of results in order to browse inside item sets,
+items or media after a search without losing the search results. The helper is
+used by default in admin resources pages.
+
+#### Is home page
+
+Allow to check if the current page is the home page of the site, like in Omeka Classic.
 
 #### Current site
 
 Allow to get the current site in public view, that may be missing in some cases.
 
-#### Block "search form"
+#### Thumbnail url
 
-Allow to add a search form in any page, typically in the home page.
-This block is now managed by module [Block Plus] since version 3.1.2.12.
+Allow to get the url of the thumbnail of a resource, a page or a site.
+Warning: For site, the module [Advanced Search Plus] is needed when there is no
+page with a thumbnail (the module provides the api for the url argument `has_thumbnails`).
+
+#### Default order of items in item set
+
+Display resources in a specific order in the item set main page in front-end,
+for example by title or identifier. This option can be specified differently for
+each site.
+
+#### Item set position
+
+Determine the position of an item set in the site.
 
 ### Admin
-
-#### Trim property values
-
-Remove leading and trailing whitespaces preventively on any resource creation or
-update, or curatively via the batch edit, so values will be easier to find and
-to compare exactly (fix [#1258]).
-
-Warning: This feature is still available, but is improved in module [Bulk Edit].
-
-#### Deduplicate property values
-
-Remove exact duplicated values on any new or updated resource preventively.
-Note: preventive deduplication is case sensitive, but curative deduplication is
-case insensitive (it uses a direct query and the Omeka database is case
-insensitive by default).
-
-Warning: This feature is still available, but is improved in module [Bulk Edit].
 
 #### Choice of columns in admin browse view
 
@@ -181,6 +118,79 @@ existing items when a new feature is added in a module.
 php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id 1
 ```
 
+
+Features of older versions (< Omeka 3)
+--------------------------------------
+
+### Public
+
+#### Simple mirror page
+
+Allow to use a page as a block, so the same page can be use in multiple sites,
+for example the page "About" or "Privacy". Of course, the page is a standard
+page and can be more complex with multiple blocks. May be fun.
+This is an equivalent for the [shortcode as a page] in Omeka classic too.
+This block is now managed by module [Block Plus] since version 3.1.2.12.
+
+#### Direct links in user bar
+
+Display direct links to the current resource in the public user bar in order to
+simplify edition and management of resources (fix [#1283], included in Omeka S 1.4).
+The revert links are available too. They display the resource in the default
+site, or in the first one (fix [#1259]).
+
+#### Random order of resources (only for Omeka S version < 3)
+
+Display resources in a random order, for example for a carousel or a featured
+resource. Simply add `sort_by=random` to the query when needed, in particular
+in the page block `Browse preview` (fix [#1281]).
+
+#### Advanced search by start with, end with, or in list
+
+Allow to do more advanced search in public or admin board on values of the
+properties: start with, end with, in list (fix [#1274], [#1276]).
+This feature is moved to module [Advanced Search Plus] in Omeka 3.
+
+#### Advanced search with list of used properties and resource classes.
+
+Display only the used properties and resources classes in the advanced search
+form, via a site setting (fix [#1423]). This feature is integrated in Omeka 3.
+
+In some cases, a change is required in the theme. In the files `themes/my-theme/common/advanced-search/properties.phtml`
+and `themes/my-theme/common/advanced-search/resource-classes.phtml`, add this option
+below `apply_templates`:
+```php
+    'used_terms' => $this->siteSetting('next_search_used_terms'),
+```
+
+#### Citation
+
+Since 3.1.2.7, this feature has moved to module [Bibliography], that uses a
+template view to easily customize it. The view helper doesn’t change.
+
+### Admin
+
+#### Trim property values
+
+Remove leading and trailing whitespaces preventively on any resource creation or
+update, or curatively via the batch edit, so values will be easier to find and
+to compare exactly (fix [#1258]).
+
+Warning: This feature is removed in the version for Omeka 3, but is available in
+an improved version in module [Bulk Edit].
+
+#### Deduplicate property values
+
+Remove exact duplicated values on any new or updated resource preventively.
+Note: preventive deduplication is case sensitive, but curative deduplication is
+case insensitive (it uses a direct query and the Omeka database is case
+insensitive by default).
+
+Warning: This feature is removed in the version for Omeka 3, but is available in
+an improved version in module [Bulk Edit].
+
+### Backend
+
 #### Logger in view
 
 Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.4).
@@ -198,6 +208,13 @@ Uncompress files and rename module folder `Next`. Then install it like any
 other Omeka module and follow the config instructions.
 
 See general end user documentation for [Installing a module].
+
+
+TODO
+----
+
+- [ ] Normalize the breadcrumbs with Laminas navigation.
+- [ ] Move all navigation and theme helpers to a new module.
 
 
 Warning
@@ -261,6 +278,7 @@ Copyright
 [#1497]: https://github.com/omeka/omeka-s/issues/1497
 [Bibliography]: https://gitlab.com/Daniel-KM/Omeka-S-module-Bibliography
 [Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
+[Advanced Search Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearchPlus
 [Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
 [Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
 [Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
