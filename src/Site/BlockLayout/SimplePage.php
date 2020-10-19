@@ -9,7 +9,7 @@ use Omeka\Entity\SitePage;
 use Omeka\Entity\SitePageBlock;
 use Omeka\Site\BlockLayout\AbstractBlockLayout;
 use Omeka\Stdlib\ErrorStore;
-use Zend\View\Renderer\PhpRenderer;
+use Laminas\View\Renderer\PhpRenderer;
 
 /**
  * @deprecated Use the same feature in module BlockPlus.
@@ -120,7 +120,7 @@ class SimplePage extends AbstractBlockLayout
         // cases should be fixed.
 
         // @see \Omeka\Controller\Site\PageController::showAction()
-        $contentView = new \Zend\View\Model\ViewModel;
+        $contentView = new \Laminas\View\Model\ViewModel;
         $contentView->setVariable('site', $simplePage->site());
         $contentView->setVariable('page', $simplePage);
         $contentView->setTemplate('omeka/site/page/content');

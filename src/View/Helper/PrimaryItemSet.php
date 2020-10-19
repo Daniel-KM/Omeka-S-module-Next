@@ -4,7 +4,7 @@ namespace Next\View\Helper;
 use Omeka\Api\Representation\ItemRepresentation;
 use Omeka\Api\Representation\ItemSetRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class PrimaryItemSet extends AbstractHelper
 {

@@ -2,7 +2,7 @@
 namespace Next\View\Helper;
 
 use Omeka\Api\Exception\NotFoundException;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 /**
  * View helper for rendering search filters.

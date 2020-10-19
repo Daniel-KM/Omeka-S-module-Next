@@ -2,7 +2,7 @@
 namespace Next\Form;
 
 use Next\Form\Element\SitesPageSelect;
-use Zend\Form\Fieldset;
+use Laminas\Form\Fieldset;
 
 class SimplePageFieldset extends Fieldset
 {

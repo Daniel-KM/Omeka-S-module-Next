@@ -6,10 +6,10 @@ use Next\Stdlib\JsonUnescaped as Json;
 use Omeka\Api\Exception\ValidationException;
 use Omeka\Api\Response;
 use Traversable;
-use Zend\Stdlib\ArrayUtils;
-use Zend\View\Exception;
-use Zend\View\Model\JsonModel;
-use Zend\View\Model\ModelInterface as Model;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\View\Exception;
+use Laminas\View\Model\JsonModel;
+use Laminas\View\Model\ModelInterface as Model;
 
 /**
  * JSON renderer for API responses.
@@ -42,7 +42,7 @@ class ApiJsonRenderer extends \Omeka\View\Renderer\ApiJsonRenderer
             $this->setJsonpCallback($jsonpCallback);
         }
 
-        // Copy of \Zend\Json\Json::render(), but with JsonUnescaped as encoding
+        // Copy of \Laminas\Json\Json::render(), but with JsonUnescaped as encoding
         // method in order to use a full pretty print if wanted, in one step.
 
         $nameOrModel = &$payload;

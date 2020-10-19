@@ -2,7 +2,7 @@
 namespace Next\Service\File;
 
 use Next\File\TempFileFactory;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 class TempFileFactoryFactory implements FactoryInterface

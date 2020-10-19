@@ -2,7 +2,7 @@
 namespace Next\View\Helper;
 
 use Omeka\Api\Representation\ItemSetRepresentation;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class ItemSetPosition extends AbstractHelper
 {

@@ -3,7 +3,7 @@ namespace Next\Service\BlockLayout;
 
 use Interop\Container\ContainerInterface;
 use Next\Site\BlockLayout\SimplePage;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 /**
  * @deprecated Use the same feature in module BlockPlus.

@@ -3,8 +3,8 @@ namespace Next\Form;
 
 use Omeka\Form\Element\PropertySelect;
 use Omeka\Settings\Settings;
-use Zend\Form\Element;
-use Zend\Form\Fieldset;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
 
 class SettingsFieldset extends Fieldset
 {

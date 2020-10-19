@@ -1,9 +1,9 @@
 <?php
 namespace Next\Mvc;
 
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\AbstractListenerAggregate;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\AbstractListenerAggregate;
+use Laminas\Mvc\MvcEvent;
 
 class MvcListeners extends AbstractListenerAggregate
 {
@@ -36,7 +36,7 @@ class MvcListeners extends AbstractListenerAggregate
 
         // Don't process if an order is set.
         $request = $event->getRequest();
-        /** @var \Zend\Stdlib\Parameters $query */
+        /** @var \Laminas\Stdlib\Parameters $query */
         $query = $request->getQuery();
         if (!empty($query['sort_by'])) {
             return;

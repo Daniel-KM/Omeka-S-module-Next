@@ -2,7 +2,7 @@
 namespace Next\Stdlib;
 
 use SplQueue;
-use Zend\Json\Json;
+use Laminas\Json\Json;
 
 /**
  * Class for encoding to and decoding from JSON.
@@ -38,7 +38,7 @@ class JsonUnescaped extends Json
         $prettyPrint = (isset($options['prettyPrint']) && ($options['prettyPrint'] === true));
         $encodedResult = self::encodeValue($valueToEncode, $cycleCheck, $options, $prettyPrint);
 
-        // Post-process to revert back any Zend\Json\Expr instances.
+        // Post-process to revert back any Laminas\Json\Expr instances.
         $encodedResult = self::injectJavascriptExpressions($encodedResult, $javascriptExpressions);
 
         return $encodedResult;
@@ -46,7 +46,7 @@ class JsonUnescaped extends Json
 
     /**
      * Copy of the parent method to allow to access to parent private methods.
-     * @see \Zend\Json\Json::encodeValue()
+     * @see \Laminas\Json\Json::encodeValue()
      *
      * Encode a value to JSON.
      *
@@ -78,7 +78,7 @@ class JsonUnescaped extends Json
      * quotes ampersand, unicode character, slashes, and ends of line: it is not
      * required by the recommandation.
      *
-     * @see \Zend\Json\Json::encodeViaPhpBuiltIn()
+     * @see \Laminas\Json\Json::encodeViaPhpBuiltIn()
      *
      * If $prettyPrint is boolean true, also uses JSON_PRETTY_PRINT.
      *
@@ -103,7 +103,7 @@ class JsonUnescaped extends Json
 
     /**
      * Copy of private parent method.
-     * @see \Zend\Json\Json::injectJavascriptExpressions()
+     * @see \Laminas\Json\Json::injectJavascriptExpressions()
      *
      * Inject javascript expressions into the encoded value.
      *

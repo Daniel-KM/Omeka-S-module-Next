@@ -2,8 +2,8 @@
 namespace Next\Mvc\Controller\Plugin;
 
 use Doctrine\ORM\EntityManager;
-use Zend\Log\LoggerInterface;
-use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Laminas\Log\LoggerInterface;
+use Laminas\Mvc\Controller\Plugin\AbstractPlugin;
 
 /**
  * @deprecated Use module BulkEdit.

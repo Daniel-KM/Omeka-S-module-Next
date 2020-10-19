@@ -1,10 +1,10 @@
 <?php
 namespace Next\View\Helper;
 
-use Zend\Navigation\Navigation;
-use Zend\Navigation\Page\AbstractPage;
-use Zend\Router\RouteMatch;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Navigation\Navigation;
+use Laminas\Navigation\Page\AbstractPage;
+use Laminas\Router\RouteMatch;
+use Laminas\View\Helper\AbstractHelper;
 
 class Breadcrumbs extends AbstractHelper
 {
@@ -42,7 +42,7 @@ class Breadcrumbs extends AbstractHelper
     public function __invoke(array $options = [])
     {
         /**
-         * @var \Zend\View\Renderer\PhpRenderer $view
+         * @var \Laminas\View\Renderer\PhpRenderer $view
          * @var \Omeka\Api\Representation\SiteRepresentation $site
          */
         $view = $this->getView();
@@ -91,7 +91,7 @@ class Breadcrumbs extends AbstractHelper
         ];
         $options += $defaults;
 
-        /** @var \Zend\Router\RouteMatch $routeMatch */
+        /** @var \Laminas\Router\RouteMatch $routeMatch */
         $routeMatch = $site->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
@@ -292,9 +292,9 @@ class Breadcrumbs extends AbstractHelper
                 // root page.
 
                 /**
-                 * @var \Zend\View\Helper\Navigation $nav
-                 * @var \Zend\Navigation\Navigation $container
-                 * @see \Zend\View\Helper\Navigation\Breadcrumbs::renderPartialModel()
+                 * @var \Laminas\View\Helper\Navigation $nav
+                 * @var \Laminas\Navigation\Navigation $container
+                 * @see \Laminas\View\Helper\Navigation\Breadcrumbs::renderPartialModel()
                  * @todo Use the container directly, prepending root pages.
                  */
                 $nav = $site->publicNav();
@@ -574,7 +574,7 @@ class Breadcrumbs extends AbstractHelper
                 $current = $sub;
             }
             $current['pages'] = [];
-            // Resource should be an instance of \Zend\Permissions\Acl\Resource\ResourceInterface.
+            // Resource should be an instance of \Laminas\Permissions\Acl\Resource\ResourceInterface.
             unset($current['resource']);
             if ($level !== $last) {
                 $current['pages'][] = null;
@@ -598,6 +598,6 @@ class Breadcrumbs extends AbstractHelper
         $view = $this->getView();
         return isset($view->site)
             ? $view->site
-            : $view->getHelperPluginManager()->get('Zend\View\Helper\ViewModel')->getRoot()->getVariable('site');
+            : $view->getHelperPluginManager()->get('Laminas\View\Helper\ViewModel')->getRoot()->getVariable('site');
     }
 }

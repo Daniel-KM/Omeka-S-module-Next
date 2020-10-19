@@ -10,12 +10,12 @@ if (!class_exists(\Generic\AbstractModule::class)) {
 use Doctrine\ORM\QueryBuilder;
 use Generic\AbstractModule;
 use Omeka\Api\Adapter\AbstractResourceEntityAdapter;
-use Zend\EventManager\Event;
-use Zend\EventManager\SharedEventManagerInterface;
-use Zend\Form\Element;
-use Zend\ModuleManager\ModuleEvent;
-use Zend\ModuleManager\ModuleManager;
-use Zend\Session\Container;
+use Laminas\EventManager\Event;
+use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\Form\Element;
+use Laminas\ModuleManager\ModuleEvent;
+use Laminas\ModuleManager\ModuleManager;
+use Laminas\Session\Container;
 
 /**
  * Next
@@ -596,7 +596,7 @@ class Module extends AbstractModule
                 'required' => false,
                 'filters' => [
                     [
-                        'name' => \Zend\Filter\Callback::class,
+                        'name' => \Laminas\Filter\Callback::class,
                         'options' => [
                             'callback' => [$this, 'filterResourceOrder'],
                         ],
@@ -612,7 +612,7 @@ class Module extends AbstractModule
                 'required' => false,
                 'filters' => [
                     [
-                        'name' => \Zend\Filter\Callback::class,
+                        'name' => \Laminas\Filter\Callback::class,
                         'options' => [
                             'callback' => [$this, 'filterBreadcrumbsPrepend'],
                         ],

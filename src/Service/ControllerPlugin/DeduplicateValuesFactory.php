@@ -3,7 +3,7 @@ namespace Next\Service\ControllerPlugin;
 
 use Interop\Container\ContainerInterface;
 use Next\Mvc\Controller\Plugin\DeduplicateValues;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class DeduplicateValuesFactory implements FactoryInterface
 {

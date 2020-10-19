@@ -6,9 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Omeka\Api\Adapter\Manager as ApiAdapterManager;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Api\Request;
-use Zend\EventManager\Event;
-use Zend\Session\Container;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\EventManager\Event;
+use Laminas\Session\Container;
+use Laminas\View\Helper\AbstractHelper;
 
 class BrowsePreviousNext extends AbstractHelper
 {

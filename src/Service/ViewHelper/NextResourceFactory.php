@@ -3,7 +3,7 @@ namespace Next\Service\ViewHelper;
 
 use Interop\Container\ContainerInterface;
 use Next\View\Helper\NextResource;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class NextResourceFactory implements FactoryInterface
 {

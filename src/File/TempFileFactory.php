@@ -1,7 +1,7 @@
 <?php
 namespace Next\File;
 
-use Zend\EventManager\EventManagerAwareTrait;
+use Laminas\EventManager\EventManagerAwareTrait;
 
 class TempFileFactory extends \Omeka\File\TempFileFactory
 {

@@ -1,7 +1,7 @@
 <?php
 namespace Next\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class CurrentSite extends AbstractHelper
 {
@@ -17,7 +17,7 @@ class CurrentSite extends AbstractHelper
         if (is_null($site)) {
             $site = $this->getView()
                 ->getHelperPluginManager()
-                ->get('Zend\View\Helper\ViewModel')
+                ->get('Laminas\View\Helper\ViewModel')
                 ->getRoot()
                 ->getVariable('site');
         }

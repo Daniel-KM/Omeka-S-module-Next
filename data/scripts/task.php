@@ -24,7 +24,7 @@ require dirname(dirname(dirname(dirname(__DIR__)))) . '/bootstrap.php';
 
 $application = \Omeka\Mvc\Application::init(require OMEKA_PATH . '/application/config/application.config.php');
 $services = $application->getServiceManager();
-/** @var \Zend\Log\Logger $logger */
+/** @var \Laminas\Log\Logger $logger */
 $logger = $services->get('Omeka\Logger');
 $translator = $services->get('MvcTranslator');
 
@@ -129,7 +129,7 @@ $job->setClass($taskClass);
 /** @var \Omeka\Module\Module $module */
 $module = $services->get('Omeka\ModuleManager')->getModule('Log');
 if ($module && $module->getState() === \Omeka\Module\Manager::STATE_ACTIVE) {
-    $referenceIdProcessor = new \Zend\Log\Processor\ReferenceId();
+    $referenceIdProcessor = new \Laminas\Log\Processor\ReferenceId();
     $referenceIdProcessor->setReferenceId('task/' . $taskName . '/' . (new \DateTime())->format('Ymd-His'));
     $logger->addProcessor($referenceIdProcessor);
 

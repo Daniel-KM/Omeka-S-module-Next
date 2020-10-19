@@ -1,8 +1,8 @@
 <?php
 namespace Next\View\Helper;
 
-use Zend\Session\Container;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\Session\Container;
+use Laminas\View\Helper\AbstractHelper;
 
 class LastBrowsePage extends AbstractHelper
 {

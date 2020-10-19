@@ -3,7 +3,7 @@ namespace Next\View\Helper;
 
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Api\Representation\MediaRepresentation;
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 
 class NextResource extends AbstractHelper
 {

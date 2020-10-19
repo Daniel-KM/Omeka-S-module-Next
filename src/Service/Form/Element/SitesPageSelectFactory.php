@@ -3,7 +3,7 @@ namespace Next\Service\Form\Element;
 
 use Interop\Container\ContainerInterface;
 use Next\Form\Element\SitesPageSelect;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class SitesPageSelectFactory implements FactoryInterface
 {

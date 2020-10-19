@@ -3,7 +3,7 @@ namespace Next\Service\Form;
 
 use Interop\Container\ContainerInterface;
 use Next\Form\SettingsFieldset;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class SettingsFieldsetFactory implements FactoryInterface
 {
