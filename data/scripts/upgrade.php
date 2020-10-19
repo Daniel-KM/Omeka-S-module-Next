@@ -101,3 +101,36 @@ if (version_compare($oldVersion, '3.1.2.31', '<')) {
         }
     }
 }
+
+if (version_compare($oldVersion, '3.3.2.32', '<')) {
+    $message = new Message(
+        'Some features were moved and improved in modules %1$sAdvanced Search Plus%4$s, %2$sBlock Plus%4$s, and  %3$sBulk Edit%4$s: in particular select in used properties and classes, SearchForm block, Simple Mirror Page block, automatic trimming and deduplication.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearchPlus" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit" target="_blank">',
+        '</a>'
+    );
+
+    $message->setEscapeHtml(false);
+    $messenger = new Messenger();
+    $messenger->addWarning($message);
+
+    // Option moved to module Block Plus.
+    $sql = <<<'SQL'
+UPDATE site_page_block
+SET layout = "mirrorPage"
+WHERE layout = "simplePage";
+SQL;
+    $connection->exec($sql);
+
+    $siteSettings = $services->get('Omeka\Settings\Site');
+    /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
+    $siteIds = $api->search('sites', [], ['initialize' => false, 'returnScalar' => 'id'])->getContent();
+    foreach ($siteIds as $siteId) {
+        $siteSettings->setTargetId($siteId);
+        // Option moved to module Advanced Search Plus.
+        $siteSettings->set('advancedsearchplus_restrict_used_terms',
+            $siteSettings->get('next_search_used_terms', true));
+        $siteSettings->delete('next_search_used_terms');
+    }
+}
