@@ -212,13 +212,13 @@ your archives regularly so you can roll back if needed.
 Troubleshooting
 ---------------
 
-See online issues on the [module issues] page on GitHub.
+See online issues on the [module issues] page on GitLab.
 
 
 License
 -------
 
-This module is published under the [CeCILL v2.1] licence, compatible with
+This module is published under the [CeCILL v2.1] license, compatible with
 [GNU/GPL] and approved by [FSF] and [OSI].
 
 In consideration of access to the source code and the rights to copy, modify and
@@ -241,11 +241,11 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018-2020 (see [Daniel-KM] on GitHub)
+* Copyright Daniel Berthereau, 2018-2020 (see [Daniel-KM] on GitLab)
 
 
 [Omeka S]: https://omeka.org/s
-[Next]: https://github.com/Daniel-KM/Omeka-S-module-Next
+[Next]: https://gitlab.com/Daniel-KM/Omeka-S-module-Next
 [shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
 [#1156]: https://github.com/omeka/omeka-s/issues/1156
 [#1258]: https://github.com/omeka/omeka-s/issues/1258
@@ -259,17 +259,17 @@ Copyright
 [#1464]: https://github.com/omeka/omeka-s/issues/1464
 [#1493]: https://github.com/omeka/omeka-s/issues/1493
 [#1497]: https://github.com/omeka/omeka-s/issues/1497
-[Bibliography]: https://github.com/Daniel-KM/Omeka-S-module-Bibliography
-[Generic]: https://github.com/Daniel-KM/Omeka-S-module-Generic
-[Block Plus]: https://github.com/Daniel-KM/Omeka-S-module-BlockPlus
-[Bulk Edit]: https://github.com/Daniel-KM/Omeka-S-module-BulkEdit
-[Verovio]: https://github.com/Daniel-KM/Omeka-S-module-Verovio
+[Bibliography]: https://gitlab.com/Daniel-KM/Omeka-S-module-Bibliography
+[Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
+[Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
+[Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
+[Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
-[module issues]: https://github.com/Daniel-KM/Omeka-S-module-Next/issues
+[module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Next/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
 [OSI]: http://opensource.org
 [MIT]: http://http://opensource.org/licenses/MIT
 [GitLab]: https://gitlab.com/Daniel-KM
-[Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
+[Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"

@@ -26,7 +26,7 @@ $space = strtolower(__NAMESPACE__);
 if (version_compare($oldVersion, '3.1.2.9', '<')) {
     $message = new Message(
         'Some features were moved and improved in a new module %sBulkEdit%s: trim metadata and deduplicate metadata. They are still available in module Next.', // @translate
-        '<a href="https://github.com/Daniel-KM/Omeka-S-module-BulkEdit">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit">',
         '</a>'
     );
 
@@ -38,7 +38,7 @@ if (version_compare($oldVersion, '3.1.2.9', '<')) {
 if (version_compare($oldVersion, '3.1.2.12', '<')) {
     $message = new Message(
         'Some features were moved and improved in a new module %sBlockPlus%s: SearchForm block and SimplePage block. They are still available in module Next.', // @translate
-        '<a href="https://github.com/Daniel-KM/Omeka-S-module-BlockPlus">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus">',
         '</a>'
     );
 
