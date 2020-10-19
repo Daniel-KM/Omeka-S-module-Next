@@ -244,7 +244,7 @@ SQL;
         // adapters add, always sort by entity ID.
         $adapter->sortQuery($qb, $query);
         $adapter->limitQuery($qb, $query);
-        $qb->addOrderBy("$alias.id", $query['sort_order']);
+        $qb->addOrderBy('omeka_root.id', $query['sort_order']);
 
         return $qb;
     }
