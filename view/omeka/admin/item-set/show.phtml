@@ -5,6 +5,8 @@
  * @var \Omeka\Api\Representation\ItemSetRepresentation $resource
  */
 
+// Copy of original file + public button and navigation buttons.
+
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 $this->htmlElement('body')->appendAttribute('class', 'item-sets show');
@@ -18,7 +20,7 @@ $viewItemsLink = $this->url(
     ]
 );
 if ($owner = $itemSet->owner()) {
-    $ownerText = $escape($itemSet->owner()->name());
+    $ownerText = $escape($owner->name());
 } else {
     $ownerText = $translate('[no owner]');
 }
@@ -36,6 +38,7 @@ $sectionNavs = [
     <?php if ($itemSet->userIsAllowed('update')): ?>
     <?php echo $itemSet->link($translate('Edit item set'), 'edit', ['class' => 'button']); ?>
     <?php endif; ?>
+    <?php echo $this->browsePreviousNext($resource); ?>
     <a href="<?php echo $viewItemsLink; ?>" class="button"><?php echo $translate('View items'); ?></a>
 </div>
 

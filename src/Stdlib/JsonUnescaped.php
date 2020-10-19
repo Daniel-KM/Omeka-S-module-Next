@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\Stdlib;
 
 use Laminas\Json\Json;

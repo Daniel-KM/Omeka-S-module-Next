@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
@@ -26,9 +27,9 @@ class DefaultSiteSlug extends AbstractHelper
     /**
      * Return the default site slug, or the first one.
      *
-     * @return string|null
+     * @return string
      */
-    public function __invoke()
+    public function __invoke(): string
     {
         return $this->defaultSiteSlug;
     }

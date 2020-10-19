@@ -5,6 +5,8 @@
  * @var \Omeka\Api\Representation\MediaRepresentation $resource
  */
 
+// Copy of original file + public button and navigation buttons.
+
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 $this->htmlElement('body')->appendAttribute('class', 'media show');
@@ -21,6 +23,7 @@ $sectionNavs = [
     <?php if ($media->userIsAllowed('update')): ?>
     <?php echo $media->link($translate('Edit media'), 'edit', ['class' => 'button']); ?>
     <?php endif; ?>
+    <?php echo $this->browsePreviousNext($resource); ?>
 </div>
 
 <?php echo $this->sectionNav($sectionNavs, 'view.show.section_nav', $media); ?>

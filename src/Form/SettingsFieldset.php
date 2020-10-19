@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\Form;
 
 use Laminas\Form\Element;
@@ -84,9 +85,10 @@ class SettingsFieldset extends Fieldset
     /**
      * @param Settings $settings
      */
-    public function setSettings(Settings $settings): void
+    public function setSettings(Settings $settings): SettingsFieldset
     {
         $this->settings = $settings;
+        return $this;
     }
 
     /**

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
 use Omeka\Api\Representation\AbstractRepresentation;
-use Omeka\Api\Representation\AssetRepresentation;
 use Omeka\Api\Representation\SitePageRepresentation;
 use Omeka\Api\Representation\SiteRepresentation;
 
@@ -21,37 +21,22 @@ class ThumbnailUrl extends AbstractHelper
      *
      * @param AbstractRepresentation $representation
      * @param string $type
-     * @return string
+     * @return string|null
      */
-    public function __invoke(AbstractRepresentation $representation, $type = 'square')
+    public function __invoke(AbstractRepresentation $representation, $type = 'square'): ?string
     {
         if ($representation instanceof SitePageRepresentation) {
             $representation = $this->thumbnailUrlPage($representation);
             if (!$representation) {
-                return;
+                return null;
             }
         } elseif ($representation instanceof SiteRepresentation) {
             $representation = $this->thumbnailUrlSite($representation);
             if (!$representation) {
-                return;
+                return null;
             }
         }
-
-        if ($representation instanceof AssetRepresentation) {
-            return $representation->assetUrl();
-        }
-
-        if (version_compare(\Omeka\Module::VERSION, '1.3', '>=')) {
-            $thumbnail = $representation->thumbnail();
-            if ($thumbnail) {
-                return $thumbnail->assetUrl();
-            }
-        }
-
-        $primaryMedia = $representation->primaryMedia();
-        return $primaryMedia
-            ? $primaryMedia->thumbnailUrl($type)
-            : null;
+        return $representation->thumbnailDisplayUrl($type);
     }
 
     protected function thumbnailUrlSite(SiteRepresentation $site)
@@ -78,7 +63,8 @@ class ThumbnailUrl extends AbstractHelper
         }
 
         // Any media in the site.
-        return $api->searchOne('media', ['site_id' => $site->id()])->getContent();
+        // FIXME This works only with module AdvancedSearchPlus or ApiInfo.
+        return $api->searchOne('media', ['site_id' => $site->id(), 'has_thumbnails'])->getContent();
     }
 
     protected function thumbnailUrlPage(SitePageRepresentation $page)

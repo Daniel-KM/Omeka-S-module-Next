@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
@@ -10,7 +11,7 @@ class IsHomePage extends AbstractHelper
      *
      * @return bool
      */
-    public function __invoke()
+    public function __invoke(): bool
     {
         $view = $this->getView();
 

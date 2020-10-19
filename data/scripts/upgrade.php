@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next;
 
 use Omeka\Mvc\Controller\Plugin\Messenger;

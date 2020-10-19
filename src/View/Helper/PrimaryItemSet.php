@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
@@ -29,7 +30,7 @@ class PrimaryItemSet extends AbstractHelper
         ItemRepresentation $item,
         SiteRepresentation $site = null,
         $returnNullIfNoOrder = false
-    ) {
+    ): ?ItemSetRepresentation {
         // Check only with the item sets of the site.
         if ($site) {
             // Use item set id as key to simplify checks.

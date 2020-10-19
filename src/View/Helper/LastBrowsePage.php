@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\Session\Container;
@@ -13,11 +14,10 @@ class LastBrowsePage extends AbstractHelper
      *
      * @return string
      */
-    public function __invoke()
+    public function __invoke(): string
     {
         $view = $this->getView();
-        $params = $view->params();
-        $isAdmin = (bool) $params->fromRoute('__ADMIN__');
+        $isAdmin = $view->status()->isAdminRequest();
         $ui = $isAdmin ? 'admin' : 'public';
         $session = new Container('Next');
         return isset($session->lastBrowsePage[$ui])

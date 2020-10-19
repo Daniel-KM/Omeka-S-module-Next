@@ -1,9 +1,10 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\Navigation\Navigation;
 use Laminas\Navigation\Page\AbstractPage;
-use Laminas\Router\RouteMatch;
+use Laminas\Router\Http\RouteMatch;
 use Laminas\View\Helper\AbstractHelper;
 
 class Breadcrumbs extends AbstractHelper
@@ -91,7 +92,7 @@ class Breadcrumbs extends AbstractHelper
         ];
         $options += $defaults;
 
-        /** @var \Laminas\Router\RouteMatch $routeMatch */
+        /** @var \Laminas\Router\Http\RouteMatch $routeMatch */
         $routeMatch = $site->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
         $matchedRouteName = $routeMatch->getMatchedRouteName();
 
@@ -274,9 +275,7 @@ class Breadcrumbs extends AbstractHelper
                     break;
                 }
                 if (!$options['homepage']) {
-                    $homepage = version_compare(\Omeka\Module::VERSION, '1.4', '>=')
-                        ? $site->homepage()
-                        : null;
+                    $homepage = $site->homepage();
                     if (!$homepage) {
                         $linkedPages = $site->linkedPages();
                         $homepage = $linkedPages ? current($linkedPages) : null;

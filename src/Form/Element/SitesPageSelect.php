@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\Form\Element;
 
 class SitesPageSelect extends AbstractGroupBySiteSelect

@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Doctrine\ORM\QueryBuilder;
@@ -24,7 +25,7 @@ trait NextPreviousResourceTrait
      */
     protected $adapter;
 
-    public function __construct(AdapterManager $adapterManager, SiteRepresentation $site = null)
+    public function __construct(AdapterManager $adapterManager, SiteRepresentation $site = null): ?AbstractResourceEntityRepresentation
     {
         $this->adapterManager = $adapterManager;
         $this->site = $site;
@@ -40,8 +41,6 @@ trait NextPreviousResourceTrait
     protected function previousOrNextResource(AbstractResourceEntityRepresentation $resource, $lowerOrGreaterThan)
     {
         $resourceName = $resource->resourceName();
-
-        /* @var \Omeka\Api\Adapter\AbstractResourceEntityAdapter $adapter */
         $this->adapter = $this->adapterManager->get($resourceName);
 
         $resourceTypes = [
@@ -53,16 +52,13 @@ trait NextPreviousResourceTrait
 
         // Visibility is automatically managed.
 
-        $isOldOmeka = \Omeka\Module::VERSION < 2;
-        $alias = $isOldOmeka ? $this->adapter->getEntityClass() : 'omeka_root';
-
         $entityManager = $this->adapter->getEntityManager();
         $qb = $entityManager->createQueryBuilder()
-            ->select($alias . '.id')
-            ->from($resourceType, $alias)
-            ->andWhere($alias . '.id ' . $lowerOrGreaterThan . ' :resource_id')
+            ->select('omeka_root.id')
+            ->from($resourceType, 'omeka_root')
+            ->andWhere('omeka_root.id ' . $lowerOrGreaterThan . ' :resource_id')
             ->setParameter(':resource_id', $resource->id())
-            ->orderBy($alias . '.id', $lowerOrGreaterThan === '<' ? 'DESC' : 'ASC')
+            ->orderBy('omeka_root.id', $lowerOrGreaterThan === '<' ? 'DESC' : 'ASC')
             ->setMaxResults(1);
 
         if ($this->site) {
@@ -104,15 +100,12 @@ trait NextPreviousResourceTrait
         // Avoid potential infinite recursion.
         unset($params['site_id']);
 
-        $isOldOmeka = \Omeka\Module::VERSION < 2;
-        $alias = $isOldOmeka ? 'Omeka\Entity\Item' : 'omeka_root';
-
         $this->adapter->buildQuery($qb, $params);
 
         if ($this->getView()->siteSetting('browse_attached_items', false)) {
             $siteBlockAttachmentsAlias = $this->adapter->createAlias();
             $qb->innerJoin(
-                $alias . '.siteBlockAttachments',
+                'omeka_root.siteBlockAttachments',
                 $siteBlockAttachmentsAlias
             );
             $sitePageBlockAlias = $this->adapter->createAlias();
@@ -149,12 +142,9 @@ trait NextPreviousResourceTrait
             return;
         }
 
-        $isOldOmeka = \Omeka\Module::VERSION < 2;
-        $alias = $isOldOmeka ? 'Omeka\Entity\ItemSet' : 'omeka_root';
-
         $siteItemSetsAlias = $this->adapter->createAlias();
         $qb->innerJoin(
-            $alias . '.siteItemSets',
+            'omeka_root.siteItemSets',
             $siteItemSetsAlias
         );
         $qb->andWhere($qb->expr()->eq(

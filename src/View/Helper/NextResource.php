@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
@@ -15,7 +16,7 @@ class NextResource extends AbstractHelper
      * @param AbstractResourceEntityRepresentation $resource
      * @return AbstractResourceEntityRepresentation|null
      */
-    public function __invoke(AbstractResourceEntityRepresentation $resource)
+    public function __invoke(AbstractResourceEntityRepresentation $resource): ?AbstractResourceEntityRepresentation
     {
         $resourceName = $resource->resourceName();
         if ($resourceName === 'media') {

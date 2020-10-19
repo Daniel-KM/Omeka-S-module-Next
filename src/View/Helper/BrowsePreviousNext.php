@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Doctrine\DBAL\Connection;
@@ -224,16 +225,13 @@ SQL;
         // Begin building the search query.
         $entityClass = $adapter->getEntityClass();
 
-        $isOldOmeka = \Omeka\Module::VERSION < 2;
-        $alias = $isOldOmeka ? $entityClass : 'omeka_root';
-
         // $adapter->index = 0;
         $qb = $adapter->getEntityManager()
             ->createQueryBuilder()
-            ->select($alias)
-            ->from($entityClass, $alias);
+            ->select('omeka_root')
+            ->from($entityClass, 'omeka_root');
         $adapter->buildQuery($qb, $query);
-        $qb->groupBy("$alias.id");
+        $qb->groupBy('omeka_root.id');
 
         // Trigger the search.query event.
         $event = new Event('api.search.query', $adapter, [
@@ -247,14 +245,6 @@ SQL;
         $adapter->sortQuery($qb, $query);
         $adapter->limitQuery($qb, $query);
         $qb->addOrderBy("$alias.id", $query['sort_order']);
-
-        if ($isOldOmeka) {
-            // Keep only the id.
-            // This is not possible with Omeka 2, since \Omeka\Module::searchFulltext()
-            // adds a specific select.
-            $qb
-                ->select($alias . '.id');
-        }
 
         return $qb;
     }

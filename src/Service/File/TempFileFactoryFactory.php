@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\Service\File;
 
 use Interop\Container\ContainerInterface;

@@ -5,6 +5,8 @@
  * @var \Omeka\Api\Representation\ItemRepresentation $resource
  */
 
+// Copy of original file + public button and navigation buttons.
+
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 $this->htmlElement('body')->appendAttribute('class', 'items show');
@@ -18,6 +20,8 @@ $sectionNavs = [
     'item-metadata' => $translate('Metadata'),
     'item-linked' => $translate('Linked resources'),
 ];
+
+$itemMedia = $item->media();
 ?>
 <?php echo $this->pageTitle($item->displayTitle(), 1, $translate('Items')); ?>
 <div id="page-actions">
@@ -56,7 +60,6 @@ $sectionNavs = [
     <?php endif; ?>
 </div>
 
-
 <div class="sidebar active">
     <?php echo $this->thumbnail($item, 'square'); ?>
     <div class="meta-group">
@@ -72,6 +75,15 @@ $sectionNavs = [
         <?php endforeach; ?>
     </div>
     <?php endif; ?>
+    <?php $sites = $item->sites(); ?>
+    <?php if (count($sites) > 0): ?>
+    <div class="meta-group">
+        <h4><?php echo $translate('Sites'); ?></h4>
+        <?php foreach ($sites as $site): ?>
+        <div class="value item-sets"><?php echo $site->link($site->title()); ?></div>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
     <div class="meta-group">
         <h4><?php echo $translate('Created'); ?></h4>
         <div class="value"><?php echo $escape($this->i18n()->dateFormat($item->created())); ?></div>
@@ -80,10 +92,10 @@ $sectionNavs = [
         <h4><?php echo $translate('Owner'); ?></h4>
         <div class="value"><?php echo $ownerText; ?></div>
     </div>
-    <?php if ($item->media()): ?>
+    <?php if ($itemMedia): ?>
     <div class="meta-group">
-        <h4><?php echo $translate('Media'); ?></h4>
-        <?php foreach ($item->media() as $media): ?>
+        <h4><?php echo $translate('Media'); ?> (<?php echo count($itemMedia); ?>)</h4>
+        <?php foreach ($itemMedia as $media): ?>
         <div class="value">
             <?php echo $media->linkPretty(); ?>
         </div>

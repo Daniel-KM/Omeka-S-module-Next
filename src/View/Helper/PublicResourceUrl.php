@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
@@ -33,11 +34,11 @@ class PublicResourceUrl extends AbstractHelper
      * @param bool $canonical Whether to return an absolute URL
      * @return string
      */
-    public function __invoke(AbstractResourceRepresentation $resource, $canonical = false)
+    public function __invoke(AbstractResourceRepresentation $resource, $canonical = false): string
     {
         // Manage the case where there is no site.
         return $this->defaultSiteSlug
-            ? $resource->siteUrl($this->defaultSiteSlug, $canonical)
+            ? (string) $resource->siteUrl($this->defaultSiteSlug, $canonical)
             : '';
     }
 }

@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\Service\Form\Element;
 
 use Interop\Container\ContainerInterface;
