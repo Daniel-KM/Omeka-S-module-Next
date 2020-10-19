@@ -23,7 +23,7 @@ use Omeka\Api\Adapter\AbstractResourceEntityAdapter;
  * Bring together various features too small to be a full module; may be
  * integrated in the next release of Omeka S, or not.
  *
- * @copyright Daniel Berthereau, 2018-2019
+ * @copyright Daniel Berthereau, 2018-2020
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  */
 class Module extends AbstractModule
