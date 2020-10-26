@@ -39,6 +39,7 @@ return [
             'nextResource' => Service\ViewHelper\NextResourceFactory::class,
             'previousResource' => Service\ViewHelper\PreviousResourceFactory::class,
             'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
+            'userSiteSlugs' => Service\ViewHelper\UserSiteSlugsFactory::class,
         ],
     ],
     'form_elements' => [
