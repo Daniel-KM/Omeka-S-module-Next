@@ -63,7 +63,7 @@ class PrimaryItemSet extends AbstractHelper
             // template, so a check should be done for "resource:itemset" and
             // "resource".
 
-            $values = $item->value($propertyItemSet, ['type' => 'resource:itemset', 'all' => true, 'default' => []]);
+            $values = $item->value($propertyItemSet, ['type' => 'resource:itemset', 'all' => true]);
             foreach ($values as $value) {
                 $itemSet = $value->valueResource();
                 if (isset($itemSets[$itemSet->id()])) {
@@ -71,7 +71,7 @@ class PrimaryItemSet extends AbstractHelper
                 }
             }
 
-            $values = $item->value($propertyItemSet, ['type' => 'resource', 'all' => true, 'default' => []]);
+            $values = $item->value($propertyItemSet, ['type' => 'resource', 'all' => true]);
             foreach ($values as $value) {
                 $valueResource = $value->valueResource();
                 if ($valueResource->resourceName() !== 'item_sets') {
