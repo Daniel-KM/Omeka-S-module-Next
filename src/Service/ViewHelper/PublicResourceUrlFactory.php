@@ -8,19 +8,23 @@ use Next\View\Helper\PublicResourceUrl;
 
 /**
  * Service factory for the PublicResourceUrlFactory view helper.
- *
- * @todo Set a setting for the default site of the user.
  */
 class PublicResourceUrlFactory implements FactoryInterface
 {
     /**
-     * Create and return the PublicResourceUrl view helper
+     * Create and return the PublicResourceUrl view helper.
      *
      * @return PublicResourceUrl
      */
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        $defaultSiteSlug = $services->get('ViewHelperManager')->get('defaultSiteSlug');
-        return new PublicResourceUrl($defaultSiteSlug());
+        $defaultSiteId = $services->get('Omeka\Settings')->get('default_site');
+        $viewHelpers = $services->get('ViewHelperManager');
+        $userSiteSlugs = $viewHelpers->get('userSiteSlugs');
+        $defaultSiteSlug = $viewHelpers->get('defaultSiteSlug');
+        return new PublicResourceUrl(
+            [$defaultSiteId => $defaultSiteSlug()],
+            $userSiteSlugs()
+        );
     }
 }

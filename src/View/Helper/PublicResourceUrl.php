@@ -11,34 +11,64 @@ use Omeka\Api\Representation\AbstractResourceRepresentation;
 class PublicResourceUrl extends AbstractHelper
 {
     /**
-     * @var string
+     * @var string[]
      */
     protected $defaultSiteSlug;
 
     /**
+     * @var string[]
+     */
+    protected $userSiteSlugs;
+
+    /**
      * Construct the helper.
      *
-     * @param string|null $defaultSiteSlug
+     * @param string[] $defaultSiteSlug
+     * @param string[] $userSiteSlugs
      */
-    public function __construct($defaultSiteSlug)
+    public function __construct(array $defaultSiteSlug, array $userSiteSlugs)
     {
         $this->defaultSiteSlug = $defaultSiteSlug;
+        $this->userSiteSlugs = $userSiteSlugs;
     }
 
     /**
-     * Return the url to the public default site page or a resource.
+     * Return the url to the public default site page of a resource.
      *
      * @uses AbstractResourceRepresentation::siteUrl()
      *
      * @param AbstractResourceRepresentation $resource
      * @param bool $canonical Whether to return an absolute URL
-     * @return string
+     * @return string May be an empty string if there is no site.
      */
     public function __invoke(AbstractResourceRepresentation $resource, $canonical = false): string
     {
+        if (method_exists($resource, 'sites')) {
+            $sites = $resource->sites();
+        } elseif ($resource instanceof \Omeka\Api\Representation\MediaRepresentation) {
+            $item = $resource->item();
+            $sites = $item->sites();
+        } else {
+            $sites = [];
+        }
+
+        if (count($sites)) {
+            $intersectSites = array_intersect_key($sites, $this->userSiteSlugs);
+            if (count($intersectSites)) {
+                $site = reset($intersectSites);
+                return $resource->siteUrl($site->slug(), $canonical);
+            }
+            if (isset($sites[key($this->defaultSiteSlug)])) {
+                return $resource->siteUrl(reset($this->defaultSiteSlug), $canonical);
+            }
+            $site = reset($sites);
+            return $resource->siteUrl($site->slug(), $canonical);
+        }
+
         // Manage the case where there is no site.
-        return $this->defaultSiteSlug
-            ? (string) $resource->siteUrl($this->defaultSiteSlug, $canonical)
+        $slug = count($this->userSiteSlugs) ? reset($this->userSiteSlugs) : reset($this->defaultSiteSlug);
+        return $slug
+            ? (string) $resource->siteUrl($slug, $canonical)
             : '';
     }
 }
