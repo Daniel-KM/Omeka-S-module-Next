@@ -32,7 +32,8 @@ class LoopItems extends AbstractTask
 
         $resourceType = 'items';
 
-        $totalToProcess = $api->search($resourceType)->getTotalResults();
+        // Don't load entities if the only information needed is total results.
+        $totalToProcess = $api->search($resourceType, ['limit' => 0])->getTotalResults();
 
         if (empty($totalToProcess)) {
             $logger->info(new Message(
