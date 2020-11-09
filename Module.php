@@ -28,6 +28,23 @@ class Module extends AbstractModule
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
     {
+        // Manage buttons in admin resources.
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Item',
+            'view.layout',
+            [$this, 'handleViewLayoutResource']
+        );
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\ItemSet',
+            'view.layout',
+            [$this, 'handleViewLayoutResource']
+        );
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Media',
+            'view.layout',
+            [$this, 'handleViewLayoutResource']
+        );
+
         // Manage prev/next.
         $controllers = [
             'Omeka\Controller\Admin\Item',
@@ -83,6 +100,55 @@ class Module extends AbstractModule
             'form.add_input_filters',
             [$this, 'handleSiteSettingsFilters']
         );
+    }
+
+    public function handleViewLayoutResource(Event $event): void
+    {
+        $view = $event->getTarget();
+        $params = $view->params()->fromRoute();
+        $action = $params['action'] ?? 'browse';
+        if (!in_array($action, ['show'])) {
+            return;
+        }
+
+        $controller = $params['__CONTROLLER__'] ?? $params['controller'] ?? '';
+        $controllers = [
+            'item' => 'items',
+            'item-set' => 'item_sets',
+            'media' => 'media',
+            'Omeka\Controller\Admin\Item' => 'items',
+            'Omeka\Controller\Admin\ItemSet' => 'item_sets',
+            'Omeka\Controller\Admin\Media' => 'media',
+        ];
+        if (!isset($controllers[$controller])) {
+            return;
+        }
+
+        if ($action === 'show') {
+            // The resource is not available in the main view.
+            $id = isset($params['id']) ? (int) $params['id'] : 0;
+            if (!$id) {
+                return;
+            }
+            $resource = $view->api()->read($controllers[$controller], ['id' => $id], ['initialize' => false])->getContent();
+            $url = $view->publicResourceUrl($resource);
+            if (!$url) {
+                return;
+            }
+            $linkPublicView = $view->hyperlink(
+                $view->translate('Public view'), // @translate
+                $url,
+                ['class' => 'button', 'target' => '_blank']
+            );
+            $linkBrowseView = $view->browsePreviousNext($resource);
+            $html = preg_replace(
+                '~<div id="page-actions">(.*?)</div>~s',
+                '<div id="page-actions">' . $linkPublicView . ' $1 ' . $linkBrowseView . '</div>',
+                $view->content,
+                1
+            );
+            $view->vars()->offsetSet('content', $html);
+        }
     }
 
     public function handleViewShowSidebarMedia(Event $event): void
