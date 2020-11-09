@@ -67,7 +67,6 @@ An option is added to select the metadata to display in the main browse view (fi
 
 #### New links
 
-- From the site permissions to the user page (fix [#1301]).
 - From the list of jobs to each log (fix [#1156]).
 
 #### Better identification of media types for xml and zip files
@@ -189,6 +188,10 @@ insensitive by default).
 Warning: This feature is removed in the version for Omeka 3, but is available in
 an improved version in module [Bulk Edit].
 
+#### New links
+
+- From the site permissions to the user page (fix [#1301]).
+
 ### Backend
 
 #### Logger in view
@@ -215,6 +218,7 @@ TODO
 
 - [ ] Normalize the breadcrumbs with Laminas navigation.
 - [ ] Move all navigation and theme helpers to a new module.
+- [ ] Site permission links to user page (v3)
 
 
 Warning
