@@ -107,7 +107,7 @@ class ThumbnailUrl extends AbstractHelper
                     case 'browsePreview':
                         $resourceType = $block->dataValue('resource_type', 'items');
                         $query = [];
-                        parse_str(ltrim($block->dataValue('query'), "? \t\n\r\0\x0B"), $query);
+                        parse_str(ltrim((string) $block->dataValue('query'), "? \t\n\r\0\x0B"), $query);
                         $site = $block->page()->site();
                         if ($view->siteSetting('browse_attached_items', false)) {
                             $query['site_attachments_only'] = true;
