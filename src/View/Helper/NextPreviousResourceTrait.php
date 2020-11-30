@@ -25,7 +25,7 @@ trait NextPreviousResourceTrait
      */
     protected $adapter;
 
-    public function __construct(AdapterManager $adapterManager, SiteRepresentation $site = null): ?AbstractResourceEntityRepresentation
+    public function __construct(AdapterManager $adapterManager, SiteRepresentation $site = null)
     {
         $this->adapterManager = $adapterManager;
         $this->site = $site;
