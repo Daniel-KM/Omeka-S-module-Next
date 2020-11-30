@@ -2,7 +2,8 @@ Next (module for Omeka S)
 =========================
 
 > __New versions of this module and support for Omeka S version 3.0 and above
-> are available on [GitLab], which seems to respect users and privacy better.__
+> are available on [GitLab], which seems to respect users and privacy better
+> than the previous repository.__
 
 [Next] is a module for [Omeka S] that brings together various features too small
 to be a full module. They may be integrated in the next release of Omeka S, or
