@@ -317,7 +317,7 @@ class Module extends AbstractModule
         // "0" is the default order, so it is always single.
         $result = [];
         foreach ($list as $row) {
-            list($ids, $sortBy, $sortOrder) = array_filter(array_map('trim', explode(' ', $row, 3)));
+            [$ids, $sortBy, $sortOrder] = array_filter(array_map('trim', explode(' ', $row . '  ', 3)));
             $ids = trim($ids, ', ');
             if (!strlen($ids) || empty($sortBy)) {
                 continue;
@@ -329,7 +329,7 @@ class Module extends AbstractModule
                 : implode(',', $ids);
             $result[$ids] = [
                 'sort_by' => $sortBy,
-                'sort_order' => strtolower($sortOrder) === 'desc' ? 'desc' : 'asc',
+                'sort_order' => $sortOrder && strtolower($sortOrder) === 'desc' ? 'desc' : 'asc',
             ];
         }
         ksort($result);
@@ -340,8 +340,8 @@ class Module extends AbstractModule
     public function filterBreadcrumbsPrepend($string)
     {
         return array_filter(array_map(function ($v) {
-            list($uri, $label) = array_map('trim', explode(' ', $v, 2));
-            if (!strlen($label)) {
+            [$uri, $label] = array_map('trim', explode(' ', $v . ' ', 2));
+            if (!strlen((string) $label)) {
                 $label = $uri;
             }
             return ['label' => $label, 'uri' => $uri];
