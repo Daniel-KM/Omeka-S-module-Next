@@ -263,7 +263,7 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018-2020 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2018-2021 (see [Daniel-KM] on GitLab)
 
 
 [Omeka S]: https://omeka.org/s
