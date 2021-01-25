@@ -145,15 +145,17 @@ class Breadcrumbs extends AbstractHelper
                     }
 
                     $controller = $this->extractController($routeMatch);
-                    $label = $this->extractLabel($controller);
-                    $this->crumbs[] = [
-                        'label' => $translate($label),
-                        'uri' => $url(
-                            $matchedRouteName,
-                            ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
-                        ),
-                        'resource' => null,
-                    ];
+                    if ($controller !== 'search') {
+                        $label = $this->extractLabel($controller);
+                        $this->crumbs[] = [
+                            'label' => $translate($label),
+                            'uri' => $url(
+                                $matchedRouteName,
+                                ['site-slug' => $siteSlug, 'controller' => $controller, 'action' => 'browse']
+                            ),
+                            'resource' => null,
+                        ];
+                    }
                     if ($options['current']) {
                         $label = $translate('Search'); // @translate
                     }
@@ -543,9 +545,17 @@ class Breadcrumbs extends AbstractHelper
             'media' => 'media',
         ];
         $controller = $routeMatch->getParam('controller') ?: $routeMatch->getParam('__CONTROLLER__');
-        return isset($controllers[$controller])
-            ? $controllers[$controller]
-            : $controller;
+        if (isset($controllers[$controller])) {
+            return $controllers[$controller];
+        }
+
+        if ($routeMatch->getParam('action') === 'search'
+            && ($controller === 'Omeka\Controller\Site\Index' || $controller === 'index')
+        ) {
+            return 'search';
+        }
+
+        return $controller;
     }
 
     protected function extractLabel($controller)
