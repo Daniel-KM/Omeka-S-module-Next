@@ -28,7 +28,29 @@ settings, or in the options of the view helper.
 #### Previous/Next resources
 
 Allow to get the previous or the next resources, that simplifies browsing like
-in Omeka Classic. An option allows to use it in admin board.
+in Omeka Classic. An option allows to use it in admin board. For sites, there is
+a specific option to limit and to order items and item sets according to a
+standard query.
+
+To use it, you need to add this in the item, item set, or media show page of the
+theme:
+
+```php
+<?php
+$plugins = $this->getHelperPluginManager();
+$hasNext = $plugins->has('previousResource');
+?>
+<?php if ($hasNext): ?>
+<div class="previous-next-items">
+    <?php if ($previous = $this->previousResource($resource)): ?>
+    <?= $previous->link($translate('Previous item'), null, ['class' => 'previous-item']) ?>
+    <?php endif; ?>
+    <?php if ($next = $this->nextResource($resource)): ?>
+    <?= $next->link($translate('Next item'), null, ['class' => 'next-item']) ?>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+```
 
 #### Last browse page
 
