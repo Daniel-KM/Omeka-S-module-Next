@@ -93,41 +93,13 @@ trait NextPreviousResourceTrait
             return;
         }
 
-        $params = $this->site->itemPool();
-        if (!is_array($params)) {
-            $params = [];
-        }
-        // Avoid potential infinite recursion.
-        unset($params['site_id']);
-
-        $this->adapter->buildQuery($qb, $params);
-
-        if ($this->getView()->siteSetting('browse_attached_items', false)) {
-            $siteBlockAttachmentsAlias = $this->adapter->createAlias();
-            $qb->innerJoin(
-                'omeka_root.siteBlockAttachments',
-                $siteBlockAttachmentsAlias
-            );
-            $sitePageBlockAlias = $this->adapter->createAlias();
-            $qb->innerJoin(
-                "$siteBlockAttachmentsAlias.block",
-                $sitePageBlockAlias
-            );
-            $sitePageAlias = $this->adapter->createAlias();
-            $qb->innerJoin(
-                "$sitePageBlockAlias.page",
-                $sitePageAlias
-            );
-            $siteAlias = $this->adapter->createAlias();
-            $qb->innerJoin(
-                "$sitePageAlias.site",
-                $siteAlias
-            );
-            $qb->andWhere($qb->expr()->eq(
+        $siteAlias = $this->adapter->createAlias();
+        $qb->innerJoin(
+            'omeka_root.sites', $siteAlias, 'WITH', $qb->expr()->eq(
                 "$siteAlias.id",
-                $this->adapter->createNamedParameter($qb, $this->site->id()))
-            );
-        }
+                $this->adapter->createNamedParameter($qb, $this->site->id())
+            )
+        );
     }
 
     /**
