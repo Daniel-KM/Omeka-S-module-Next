@@ -73,6 +73,8 @@ return [
         ],
         'site_settings' => [
             'next_items_order_for_itemsets' => [],
+            'next_prevnext_items_query' => '',
+            'next_prevnext_item_sets_query' => '',
             'next_breadcrumbs_crumbs' => [
                 'home',
                 'collections',

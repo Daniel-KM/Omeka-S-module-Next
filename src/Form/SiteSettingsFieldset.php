@@ -25,6 +25,30 @@ class SiteSettingsFieldset extends Fieldset
 17,24 created desc
 73 dcterms:title asc',
                 ],
+            ])
+            ->add([
+                'name' => 'next_prevnext_items_query',
+                'type' => Element\Text::class,
+                'options' => [
+                    'label' => 'Query to limit and sort the list of items for the previous/next buttons', // @translate
+                    'info' => 'Use a standard query. Arguments from module Advanced Search Plus are supported if present and needed.', // @translate
+                    'documentation' => 'https://omeka.org/s/docs/user-manual/sites/site_pages/#browse-preview',
+                ],
+                'attributes' => [
+                    'id' => 'next_prevnext_items_query',
+                ],
+            ])
+            ->add([
+                'name' => 'next_prevnext_item_sets_query',
+                'type' => Element\Text::class,
+                'options' => [
+                    'label' => 'Query to limit and sort the list of item sets for the previous/next buttons', // @translate
+                    'info' => 'Use a standard query. Arguments from module Advanced Search Plus are supported if present and needed.', // @translate
+                    'documentation' => 'https://omeka.org/s/docs/user-manual/sites/site_pages/#browse-preview',
+                ],
+                'attributes' => [
+                    'id' => 'next_prevnext_item_sets_query',
+                ],
             ]);
 
         $this
