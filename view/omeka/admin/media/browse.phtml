@@ -15,7 +15,7 @@ $url = $this->plugin('url');
 $this->htmlElement('body')->appendAttribute('class', 'media browse');
 
 $defaultColumnsBrowse = ['Resource class' => 'resource_class_label', 'Owner' => 'owner_name', 'Created' => 'created'];
-$columns = $this->setting('columns_browse', $this->setting('next_columns_browse', $defaultColumnsBrowse));
+$columns = $this->setting('columns_browse') ?: ($this->setting('next_columns_browse') ?: $defaultColumnsBrowse);
 $sortHeadings = ['title' => 'Title', 'dcterms:identifier' => 'Identifier'] + array_flip($columns);
 $sortHeadings = array_values(array_map(function($value, $label) use($translate) { return ['label' => $translate($label), 'value' => $value]; }, array_keys($sortHeadings), $sortHeadings));
 ?>
