@@ -85,7 +85,7 @@ trait NextPreviousResourceTrait
         if ($hasQuery) {
             $qb
                 ->addOrderBy('omeka_root.id', 'ASC');
-            $result = array_column($qb->getQuery()->getScalarResult(), 'id');
+            $result = array_map('intval', array_column($qb->getQuery()->getScalarResult(), 'id'));
             $index = array_search($resource->id(), $result);
             if ($index === false) {
                 return null;
