@@ -317,7 +317,7 @@ class Module extends AbstractModule
         // "0" is the default order, so it is always single.
         $result = [];
         foreach ($list as $row) {
-            [$ids, $sortBy, $sortOrder] = array_filter(array_map('trim', explode(' ', $row . '  ', 3)));
+            [$ids, $sortBy, $sortOrder] = array_filter(array_map('trim', explode(' ', str_replace("\t", ' ', $row) . '  ', 3)));
             $ids = trim($ids, ', ');
             if (!strlen($ids) || empty($sortBy)) {
                 continue;
