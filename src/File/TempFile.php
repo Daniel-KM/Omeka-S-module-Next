@@ -40,6 +40,8 @@ class TempFile extends \Omeka\File\TempFile
         'http://www.openarchives.org/OAI/2.0/' => 'application/vnd.openarchives.oai-pmh+xml',
         'http://www.openarchives.org/OAI/2.0/static-repository' => 'application/vnd.openarchives.oai-pmh+xml',
         'http://www.tei-c.org/ns/1.0' => 'application/vnd.tei+xml',
+        // 3D formats.
+        'http://www.collada.org/2005/11/COLLADASchema' => 'model/vnd.collada+xml',
         // Omeka should support itself.
         'http://omeka.org/schemas/omeka-xml/v1' => 'text/vnd.omeka+xml',
         'http://omeka.org/schemas/omeka-xml/v2' => 'text/vnd.omeka+xml',
