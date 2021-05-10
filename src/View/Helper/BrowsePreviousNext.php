@@ -121,7 +121,7 @@ class BrowsePreviousNext extends AbstractHelper
         $parameters = [];
 
         $quote = function ($v) {
-            $v = (string) $v;
+            $v = is_object($v) ? (string) $v->getId() : (string) $v;
             if (strpos($v, "'")) {
                 // Direct sql quotation uses two single quotes, not a backslash.
                 $v = $this->connection->quote($v);
