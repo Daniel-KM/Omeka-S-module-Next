@@ -318,7 +318,7 @@ class Module extends AbstractModule
         $result = [];
         foreach ($list as $row) {
             [$ids, $sortBy, $sortOrder] = array_filter(array_map('trim', explode(' ', str_replace("\t", ' ', $row) . '  ', 3)));
-            $ids = trim($ids, ', ');
+            $ids = trim((string) $ids, ', ');
             if (!strlen($ids) || empty($sortBy)) {
                 continue;
             }
