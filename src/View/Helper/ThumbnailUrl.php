@@ -16,14 +16,13 @@ class ThumbnailUrl extends AbstractHelper
      * Get a thumbnail url of a representation.
      *
      * The thumbnail may be specified directly, or be the primary media one.
+     * More generic than the default method of representation "thumbnailDisplayUrl()".
+     *
+     * This helper is available in the module BlockPlus.
      *
      * @see \Omeka\View\Helper\Thumbnail
-     *
-     * @param AbstractRepresentation $representation
-     * @param string $type
-     * @return string|null
      */
-    public function __invoke(AbstractRepresentation $representation, $type = 'square'): ?string
+    public function __invoke(AbstractRepresentation $representation, ?string $type = 'square'): ?string
     {
         if ($representation instanceof SitePageRepresentation) {
             $representation = $this->thumbnailUrlPage($representation);
@@ -36,10 +35,10 @@ class ThumbnailUrl extends AbstractHelper
                 return null;
             }
         }
-        return $representation->thumbnailDisplayUrl($type);
+        return $representation->thumbnailDisplayUrl($type ?: 'square');
     }
 
-    protected function thumbnailUrlSite(SiteRepresentation $site)
+    protected function thumbnailUrlSite(SiteRepresentation $site): ?AbstractRepresentation
     {
         $view = $this->getView();
         $api = $view->plugin('api');
@@ -63,11 +62,11 @@ class ThumbnailUrl extends AbstractHelper
         }
 
         // Any media in the site.
-        // FIXME This works only with module AdvancedSearchPlus or ApiInfo.
-        return $api->searchOne('media', ['site_id' => $site->id(), 'has_thumbnails'])->getContent();
+        // FIXME This works only with module AdvancedSearch or ApiInfo.
+        return $api->searchOne('media', ['site_id' => $site->id(), 'has_thumbnails' => true])->getContent();
     }
 
-    protected function thumbnailUrlPage(SitePageRepresentation $page)
+    protected function thumbnailUrlPage(SitePageRepresentation $page): ?AbstractRepresentation
     {
         $view = $this->getView();
         $api = $view->plugin('api');
