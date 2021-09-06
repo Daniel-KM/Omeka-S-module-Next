@@ -11,9 +11,6 @@ return [
             Mvc\MvcListeners::class => Mvc\MvcListeners::class,
             'Omeka\ViewApiJsonRenderer' => View\Renderer\ApiJsonRenderer::class,
         ],
-        'factories' => [
-            'Omeka\File\TempFileFactory' => Service\File\TempFileFactoryFactory::class,
-        ],
     ],
     'view_manager' => [
         'template_path_stack' => [

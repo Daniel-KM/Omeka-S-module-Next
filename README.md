@@ -92,13 +92,6 @@ An option is added to select the metadata to display in the main browse view (fi
 
 - From the list of jobs to each log (fix [#1156]).
 
-#### Better identification of media types for xml and zip files
-
-In Omeka core, all xml files are identified as `text/xml` and zip files as `application/zip`,
-so it’s not possible to make a distinction between a mets file and an ead file,
-or to identify an epub, that is a zipped xhtml. This feature is required to use
-the module [Verovio] when files don’t use the extension "mei" ([#1464]).
-
 #### Better display of json output in api
 
 The json standard doesn’t require to escape anything, except ", "" and control
@@ -226,6 +219,15 @@ Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.
 A class to simplify management of generic methods of the module (install and
 settings). This part is now managed in module [Generic] more simply.
 
+#### Better identification of media types for xml and zip files
+
+In Omeka core, all xml files are identified as `text/xml` and zip files as `application/zip`,
+so it’s not possible to make a distinction between a mets file and an ead file,
+or to identify an epub, that is a zipped xhtml. This feature is required to use
+the module [Verovio] when files don’t use the extension "mei" ([#1464]).
+
+This feature was moved to module [XML Viewer] since version 3.3.40.
+
 
 Installation
 ------------
@@ -309,6 +311,7 @@ Copyright
 [Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
 [Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
 [Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
+[XML Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Next/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
