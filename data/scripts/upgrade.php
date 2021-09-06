@@ -135,3 +135,15 @@ SQL;
         $siteSettings->delete('next_search_used_terms');
     }
 }
+
+if (version_compare($oldVersion, '3.3.40', '<')) {
+    $message = new Message(
+        'The better identification of xml files was moved to new module %sXml Viewer%s.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer">',
+        '</a>'
+    );
+
+    $message->setEscapeHtml(false);
+    $messenger = new Messenger();
+    $messenger->addWarning($message);
+}
