@@ -15,16 +15,6 @@ Features (all versions)
 
 ### Public
 
-#### Breadcrumbs
-
-A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.
-The default template is `common/breadcrumbs.phtml`, so the breadcrumb can be
-themed. Some options are available too.
-By default, the breadcrumb for an item uses the first item set as the parent
-crumb. The first item set is the item set with the smallest id. If you want to
-use another item set, set it as resource in the property that is set in the main
-settings, or in the options of the view helper.
-
 #### Previous/Next resources
 
 Allow to get the previous or the next resources, that simplifies browsing like
@@ -65,12 +55,6 @@ Allow to check if the current page is the home page of the site, like in Omeka C
 #### Current site
 
 Allow to get the current site in public view, that may be missing in some cases.
-
-#### Thumbnail url
-
-Allow to get the url of the thumbnail of a resource, a page or a site.
-Warning: For site, the module [Advanced Search Plus] is needed when there is no
-page with a thumbnail (the module provides the api for the url argument `has_thumbnails`).
 
 #### Default order of items in item set
 
@@ -135,13 +119,34 @@ Features of older versions (< Omeka 3)
 
 ### Public
 
+#### Breadcrumbs
+
+This feature was moved to module [Menu] since version 3.0.1.
+
+A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.
+The default template is `common/breadcrumbs.phtml`, so the breadcrumb can be
+themed. Some options are available too.
+By default, the breadcrumb for an item uses the first item set as the parent
+crumb. The first item set is the item set with the smallest id. If you want to
+use another item set, set it as resource in the property that is set in the main
+settings, or in the options of the view helper.
+
 #### Simple mirror page
+
+This block is now managed by module [Block Plus] since version 3.1.2.12.
 
 Allow to use a page as a block, so the same page can be use in multiple sites,
 for example the page "About" or "Privacy". Of course, the page is a standard
 page and can be more complex with multiple blocks. May be fun.
 This is an equivalent for the [shortcode as a page] in Omeka classic too.
-This block is now managed by module [Block Plus] since version 3.1.2.12.
+
+#### Thumbnail url
+
+This feature was moved to module [Block Plus] since version 3.3.11.8.
+
+Allow to get the url of the thumbnail of a resource, a page or a site.
+Warning: For site, the module [Advanced Search Plus] is needed when there is no
+page with a thumbnail (the module provides the api for the url argument `has_thumbnails`).
 
 #### Direct links in user bar
 
@@ -312,6 +317,7 @@ Copyright
 [Advanced Search Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearchPlus
 [Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
 [Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
+[Menu]: https://gitlab.com/Daniel-KM/Omeka-S-module-Menu
 [Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
 [XML Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
@@ -320,6 +326,6 @@ Copyright
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
 [OSI]: http://opensource.org
-[MIT]: http://http://opensource.org/licenses/MIT
+[MIT]: http://opensource.org/licenses/MIT
 [GitLab]: https://gitlab.com/Daniel-KM
 [Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
