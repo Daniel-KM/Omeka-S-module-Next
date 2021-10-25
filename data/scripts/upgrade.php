@@ -147,3 +147,13 @@ if (version_compare($oldVersion, '3.3.40', '<')) {
     $messenger = new Messenger();
     $messenger->addWarning($message);
 }
+
+if (version_compare($oldVersion, '3.3.41', '<')) {
+    $message = new Message(
+        'The option to select columns in admin/item/browse was disabled. Use https://github.com/omeka/omeka-s/pull/1497 if needed.' // @translate
+    );
+
+    $message->setEscapeHtml(false);
+    $messenger = new Messenger();
+    $messenger->addWarning($message);
+}

@@ -48,26 +48,6 @@ class SettingsFieldset extends Fieldset
                     'data-placeholder' => 'Select a property…', // @translate
                 ],
             ])
-            // Check is done in filter.
-            ->add([
-                'name' => 'next_columns_browse',
-                'type' => PropertySelect::class,
-                'options' => [
-                    'label' => 'Columns for browse views', // @translate
-                    'info' => 'These columns will be used in the admin resource browse views.', // @translate
-                    'term_as_value' => true,
-                    'prepend_value_options' => $prependedValues,
-                ],
-                'attributes' => [
-                    'id' => 'next-columns-browse',
-                    // TODO Keep the original order of the columns via js.
-                    'value' => array_values($this->getSettings()->get('next_columns_browse', [])) ?: $defaultColumnsBrowse,
-                    'required' => false,
-                    'multiple' => true,
-                    'class' => 'chosen-select',
-                    'data-placeholder' => 'Select columns…', // @translate
-                ],
-            ])
             ->add([
                 'name' => 'next_prevnext_disable',
                 'type' => Element\Checkbox::class,

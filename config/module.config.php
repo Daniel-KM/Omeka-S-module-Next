@@ -61,11 +61,6 @@ return [
     'next' => [
         'settings' => [
             'next_property_itemset' => '',
-            'next_columns_browse' => [
-                'resource_class_label' => 'resource_class_label',
-                'owner_name' => 'owner_name',
-                'created' => 'created',
-            ],
             'next_prevnext_disable' => false,
         ],
         'site_settings' => [

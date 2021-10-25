@@ -19,7 +19,7 @@ use Laminas\Session\Container;
  * Bring together various features too small to be a full module; may be
  * integrated in the next release of Omeka S, or not.
  *
- * @copyright Daniel Berthereau, 2018-2020
+ * @copyright Daniel Berthereau, 2018-2021
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  */
 class Module extends AbstractModule
@@ -189,51 +189,6 @@ class Module extends AbstractModule
                 'required' => false,
             ])
         ;
-
-        /** @var \Omeka\Form\SettingForm $form */
-        $form = $event->getTarget();
-        $hasColumnsBrowse = $form->get('general')->has('columns_browse');
-        if ($hasColumnsBrowse) {
-            $form->get('next')->remove('next_columns_browse');
-        } else {
-            $columnsBrowse = $form->get('next')->get('next_columns_browse')->getValueOptions();
-            $inputFilter
-                ->get('next')
-                ->add([
-                    'name' => 'next_columns_browse',
-                    'required' => false,
-                    'filters' => [
-                        [
-                            'name' => 'callback',
-                            'options' => [
-                                // The columns names are saved to simplify the creation
-                                // of the browse view. Order is kept.
-                                // FIXME Zend requires the values to be values, not keys, so there may be issues when labels are the same in different vocabularies.
-                                'callback' => function ($columns) use ($columnsBrowse) {
-                                    $result = [];
-                                    foreach ($columns as $column) {
-                                        if (isset($columnsBrowse[$column])) {
-                                            $result[$columnsBrowse[$column]] = $column;
-                                        } else {
-                                            foreach ($columnsBrowse as $columnBrowse) {
-                                                if (is_array($columnBrowse)) {
-                                                    foreach ($columnBrowse['options'] as $property) {
-                                                        if ($column === $property['value']) {
-                                                            $result[$property['label']] = $column;
-                                                            break 2;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    return $result;
-                                },
-                            ],
-                        ],
-                    ],
-                ]);
-        }
     }
 
     public function handleSiteSettings(Event $event): void
