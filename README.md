@@ -84,10 +84,6 @@ Determine the position of an item set in the site.
 
 ### Admin
 
-#### Choice of columns in admin browse view
-
-An option is added to select the metadata to display in the main browse view (fix [#1497]).
-
 #### New links
 
 - From the list of jobs to each log (fix [#1156]).
@@ -209,6 +205,12 @@ an improved version in module [Bulk Edit].
 - From the site permissions to the user page (fix [#1301]).
 
 ### Backend
+
+#### Choice of columns in admin browse view
+
+An option is added to select the metadata to display in the main browse view (fix [#1497]).
+This option in no more integrated in the module, but available through the pull
+request.
 
 #### Logger in view
 
