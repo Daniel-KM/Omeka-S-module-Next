@@ -39,7 +39,10 @@ class MvcListeners extends AbstractListenerAggregate
         $request = $event->getRequest();
         /** @var \Laminas\Stdlib\Parameters $query */
         $query = $request->getQuery();
-        if (!empty($query['sort_by'])) {
+        if (!empty($query['sort_by'])
+            // Manage module Advanced Search too.
+            || !empty($query['sort'])
+        ) {
             return;
         }
 
@@ -67,6 +70,14 @@ class MvcListeners extends AbstractListenerAggregate
                 return;
             }
             $specificOrder = $orders[0];
+        }
+
+        // Check for module AdvancedSearch.
+        if (!strpos($specificOrder['sort_by'], ':')
+            && !in_array($specificOrder['sort_by'], ['created', 'modified'])
+        ) {
+            $query['sort'] = trim($specificOrder['sort_by'] . ' ' . $specificOrder['sort_order']);
+            return;
         }
 
         // Set the specific order.
