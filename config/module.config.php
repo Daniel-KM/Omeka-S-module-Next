@@ -28,7 +28,6 @@ return [
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,
             'primaryItemSet' => View\Helper\PrimaryItemSet::class,
-            'thumbnailUrl' => View\Helper\ThumbnailUrl::class,
         ],
         'factories' => [
             'browsePreviousNext' => Service\ViewHelper\BrowsePreviousNextFactory::class,
