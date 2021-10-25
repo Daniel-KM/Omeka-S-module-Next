@@ -62,6 +62,11 @@ class Module extends AbstractModule
             );
         }
         $sharedEventManager->attach(
+            \AdvancedSearch\Controller\IndexController::class,
+            'view.layout',
+            [$this, 'handleViewBrowse']
+        );
+        $sharedEventManager->attach(
             \Search\Controller\IndexController::class,
             'view.layout',
             [$this, 'handleViewBrowse']
