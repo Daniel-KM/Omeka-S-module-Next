@@ -213,31 +213,22 @@ class Module extends AbstractModule
             $ordersString .= "\n";
         }
 
-        $settings = $services->get('Omeka\Settings\Site');
-        $prepends = $settings->get('next_breadcrumbs_prepend') ?: [];
-        $prependsString = '';
-        foreach ($prepends as $prepend) {
-            $prependsString .= $prepend['uri'] . ' ' . $prepend['label'] . "\n";
-        }
-
         /**
-         * @var \Omeka\Form\Element\RestoreTextarea $siteGroupsElement
-         * @var \Internationalisation\Form\SettingsFieldset $fieldset
+         * @see \Omeka\Form\Element\RestoreTextarea $siteGroupsElement
+         * @see \Internationalisation\Form\SettingsFieldset $fieldset
          */
         $fieldset = $event->getTarget()
             ->get('next');
         $fieldset
             ->get('next_items_order_for_itemsets')
             ->setValue($ordersString);
-        $fieldset
-            ->get('next_breadcrumbs_prepend')
-            ->setValue($prependsString);
     }
 
     public function handleSiteSettingsFilters(Event $event): void
     {
         $event->getParam('inputFilter')
             ->get('next')
+            // TODO Use DataTextarea.
             ->add([
                 'name' => 'next_items_order_for_itemsets',
                 'required' => false,
@@ -246,22 +237,6 @@ class Module extends AbstractModule
                         'name' => \Laminas\Filter\Callback::class,
                         'options' => [
                             'callback' => [$this, 'filterResourceOrder'],
-                        ],
-                    ],
-                ],
-            ])
-            ->add([
-                'name' => 'next_breadcrumbs_crumbs',
-                'required' => false,
-            ])
-            ->add([
-                'name' => 'next_breadcrumbs_prepend',
-                'required' => false,
-                'filters' => [
-                    [
-                        'name' => \Laminas\Filter\Callback::class,
-                        'options' => [
-                            'callback' => [$this, 'filterBreadcrumbsPrepend'],
                         ],
                     ],
                 ],
@@ -295,16 +270,5 @@ class Module extends AbstractModule
         ksort($result);
 
         return $result;
-    }
-
-    public function filterBreadcrumbsPrepend($string)
-    {
-        return array_filter(array_map(function ($v) {
-            [$uri, $label] = array_map('trim', explode(' ', $v . ' ', 2));
-            if (!strlen((string) $label)) {
-                $label = $uri;
-            }
-            return ['label' => $label, 'uri' => $uri];
-        }, $this->stringToList($string)));
     }
 }

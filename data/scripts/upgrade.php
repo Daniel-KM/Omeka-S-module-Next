@@ -157,3 +157,14 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
     $messenger = new Messenger();
     $messenger->addWarning($message);
 }
+
+if (version_compare($oldVersion, '3.3.41', '<')) {
+    $message = new Message(
+        'The helper "Breadcrumbs" was moved to new module %smenu%s. Upgrade is automatic.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu">',
+        '</a>'
+    );
+    $message->setEscapeHtml(false);
+    $messenger = new Messenger();
+    $messenger->addWarning($message);
+}

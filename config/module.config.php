@@ -22,7 +22,6 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'breadcrumbs' => View\Helper\Breadcrumbs::class,
             'currentSite' => View\Helper\CurrentSite::class,
             'isHomePage' => View\Helper\IsHomePage::class,
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
@@ -66,16 +65,6 @@ return [
             'next_items_order_for_itemsets' => [],
             'next_prevnext_items_query' => '',
             'next_prevnext_item_sets_query' => '',
-            'next_breadcrumbs_crumbs' => [
-                'home',
-                'collections',
-                'itemset',
-                'current',
-            ],
-            'next_breadcrumbs_prepend' => [],
-            'next_breadcrumbs_collections_url' => '',
-            'next_breadcrumbs_separator' => '&gt;',
-            'next_breadcrumbs_homepage' => false,
         ],
     ],
 ];
