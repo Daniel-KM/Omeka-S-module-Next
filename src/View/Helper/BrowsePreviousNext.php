@@ -153,7 +153,7 @@ FROM (
     FROM (
         $sqlQuery
     ) AS x
-    JOIN (SELECT @rownum := 0) AS row
+    JOIN (SELECT @rownum := 0) AS r
 ) AS y
 WHERE y.id = ?;
 SQL;
@@ -173,7 +173,7 @@ FROM (
     FROM (
         $sqlQuery
     ) AS x
-    JOIN (SELECT @rownum := 0) AS row
+    JOIN (SELECT @rownum := 0) AS r
 ) AS y
 WHERE y.position >= ? AND y.position <= ?
 LIMIT 3;
