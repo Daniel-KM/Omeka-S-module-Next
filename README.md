@@ -82,37 +82,6 @@ people and machines. So this feature displays the api output as unicode and
 unescaped, so it can be readable by people who don’t have a json viewer in their
 browser ([#1493]).
 
-### Backend
-
-#### Cron tasks
-
-A script allows to run jobs from the command line, even if they are not
-initialized. It’s useful to run cron tasks. See required and optional arguments:
-
-```
-php /path/to/omeka/modules/Next/data/scripts/task.php --help
-```
-
-In your cron tab, you can add a task like that:
-
-```
-/bin/su - www-data -C "php /var/www/omeka/modules/Next/data/scripts/task.php --task MyTask --user-id 1
-```
-
-Note: since there is no job id, the job should not require it (for example,
-method `shouldStop()` should not be called. The use of the abstract class `AbstractTask`,
-that extends `AbstractJob`, is recommended, as it takes care of this point.
-
-#### Loop items task
-
-A task (job) allows to update all items, so all the modules that uses api events
-are triggered. This job can be use as a one-time task that help to process
-existing items when a new feature is added in a module.
-
-```
-php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id 1
-```
-
 
 Features of older versions (< Omeka 3)
 --------------------------------------
@@ -223,17 +192,52 @@ Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.
 
 #### AbstractModule
 
+This feature was moved to module [Generic] more simply.
+
 A class to simplify management of generic methods of the module (install and
-settings). This part is now managed in module [Generic] more simply.
+settings).
 
 #### Better identification of media types for xml and zip files
+
+This feature was moved to module [XML Viewer] since version 3.3.40.
 
 In Omeka core, all xml files are identified as `text/xml` and zip files as `application/zip`,
 so it’s not possible to make a distinction between a mets file and an ead file,
 or to identify an epub, that is a zipped xhtml. This feature is required to use
 the module [Verovio] when files don’t use the extension "mei" ([#1464]).
 
-This feature was moved to module [XML Viewer] since version 3.3.40.
+#### Cron tasks
+
+This feature was moved to module [Easy Admin] since version 3.3.42.
+
+A script allows to run jobs from the command line, even if they are not
+initialized. It’s useful to run cron tasks. See required and optional arguments:
+
+```sh
+php /path/to/omeka/modules/Next/data/scripts/task.php --help
+```
+
+In your cron tab, you can add a task like that:
+
+```sh
+/bin/su - www-data -C "php /var/www/omeka/modules/Next/data/scripts/task.php" --task MyTask --user-id 1
+```
+
+Note: since there is no job id, the job should not require it (for example,
+method `shouldStop()` should not be called. The use of the abstract class `AbstractTask`,
+that extends `AbstractJob`, is recommended, as it takes care of this point.
+
+#### Loop items task
+
+This feature was moved to module [Easy Admin] and improved since version 3.3.42.
+
+A task (job) allows to update all items, so all the modules that uses api events
+are triggered. This job can be use as a one-time task that help to process
+existing items when a new feature is added in a module.
+
+```sh
+php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id 1
+```
 
 
 Installation
@@ -318,6 +322,7 @@ Copyright
 [Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
 [Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
 [Menu]: https://gitlab.com/Daniel-KM/Omeka-S-module-Menu
+[Easy Admin]: https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin
 [Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
 [XML Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
