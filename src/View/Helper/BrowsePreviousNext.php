@@ -159,7 +159,7 @@ WHERE y.id = ?;
 SQL;
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$resource->id()]);
-        $position = $stmt->fetchColumn();
+        $position = $stmt->fetchOne();
 
         // Second step, get the previous and next resources.
         if (!$position) {
