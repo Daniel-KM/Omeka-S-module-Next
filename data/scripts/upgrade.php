@@ -22,7 +22,7 @@ $connection = $services->get('Omeka\Connection');
 $entityManager = $services->get('Omeka\EntityManager');
 $plugins = $services->get('ControllerPluginManager');
 $api = $plugins->get('api');
-$space = strtolower(__NAMESPACE__);
+// $space = strtolower(__NAMESPACE__);
 
 if (version_compare($oldVersion, '3.1.2.9', '<')) {
     $message = new Message(
@@ -139,7 +139,7 @@ SQL;
 if (version_compare($oldVersion, '3.3.40', '<')) {
     $message = new Message(
         'The better identification of xml files was moved to new module %sXml Viewer%s.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer" target="_blank">',
         '</a>'
     );
 
@@ -161,7 +161,18 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
 if (version_compare($oldVersion, '3.3.41', '<')) {
     $message = new Message(
         'The helper "Breadcrumbs" was moved to new module %smenu%s. Upgrade is automatic.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',
+        '</a>'
+    );
+    $message->setEscapeHtml(false);
+    $messenger = new Messenger();
+    $messenger->addWarning($message);
+}
+
+if (version_compare($oldVersion, '3.3.42', '<')) {
+    $message = new Message(
+        'The helper to manage cron tasks was moved and improved to new module %sEasy Admin%s. Upgrade is automatic.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">',
         '</a>'
     );
     $message->setEscapeHtml(false);
