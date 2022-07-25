@@ -71,7 +71,7 @@ class BrowsePreviousNext extends AbstractHelper
         $query = isset($session->lastQuery[$ui]) ? $session->lastQuery[$ui] : [];
 
         $lastBrowse = $options['upper'] ? $view->lastBrowsePage() : null;
-        list($previous, $next) = $this->previousNext($resource, $query);
+        [$previous, $next] = $this->previousNext($resource, $query);
 
         $template = empty($options['template']) ? 'common/browse-previous-next' : $options['template'];
         unset($options['template']);
@@ -134,7 +134,7 @@ class BrowsePreviousNext extends AbstractHelper
             $paramValue = $param->getValue();
             if (is_array($paramValue)) {
                 $paramValue = implode(',', array_map($quote, $paramValue));
-            } elseif ($param->getType() !== \Doctrine\DBAL\Types\Type::INTEGER) {
+            } elseif ($param->getType() !== \Doctrine\DBAL\Types\Types::INTEGER) {
                 $paramValue = $quote($paramValue);
             }
             $parameters[':' . $param->getName()] = $paramValue;
@@ -155,11 +155,10 @@ FROM (
     ) AS x
     JOIN (SELECT @rownum := 0) AS r
 ) AS y
-WHERE y.id = ?;
+WHERE y.id = ?
+LIMIT 1;
 SQL;
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute([$resource->id()]);
-        $position = $stmt->fetchOne();
+        $position = $this->connection->executeQuery($sql, [$resource->id()])->fetchOne();
 
         // Second step, get the previous and next resources.
         if (!$position) {
@@ -180,24 +179,31 @@ LIMIT 3;
 SQL;
         $previous = $position - 1;
         $next = $position + 1;
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute([$previous, $next]);
-        $ids = $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
+        $ids = $this->connection->executeQuery($sql, [$previous, $next])->fetchAllKeyValue();
 
         $api = $this->getView()->api();
-        $previous = isset($ids[$previous])
-            ? $api->read($resourceName, $ids[$previous])->getContent()
-            : null;
-        $next = isset($ids[$next])
-            ? $api->read($resourceName, $ids[$next])->getContent()
-            : null;
-        return [$previous, $next];
+        $previousResource = null;
+        if (isset($ids[$previous])) {
+            try {
+                $previousResource = $api->read($resourceName, $ids[$previous])->getContent();
+            } catch (\Exception $e) {
+            }
+        }
+        $nextResource = null;
+        if (isset($ids[$next])) {
+            try {
+                $nextResource = $api->read($resourceName, $ids[$next])->getContent();
+            } catch (\Exception $e) {
+            }
+        }
+        return [$previousResource, $nextResource];
     }
 
     /**
      * Copy of \Omeka\Api\Adapter\AbstractEntityAdapter::search() to get a prepared query builder.
      *
      * @todo Trigger all api manager events (api.execute.pre, etc.).
+     * @see \Omeka\Api\Adapter\AbstractEntityAdapter::search()
      *
      * @param string $resourceName
      * @param array $query
@@ -231,6 +237,7 @@ SQL;
             ->createQueryBuilder()
             ->select('omeka_root')
             ->from($entityClass, 'omeka_root');
+        $adapter->buildBaseQuery($qb, $query);
         $adapter->buildQuery($qb, $query);
         $qb->groupBy('omeka_root.id');
 
