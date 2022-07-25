@@ -2,8 +2,10 @@
 
 namespace Next\View\Helper;
 
+use AdvancedSearch\Mvc\Controller\Plugin\SearchResourcesQueryBuilder;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Laminas\EventManager\Event;
 use Laminas\Session\Container;
 use Laminas\View\Helper\AbstractHelper;
@@ -19,25 +21,30 @@ class BrowsePreviousNext extends AbstractHelper
     protected $apiAdapterManager;
 
     /**
-     * @var Connection
+     * @var \Doctrine\DBAL\Connection
      */
     protected $connection;
 
     /**
-     * @var EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     protected $entityManager;
 
     /**
-     * @param ApiAdapterManager $apiAdapterManager
-     * @param Connection $connection
-     * @param EntityManager $entityManager
+     * @var \AdvancedSearch\Mvc\Controller\Plugin\SearchResourcesQueryBuilder
      */
-    public function __construct(ApiAdapterManager $apiAdapterManager, Connection $connection, EntityManager $entityManager)
-    {
+    protected $searchResourcesQueryBuilder;
+
+    public function __construct(
+        ApiAdapterManager $apiAdapterManager,
+        Connection $connection,
+        EntityManager $entityManager,
+        ?SearchResourcesQueryBuilder $searchResourcesQueryBuilder
+    ) {
         $this->apiAdapterManager = $apiAdapterManager;
         $this->connection = $connection;
         $this->entityManager = $entityManager;
+        $this->searchResourcesQueryBuilder = $searchResourcesQueryBuilder;
     }
 
     /**
@@ -45,17 +52,15 @@ class BrowsePreviousNext extends AbstractHelper
      *
      * @todo Check visibility for public front-end.
      *
-     * @param AbstractResourceEntityRepresentation $resource
-     * @param array $options
      * @return string Html code
      */
-    public function __invoke(AbstractResourceEntityRepresentation $resource, array $options = [])
+    public function __invoke(AbstractResourceEntityRepresentation $resource, array $options = []): string
     {
         $view = $this->getView();
 
         // FIXME Fix the query below with @rownum on mysql (works on mariadb).
         if ($view->setting('next_prevnext_disable')) {
-            return;
+            return '';
         }
 
         $params = $view->params();
@@ -85,7 +90,7 @@ class BrowsePreviousNext extends AbstractHelper
         ]);
     }
 
-    protected function previousNext(AbstractResourceEntityRepresentation $resource, array $query)
+    protected function previousNext(AbstractResourceEntityRepresentation $resource, array $query): array
     {
         $resourceName = $resource->resourceName();
 
@@ -204,17 +209,26 @@ SQL;
      *
      * @todo Trigger all api manager events (api.execute.pre, etc.).
      * @see \Omeka\Api\Adapter\AbstractEntityAdapter::search()
-     *
-     * @param string $resourceName
-     * @param array $query
-     * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function prepareSearch($resourceName, array $query)
+    protected function prepareSearch($resourceName, array $query): QueryBuilder
     {
         /** @var \Omeka\Api\Adapter\AbstractResourceEntityAdapter $adapter */
         $adapter = $this->apiAdapterManager->get($resourceName);
 
         $request = new Request('search', $resourceName);
+
+        // Use specific module Advanced Search adapter if available.
+        $override = [];
+        if ($this->searchResourcesQueryBuilder) {
+            $this->searchResourcesQueryBuilder->setAdapter($adapter);
+            $query = $this->searchResourcesQueryBuilder->cleanQuery($query);
+            $query = $this->searchResourcesQueryBuilder->startOverrideQuery($query, $override);
+            // The process is done during event "api.search.query".
+            if (!empty($override)) {
+                $request->setOption('override', $override);
+            }
+        }
+
         $request->setContent($query);
 
         // Set default query parameters
