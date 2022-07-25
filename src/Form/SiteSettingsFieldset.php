@@ -12,6 +12,7 @@ class SiteSettingsFieldset extends Fieldset
     public function init(): void
     {
         $this
+            ->setAttribute('id', 'next')
             ->add([
                 'name' => 'next_items_order_for_itemsets',
                 'type' => Element\Textarea::class,

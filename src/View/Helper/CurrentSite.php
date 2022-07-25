@@ -3,26 +3,19 @@
 namespace Next\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
+use Omeka\Api\Representation\SiteRepresentation;
 
 class CurrentSite extends AbstractHelper
 {
     /**
      * Get the current site from the view.
-     *
-     * @return \Omeka\Api\Representation\SiteRepresentation|null
      */
-    public function __invoke()
+    public function __invoke(): ?SiteRepresentation
     {
-        static $site;
-
-        if (is_null($site)) {
-            $site = $this->getView()
-                ->getHelperPluginManager()
-                ->get('Laminas\View\Helper\ViewModel')
-                ->getRoot()
-                ->getVariable('site');
-        }
-
-        return $site;
+        return $this->view->site ?? $this->view->site = $this->getView()
+            ->getHelperPluginManager()
+            ->get('Laminas\View\Helper\ViewModel')
+            ->getRoot()
+            ->getVariable('site');
     }
 }

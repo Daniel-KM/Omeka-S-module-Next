@@ -33,6 +33,7 @@ class SettingsFieldset extends Fieldset
         ];
 
         $this
+            ->setAttribute('id', 'next')
             ->add([
                 'name' => 'next_property_itemset',
                 'type' => PropertySelect::class,
