@@ -68,10 +68,6 @@ Determine the position of an item set in the site.
 
 ### Admin
 
-#### New links
-
-- From the list of jobs to each log (fix [#1156]).
-
 #### Better display of json output in api
 
 The json standard doesn’t require to escape anything, except ", "" and control
@@ -83,14 +79,14 @@ unescaped, so it can be readable by people who don’t have a json viewer in the
 browser ([#1493]).
 
 
-Features of older versions (< Omeka 3)
---------------------------------------
+Features of older versions (< Omeka 3.2)
+----------------------------------------
 
 ### Public
 
 #### Breadcrumbs
 
-This feature was moved to module [Menu] since version 3.0.1.
+This feature was moved to module [Menu] and improved since version 3.3.41.
 
 A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.
 The default template is `common/breadcrumbs.phtml`, so the breadcrumb can be
@@ -190,6 +186,10 @@ request.
 
 Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.4).
 
+#### New links
+
+- From the list of jobs to each log (fix [#1156]), moved to module [Log].
+
 #### AbstractModule
 
 This feature was moved to module [Generic] more simply.
@@ -252,8 +252,8 @@ See general end user documentation for [Installing a module].
 TODO
 ----
 
-- [ ] Normalize the breadcrumbs with Laminas navigation.
-- [ ] Move all navigation and theme helpers to a new module.
+- [x] Normalize the breadcrumbs with Laminas navigation (module [Menu]).
+- [ ] Move all navigation and theme helpers to module BlockPlus.
 - [ ] Site permission links to user page (v3)
 
 
@@ -298,7 +298,7 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018-2021 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2018-2022 (see [Daniel-KM] on GitLab)
 
 
 [Omeka S]: https://omeka.org/s
@@ -323,6 +323,7 @@ Copyright
 [Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
 [Menu]: https://gitlab.com/Daniel-KM/Omeka-S-module-Menu
 [Easy Admin]: https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin
+[Log]: https://gitlab.com/Daniel-KM/Omeka-S-module-Log
 [Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
 [XML Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer
 [Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
