@@ -12,6 +12,7 @@ use Generic\AbstractModule;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Session\Container;
+use Omeka\Module\Exception\ModuleCannotInstallException;
 
 /**
  * Next
@@ -19,12 +20,32 @@ use Laminas\Session\Container;
  * Bring together various features too small to be a full module; may be
  * integrated in the next release of Omeka S, or not.
  *
- * @copyright Daniel Berthereau, 2018-2021
+ * @copyright Daniel Berthereau, 2018-2022
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  */
 class Module extends AbstractModule
 {
     const NAMESPACE = __NAMESPACE__;
+
+    protected function preInstall(): void
+    {
+        $services = $this->getServiceLocator();
+        $translator = $services->get('MvcTranslator');
+
+        /** @var \Omeka\Module\Manager $moduleManager */
+        $moduleManager = $services->get('Omeka\ModuleManager');
+        $advancedSearch = $moduleManager->getModule('AdvancedSearch');
+        if ($advancedSearch) {
+            $advancedSearchVersion = $advancedSearch->getIni('version');
+            if (version_compare($advancedSearchVersion, '3.3.6.16', '<')) {
+                $message = new \Omeka\Stdlib\Message(
+                    $translator->translate('This module requires module "%s" version "%s" or greater.'), // @translate
+                    'Advanced Search', '3.3.6.16'
+                );
+                throw new ModuleCannotInstallException((string) $message);
+            }
+        }
+    }
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
     {

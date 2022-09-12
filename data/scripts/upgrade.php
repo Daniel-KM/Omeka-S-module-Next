@@ -2,6 +2,7 @@
 
 namespace Next;
 
+use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Mvc\Controller\Plugin\Messenger;
 use Omeka\Stdlib\Message;
 
@@ -178,4 +179,23 @@ if (version_compare($oldVersion, '3.3.42', '<')) {
     $message->setEscapeHtml(false);
     $messenger = new Messenger();
     $messenger->addWarning($message);
+}
+
+if (version_compare($oldVersion, '3.3.44', '<')) {
+    $services = $this->getServiceLocator();
+    $translator = $services->get('MvcTranslator');
+
+    /** @var \Omeka\Module\Manager $moduleManager */
+    $moduleManager = $services->get('Omeka\ModuleManager');
+    $advancedSearch = $moduleManager->getModule('AdvancedSearch');
+    if ($advancedSearch) {
+        $advancedSearchVersion = $advancedSearch->getIni('version');
+        if (version_compare($advancedSearchVersion, '3.3.6.16', '<')) {
+            $message = new Message(
+                $translator->translate('This module requires module "%s" version "%s" or greater.'), // @translate
+                'Advanced Search', '3.3.6.16'
+            );
+            throw new ModuleCannotInstallException((string) $message);
+        }
+    }
 }

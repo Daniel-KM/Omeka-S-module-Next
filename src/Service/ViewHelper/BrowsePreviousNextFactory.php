@@ -15,7 +15,7 @@ class BrowsePreviousNextFactory implements FactoryInterface
             $services->get('Omeka\ApiAdapterManager'),
             $services->get('Omeka\Connection'),
             $services->get('Omeka\EntityManager'),
-            $plugins->has('searchResourcesQueryBuilder') ? $plugins->get('searchResourcesQueryBuilder') : null
+            $plugins->has('searchResources') ? $plugins->get('searchResources') : null
         );
     }
 }

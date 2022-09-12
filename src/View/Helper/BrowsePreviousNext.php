@@ -2,7 +2,7 @@
 
 namespace Next\View\Helper;
 
-use AdvancedSearch\Mvc\Controller\Plugin\SearchResourcesQueryBuilder;
+use AdvancedSearch\Mvc\Controller\Plugin\SearchResources;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
@@ -31,20 +31,20 @@ class BrowsePreviousNext extends AbstractHelper
     protected $entityManager;
 
     /**
-     * @var \AdvancedSearch\Mvc\Controller\Plugin\SearchResourcesQueryBuilder
+     * @var \AdvancedSearch\Mvc\Controller\Plugin\SearchResources
      */
-    protected $searchResourcesQueryBuilder;
+    protected $searchResources;
 
     public function __construct(
         ApiAdapterManager $apiAdapterManager,
         Connection $connection,
         EntityManager $entityManager,
-        ?SearchResourcesQueryBuilder $searchResourcesQueryBuilder
+        ?SearchResources $searchResources
     ) {
         $this->apiAdapterManager = $apiAdapterManager;
         $this->connection = $connection;
         $this->entityManager = $entityManager;
-        $this->searchResourcesQueryBuilder = $searchResourcesQueryBuilder;
+        $this->searchResources = $searchResources;
     }
 
     /**
@@ -219,10 +219,10 @@ SQL;
 
         // Use specific module Advanced Search adapter if available.
         $override = [];
-        if ($this->searchResourcesQueryBuilder) {
-            $this->searchResourcesQueryBuilder->setAdapter($adapter);
-            $query = $this->searchResourcesQueryBuilder->cleanQuery($query);
-            $query = $this->searchResourcesQueryBuilder->startOverrideQuery($query, $override);
+        if ($this->searchResources) {
+            $this->searchResources->setAdapter($adapter);
+            $query = $this->searchResources->cleanQuery($query);
+            $query = $this->searchResources->startOverrideQuery($query, $override);
             // The process is done during event "api.search.query".
             if (!empty($override)) {
                 $request->setOption('override', $override);
