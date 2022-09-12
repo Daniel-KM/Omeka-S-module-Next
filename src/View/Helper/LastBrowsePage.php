@@ -12,16 +12,19 @@ class LastBrowsePage extends AbstractHelper
      *
      * It allows to go back to the last search result page after browsing.
      *
-     * @return string
+     * @param string|null $default The default page to go back. If not set,
+     * go to the resource browse page.
      */
-    public function __invoke(): string
+    public function __invoke(?string $default = null): string
     {
         $view = $this->getView();
         $isAdmin = $view->status()->isAdminRequest();
         $ui = $isAdmin ? 'admin' : 'public';
         $session = new Container('Next');
-        return isset($session->lastBrowsePage[$ui])
-            ? $session->lastBrowsePage[$ui]
-            : $view->url($isAdmin ? 'admin/default' : 'site/resource', ['action' => ''], [], true);
+        if (empty($session->lastBrowsePage[$ui])) {
+            return $default
+                ?: $view->url($isAdmin ? 'admin/default' : 'site/resource', ['action' => ''], [], true);
+        }
+        return $session->lastBrowsePage[$ui];
     }
 }
