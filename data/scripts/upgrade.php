@@ -203,4 +203,13 @@ if (version_compare($oldVersion, '3.3.44', '<')) {
 if (version_compare($oldVersion, '3.3.45', '<')) {
     $settings->set('menu_property_itemset', $settings->get('next_property_itemset'));
     $settings->delete('next_property_itemset');
+
+    $messenger = new Messenger();
+    $message = new Message(
+        'The helper "PrimaryItemSet" was moved to module %sMenu%s.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',
+        '</a>'
+    );
+    $message->setEscapeHtml(false);
+    $messenger->addWarning($message);
 }
