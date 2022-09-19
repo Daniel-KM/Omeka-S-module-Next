@@ -110,11 +110,6 @@ class Module extends AbstractModule
             'form.add_elements',
             [$this, 'handleMainSettings']
         );
-        $sharedEventManager->attach(
-            \Omeka\Form\SettingForm::class,
-            'form.add_input_filters',
-            [$this, 'handleMainSettingsFilters']
-        );
         // Site settings.
         $sharedEventManager->attach(
             \Omeka\Form\SiteSettingsForm::class,
@@ -203,18 +198,6 @@ class Module extends AbstractModule
             }
         }
         $session->lastQuery[$ui] = $query;
-    }
-
-    public function handleMainSettingsFilters(Event $event): void
-    {
-        $inputFilter = $event->getParam('inputFilter');
-        $inputFilter
-            ->get('next')
-            ->add([
-                'name' => 'next_property_itemset',
-                'required' => false,
-            ])
-        ;
     }
 
     public function handleSiteSettings(Event $event): void

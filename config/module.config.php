@@ -26,7 +26,6 @@ return [
             'isHomePage' => View\Helper\IsHomePage::class,
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
             'lastBrowsePage' => View\Helper\LastBrowsePage::class,
-            'primaryItemSet' => View\Helper\PrimaryItemSet::class,
         ],
         'factories' => [
             'browsePreviousNext' => Service\ViewHelper\BrowsePreviousNextFactory::class,
@@ -39,11 +38,11 @@ return [
     ],
     'form_elements' => [
         'invokables' => [
+            Form\SettingsFieldset::class => Form\SettingsFieldset::class,
             Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
         ],
         'factories' => [
             Form\Element\SitesPageSelect::class => Service\Form\Element\SitesPageSelectFactory::class,
-            Form\SettingsFieldset::class => Service\Form\SettingsFieldsetFactory::class,
         ],
     ],
     'translator' => [
@@ -58,7 +57,6 @@ return [
     ],
     'next' => [
         'settings' => [
-            'next_property_itemset' => '',
             'next_prevnext_disable' => false,
         ],
         'site_settings' => [
