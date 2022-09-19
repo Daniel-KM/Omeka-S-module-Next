@@ -40,8 +40,7 @@ class ItemSetPosition extends AbstractHelper
         }
 
         $itemSetId = $itemSet->id();
-        return isset($itemSetPositions[$itemSetId])
-            ? $itemSetPositions[$itemSetId]
-            : 0;
+        return $itemSetPositions[$itemSetId]
+            ?? 0;
     }
 }

@@ -73,7 +73,7 @@ class BrowsePreviousNext extends AbstractHelper
         ];
 
         $session = new Container('Next');
-        $query = isset($session->lastQuery[$ui]) ? $session->lastQuery[$ui] : [];
+        $query = $session->lastQuery[$ui] ?? [];
 
         $lastBrowse = $options['upper'] ? $view->lastBrowsePage() : null;
         [$previous, $next] = $this->previousNext($resource, $query);
