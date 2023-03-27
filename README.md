@@ -308,7 +308,7 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018-2022 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2018-2023 (see [Daniel-KM] on GitLab)
 
 
 [Omeka S]: https://omeka.org/s
@@ -336,7 +336,7 @@ Copyright
 [Log]: https://gitlab.com/Daniel-KM/Omeka-S-module-Log
 [Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
 [XML Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer
-[Installing a module]: http://dev.omeka.org/docs/s/user-manual/modules/#installing-modules
+[Installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Next/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html

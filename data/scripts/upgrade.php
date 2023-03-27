@@ -135,7 +135,7 @@ SQL;
 
 if (version_compare($oldVersion, '3.3.40', '<')) {
     $message = new Message(
-        'The better identification of xml files was moved to new module %sXml Viewer%s.', // @translate
+        'The better identification of xml files was moved to new module %1$sXml Viewer%2$s.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer" target="_blank">',
         '</a>'
     );
@@ -155,7 +155,7 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
 
 if (version_compare($oldVersion, '3.3.41', '<')) {
     $message = new Message(
-        'The helper "Breadcrumbs" was moved to new module %smenu%s. Upgrade is automatic.', // @translate
+        'The helper "Breadcrumbs" was moved to new module %1$sMenu%2$s. Upgrade is automatic.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',
         '</a>'
     );
@@ -165,7 +165,7 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
 
 if (version_compare($oldVersion, '3.3.42', '<')) {
     $message = new Message(
-        'The helper to manage cron tasks was moved and improved to new module %sEasy Admin%s. Upgrade is automatic.', // @translate
+        'The helper to manage cron tasks was moved and improved to new module %1$sEasy Admin%2$s. Upgrade is automatic.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">',
         '</a>'
     );
@@ -184,7 +184,7 @@ if (version_compare($oldVersion, '3.3.44', '<')) {
         $advancedSearchVersion = $advancedSearch->getIni('version');
         if (version_compare($advancedSearchVersion, '3.3.6.16', '<')) {
             $message = new Message(
-                $translator->translate('This module requires module "%s" version "%s" or greater.'), // @translate
+                $translator->translate('This module requires module "%1$s" version "%2$s" or greater.'), // @translate
                 'Advanced Search', '3.3.6.16'
             );
             throw new ModuleCannotInstallException((string) $message);
@@ -197,9 +197,20 @@ if (version_compare($oldVersion, '3.3.45', '<')) {
     $settings->delete('next_property_itemset');
 
     $message = new Message(
-        'The helper "PrimaryItemSet" was moved to module %sMenu%s.', // @translate
+        'The helper "PrimaryItemSet" was moved to module %1$sMenu%2$s.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',
         '</a>'
+    );
+    $message->setEscapeHtml(false);
+    $messenger->addWarning($message);
+}
+
+if (version_compare($oldVersion, '3.4.45', '<')) {
+    $message = new Message(
+        'The helper "IsHomePage()" was moved to modules %1$sBlock Plus%2$s and %3$sMenu%2$s..', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
+        '</a>',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">'
     );
     $message->setEscapeHtml(false);
     $messenger->addWarning($message);
