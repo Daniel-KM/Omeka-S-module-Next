@@ -48,10 +48,6 @@ Allow to go back to the last list of results in order to browse inside item sets
 items or media after a search without losing the search results. The helper is
 used by default in admin resources pages.
 
-#### Is home page
-
-Allow to check if the current page is the home page of the site, like in Omeka Classic.
-
 #### Current site (Omeka S v3, integrated in core for v4)
 
 Allow to get the current site in public view, that may be missing in some cases.
@@ -104,6 +100,13 @@ Allow to use a page as a block, so the same page can be use in multiple sites,
 for example the page "About" or "Privacy". Of course, the page is a standard
 page and can be more complex with multiple blocks. May be fun.
 This is an equivalent for the [shortcode as a page] in Omeka classic too.
+
+#### Is home page
+
+This feature is now managed by modules [Block Plus] since version 3.4.15.11 and
+module [Menu] since version 3.4.8.
+
+Allow to check if the current page is the home page of the site, like in Omeka Classic.
 
 #### Thumbnail url
 
