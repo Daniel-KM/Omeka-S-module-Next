@@ -3,27 +3,26 @@
 namespace Next;
 
 use Omeka\Module\Exception\ModuleCannotInstallException;
-use Omeka\Mvc\Controller\Plugin\Messenger;
 use Omeka\Stdlib\Message;
 
 /**
  * @var Module $this
- * @var \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
+ * @var \Laminas\ServiceManager\ServiceLocatorInterface $services
  * @var string $newVersion
  * @var string $oldVersion
  *
+ * @var \Omeka\Api\Manager $api
+ * @var \Omeka\Settings\Settings $settings
  * @var \Doctrine\DBAL\Connection $connection
  * @var \Doctrine\ORM\EntityManager $entityManager
- * @var \Omeka\Api\Manager $api
+ * @var \Omeka\Mvc\Controller\Plugin\Messenger $messenger
  */
-$services = $serviceLocator;
-$settings = $services->get('Omeka\Settings');
-$config = require dirname(__DIR__, 2) . '/config/module.config.php';
-$connection = $services->get('Omeka\Connection');
-$entityManager = $services->get('Omeka\EntityManager');
 $plugins = $services->get('ControllerPluginManager');
 $api = $plugins->get('api');
-// $space = strtolower(__NAMESPACE__);
+$settings = $services->get('Omeka\Settings');
+$connection = $services->get('Omeka\Connection');
+$messenger = $plugins->get('messenger');
+$entityManager = $services->get('Omeka\EntityManager');
 
 if (version_compare($oldVersion, '3.1.2.9', '<')) {
     $message = new Message(
@@ -33,7 +32,6 @@ if (version_compare($oldVersion, '3.1.2.9', '<')) {
     );
 
     $message->setEscapeHtml(false);
-    $messenger = new Messenger();
     $messenger->addSuccess($message);
 }
 
@@ -45,7 +43,6 @@ if (version_compare($oldVersion, '3.1.2.12', '<')) {
     );
 
     $message->setEscapeHtml(false);
-    $messenger = new Messenger();
     $messenger->addSuccess($message);
 }
 
@@ -53,7 +50,7 @@ if (version_compare($oldVersion, '3.1.2.13', '<')) {
     $sql = <<<SQL
 UPDATE site_setting SET id = "next_search_used_terms" WHERE `id` = "search_used_terms";
 SQL;
-    $connection->exec($sql);
+    $connection->executeStatement($sql);
 
     $settings->set('next_breadcrumbs_property_itemset',
         $config['next']['settings']['next_breadcrumbs_property_itemset']);
@@ -114,7 +111,6 @@ if (version_compare($oldVersion, '3.3.2.32', '<')) {
     );
 
     $message->setEscapeHtml(false);
-    $messenger = new Messenger();
     $messenger->addWarning($message);
 
     // Option moved to module Block Plus.
@@ -123,7 +119,7 @@ UPDATE site_page_block
 SET layout = "mirrorPage"
 WHERE layout = "simplePage";
 SQL;
-    $connection->exec($sql);
+    $connection->executeStatement($sql);
 
     $siteSettings = $services->get('Omeka\Settings\Site');
     /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
@@ -145,7 +141,6 @@ if (version_compare($oldVersion, '3.3.40', '<')) {
     );
 
     $message->setEscapeHtml(false);
-    $messenger = new Messenger();
     $messenger->addWarning($message);
 }
 
@@ -155,7 +150,6 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
     );
 
     $message->setEscapeHtml(false);
-    $messenger = new Messenger();
     $messenger->addWarning($message);
 }
 
@@ -166,7 +160,6 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
         '</a>'
     );
     $message->setEscapeHtml(false);
-    $messenger = new Messenger();
     $messenger->addWarning($message);
 }
 
@@ -177,7 +170,6 @@ if (version_compare($oldVersion, '3.3.42', '<')) {
         '</a>'
     );
     $message->setEscapeHtml(false);
-    $messenger = new Messenger();
     $messenger->addWarning($message);
 }
 
@@ -204,7 +196,6 @@ if (version_compare($oldVersion, '3.3.45', '<')) {
     $settings->set('menu_property_itemset', $settings->get('next_property_itemset'));
     $settings->delete('next_property_itemset');
 
-    $messenger = new Messenger();
     $message = new Message(
         'The helper "PrimaryItemSet" was moved to module %sMenu%s.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',

@@ -139,7 +139,8 @@ class BrowsePreviousNext extends AbstractHelper
             $paramValue = $param->getValue();
             if (is_array($paramValue)) {
                 $paramValue = implode(',', array_map($quote, $paramValue));
-            } elseif ($param->getType() !== \Doctrine\DBAL\Types\Types::INTEGER) {
+            } elseif ($param->getType() !== \Doctrine\DBAL\ParameterType::INTEGER) {
+                // TODO Check \Doctrine\DBAL\ParameterType::INTEGER or \Doctrine\DBAL\Types\Types::INTEGER.
                 $paramValue = $quote($paramValue);
             }
             $parameters[':' . $param->getName()] = $paramValue;

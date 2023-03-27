@@ -2,12 +2,18 @@
 
 namespace Next\Form\Element;
 
+
 use Laminas\Form\Element\Select;
 use Omeka\Api\Manager as ApiManager;
 use Omeka\Api\Representation\SiteRepresentation;
+use Omeka\Api\Representation\SitePageRepresentation;
 
 /**
  * @see \Omeka\Form\Element\AbstractGroupByOwnerSelect
+ *
+ * @see \BlockPlus\Form\Element\AbstractGroupBySiteSelect
+ * @see \Internationalisation\\Form\Element\AbstractGroupBySiteSelect
+ * @see \Next\Form\Element\AbstractGroupBySiteSelect
  */
 abstract class AbstractGroupBySiteSelect extends Select
 {
@@ -21,48 +27,32 @@ abstract class AbstractGroupBySiteSelect extends Select
      */
     protected $apiManager;
 
-    /**
-     * @param SiteRepresentation $site
-     * @return self
-     */
-    public function setSite(SiteRepresentation $site = null)
+    public function setSite(?SiteRepresentation $site): self
     {
         $this->site = $site;
-        return $site;
+        return $this;
     }
 
-    /**
-     * @return \Omeka\Api\Representation\SiteRepresentation
-     */
-    public function getSite()
+    public function getSite(): ?SiteRepresentation
     {
         return $this->site;
     }
 
-    /**
-     * @param ApiManager $apiManager
-     * @return self
-     */
-    public function setApiManager(ApiManager $apiManager)
+    public function setApiManager(ApiManager $apiManager): self
     {
         $this->apiManager = $apiManager;
         return $this;
     }
 
-    /**
-     * @return ApiManager
-     */
-    public function getApiManager()
+    public function getApiManager(): ApiManager
     {
         return $this->apiManager;
     }
 
     /**
      * Get the resource name.
-     *
-     * @return string
      */
-    abstract public function getResourceName();
+    abstract public function getResourceName(): string;
 
     /**
      * Get the value label from a resource.
@@ -70,7 +60,7 @@ abstract class AbstractGroupBySiteSelect extends Select
      * @param $resource
      * @return string
      */
-    abstract public function getValueLabel($resource);
+    abstract public function getValueLabel(SitePageRepresentation $resource): string;
 
     /**
      * Specific options:
@@ -82,7 +72,7 @@ abstract class AbstractGroupBySiteSelect extends Select
      * {@inheritDoc}
      * @see \Laminas\Form\Element\Select::getValueOptions()
      */
-    public function getValueOptions()
+    public function getValueOptions(): array
     {
         $query = $this->getOption('query');
         if (!is_array($query)) {
@@ -102,7 +92,7 @@ abstract class AbstractGroupBySiteSelect extends Select
         $response = $this->getApiManager()->search($this->getResourceName(), $query);
 
         $siteGroup = $this->listSiteGroup();
-        $withinSiteGroup = $siteGroup !== false;
+        $withinSiteGroup = $siteGroup !== null;
         if ($excludeCurrentSite && $siteGroup) {
             unset($siteGroup[$currentSiteSlug]);
         }
@@ -182,18 +172,18 @@ abstract class AbstractGroupBySiteSelect extends Select
      *
      * @todo Use something cleaner than a setting name in option?
      *
-     * @return array|false Group of the current site.
+     * @return array|null Group of the current site.
      */
-    protected function listSiteGroup()
+    protected function listSiteGroup(): ?array
     {
         $siteGroup = $this->getOption('site_group');
         if (!$siteGroup) {
-            return false;
+            return null;
         }
 
         $site = $this->getSite();
         if (empty($site)) {
-            return false;
+            return null;
         }
 
         $slug = $site->slug();

@@ -230,8 +230,10 @@ class Module extends AbstractModule
 
     public function handleSiteSettingsFilters(Event $event): void
     {
-        $event->getParam('inputFilter')
-            ->get('next')
+        $inputFilter = version_compare(\Omeka\Module::VERSION, '4', '<')
+            ? $event->getParam('inputFilter')->get('next')
+            : $event->getParam('inputFilter');
+        $inputFilter
             // TODO Use DataTextarea.
             ->add([
                 'name' => 'next_items_order_for_itemsets',
@@ -274,5 +276,23 @@ class Module extends AbstractModule
         ksort($result);
 
         return $result;
+    }
+
+    /**
+     * Get each line of a string separately.
+     */
+    public function stringToList($string): array
+    {
+        return array_filter(array_map('trim', explode("\n", $this->fixEndOfLine($string))), 'strlen');
+    }
+
+    /**
+     * Clean the text area from end of lines.
+     *
+     * This method fixes Windows and Apple copy/paste from a textarea input.
+     */
+    public function fixEndOfLine($string): string
+    {
+        return str_replace(["\r\n", "\n\r", "\r"], ["\n", "\n", "\n"], (string) $string);
     }
 }
