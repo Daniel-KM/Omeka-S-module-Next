@@ -52,7 +52,7 @@ used by default in admin resources pages.
 
 Allow to check if the current page is the home page of the site, like in Omeka Classic.
 
-#### Current site
+#### Current site (Omeka S v3, integrated in core for v4)
 
 Allow to get the current site in public view, that may be missing in some cases.
 
@@ -185,6 +185,11 @@ request.
 #### Logger in view
 
 Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.4).
+
+#### Current site
+
+Allow to get the current site in public view, that may be missing in some cases
+(included in Omeka S v4).
 
 #### New links
 

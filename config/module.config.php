@@ -2,7 +2,7 @@
 
 namespace Next;
 
-return [
+$conf = [
     'listeners' => [
         Mvc\MvcListeners::class,
     ],
@@ -66,3 +66,11 @@ return [
         ],
     ],
 ];
+
+$isV4 = version_compare(\Omeka\Module::VERSION, '4', '>=');
+
+if ($isV4) {
+    unset($conf['view_helpers']['invokables']['currentSite']);
+}
+
+return $conf;
