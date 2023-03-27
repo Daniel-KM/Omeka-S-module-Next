@@ -74,6 +74,8 @@ people and machines. So this feature displays the api output as unicode and
 unescaped, so it can be readable by people who don’t have a json viewer in their
 browser ([#1493]).
 
+Of course, when used inside html, it must be escaped.
+
 
 Features of older versions (< Omeka 3.2)
 ----------------------------------------
