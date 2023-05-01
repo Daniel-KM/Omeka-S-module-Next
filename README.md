@@ -181,11 +181,18 @@ an improved version in module [Bulk Edit].
 
 ### Backend
 
+#### Button "Public view"
+
+Display a button "Public view" in resource show pages.
+
+This feature was moved to module [Easy Admin] since version 3.4.8.
+
 #### Choice of columns in admin browse view
 
 An option is added to select the metadata to display in the main browse view (fix [#1497]).
 This option in no more integrated in the module, but available through the pull
 request.
+Included in Omeka S v4 via user settings.
 
 #### Logger in view
 
