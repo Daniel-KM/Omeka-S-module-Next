@@ -207,7 +207,7 @@ if (version_compare($oldVersion, '3.3.45', '<')) {
 
 if (version_compare($oldVersion, '3.4.45', '<')) {
     $message = new Message(
-        'The helper "IsHomePage()" was moved to modules %1$sBlock Plus%2$s and %3$sMenu%2$s..', // @translate
+        'The helper "IsHomePage()" was moved to modules %1$sBlock Plus%2$s and %3$sMenu%2$s.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
         '</a>',
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">'
