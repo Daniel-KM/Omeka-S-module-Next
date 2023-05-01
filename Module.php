@@ -221,11 +221,19 @@ class Module extends AbstractModule
          * @see \Omeka\Form\Element\RestoreTextarea $siteGroupsElement
          * @see \Internationalisation\Form\SettingsFieldset $fieldset
          */
-        $fieldset = $event->getTarget()
-            ->get('next');
-        $fieldset
-            ->get('next_items_order_for_itemsets')
-            ->setValue($ordersString);
+        $isOldOmeka = version_compare(\Omeka\Module::VERSION, '4', '<');
+
+        if ($isOldOmeka) {
+            $fieldset = $event->getTarget()
+                ->get('next');
+            $fieldset
+                ->get('next_items_order_for_itemsets')
+                ->setValue($ordersString);
+        } else {
+            $event->getTarget()
+                ->get('next_items_order_for_itemsets')
+                ->setValue($ordersString);
+        }
     }
 
     public function handleSiteSettingsFilters(Event $event): void

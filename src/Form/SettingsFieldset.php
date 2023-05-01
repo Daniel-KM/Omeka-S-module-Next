@@ -9,14 +9,20 @@ class SettingsFieldset extends Fieldset
 {
     protected $label = 'Next Module'; // @translate
 
+    protected $elementGroups = [
+        'next' => 'Next Module', // @translate
+    ];
+
     public function init(): void
     {
         $this
             ->setAttribute('id', 'next')
+            ->setOption('element_groups', $this->elementGroups)
             ->add([
                 'name' => 'next_prevnext_disable',
                 'type' => Element\Checkbox::class,
                 'options' => [
+                    'element_group' => 'next',
                     'label' => 'Disable previous/next', // @translate
                     'info' => 'An issue exists on some versions of mysql database (mariadb is working fine).', // @translate
                 ],

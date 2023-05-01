@@ -7,16 +7,22 @@ use Laminas\Form\Fieldset;
 
 class SiteSettingsFieldset extends Fieldset
 {
-    protected $label = 'Next module'; // @translate
+    protected $label = 'Next Module'; // @translate
+
+    protected $elementGroups = [
+        'next' => 'Next Module', // @translate
+    ];
 
     public function init(): void
     {
         $this
             ->setAttribute('id', 'next')
+            ->setOption('element_groups', $this->elementGroups)
             ->add([
                 'name' => 'next_items_order_for_itemsets',
                 'type' => Element\Textarea::class,
                 'options' => [
+                    'element_group' => 'next',
                     'label' => 'Default items order in each item set', // @translate
                     'info' => 'Set order for item set, one by row, format "id,id,id property order". Use "0" for the default.', // @translate
                 ],
@@ -31,6 +37,7 @@ class SiteSettingsFieldset extends Fieldset
                 'name' => 'next_prevnext_items_query',
                 'type' => Element\Text::class,
                 'options' => [
+                    'element_group' => 'next',
                     'label' => 'Query to limit and sort the list of items for the previous/next buttons', // @translate
                     'info' => 'Use a standard query. Arguments from module Advanced Search Plus are supported if present and needed.', // @translate
                     'documentation' => 'https://omeka.org/s/docs/user-manual/sites/site_pages/#browse-preview',
@@ -43,6 +50,7 @@ class SiteSettingsFieldset extends Fieldset
                 'name' => 'next_prevnext_item_sets_query',
                 'type' => Element\Text::class,
                 'options' => [
+                    'element_group' => 'next',
                     'label' => 'Query to limit and sort the list of item sets for the previous/next buttons', // @translate
                     'info' => 'Use a standard query. Arguments from module Advanced Search Plus are supported if present and needed.', // @translate
                     'documentation' => 'https://omeka.org/s/docs/user-manual/sites/site_pages/#browse-preview',
@@ -50,6 +58,7 @@ class SiteSettingsFieldset extends Fieldset
                 'attributes' => [
                     'id' => 'next_prevnext_item_sets_query',
                 ],
-            ]);
+            ])
+        ;
     }
 }
