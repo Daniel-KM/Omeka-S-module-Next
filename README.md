@@ -84,7 +84,7 @@ Features of older versions (< Omeka 3.2)
 
 #### Breadcrumbs
 
-This feature was moved to module [Menu] and improved since version 3.3.41.
+This feature was moved to modules [Menu] and [Block Plus] and improved since version 3.3.41.
 
 A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.
 The default template is `common/breadcrumbs.phtml`, so the breadcrumb can be
