@@ -3,12 +3,8 @@
 namespace Next;
 
 $conf = [
-    'listeners' => [
-        Mvc\MvcListeners::class,
-    ],
     'service_manager' => [
         'invokables' => [
-            Mvc\MvcListeners::class => Mvc\MvcListeners::class,
             'Omeka\ViewApiJsonRenderer' => View\Renderer\ApiJsonRenderer::class,
         ],
     ],
@@ -25,24 +21,11 @@ $conf = [
             'currentSite' => View\Helper\CurrentSite::class,
             'isHomePage' => View\Helper\IsHomePage::class,
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
-            'lastBrowsePage' => View\Helper\LastBrowsePage::class,
         ],
         'factories' => [
-            'browsePreviousNext' => Service\ViewHelper\BrowsePreviousNextFactory::class,
             'defaultSiteSlug' => Service\ViewHelper\DefaultSiteSlugFactory::class,
-            'nextResource' => Service\ViewHelper\NextResourceFactory::class,
-            'previousResource' => Service\ViewHelper\PreviousResourceFactory::class,
             'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
             'userSiteSlugs' => Service\ViewHelper\UserSiteSlugsFactory::class,
-        ],
-    ],
-    'form_elements' => [
-        'invokables' => [
-            Form\SettingsFieldset::class => Form\SettingsFieldset::class,
-            Form\SiteSettingsFieldset::class => Form\SiteSettingsFieldset::class,
-        ],
-        'factories' => [
-            Form\Element\SitesPageSelect::class => Service\Form\Element\SitesPageSelectFactory::class,
         ],
     ],
     'translator' => [
@@ -56,14 +39,6 @@ $conf = [
         ],
     ],
     'next' => [
-        'settings' => [
-            'next_prevnext_disable' => false,
-        ],
-        'site_settings' => [
-            'next_items_order_for_itemsets' => [],
-            'next_prevnext_items_query' => '',
-            'next_prevnext_item_sets_query' => '',
-        ],
     ],
 ];
 
