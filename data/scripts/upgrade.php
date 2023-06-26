@@ -24,9 +24,11 @@ $connection = $services->get('Omeka\Connection');
 $messenger = $plugins->get('messenger');
 $entityManager = $services->get('Omeka\EntityManager');
 
+$config = include dirname(__DIR__, 2) . '/config/module.config.php';
+
 if (version_compare($oldVersion, '3.1.2.9', '<')) {
     $message = new Message(
-        'Some features were moved and improved in a new module %sBulkEdit%s: trim metadata and deduplicate metadata. They are still available in module Next.', // @translate
+        'Some features were moved and improved in a new module %sBulk Edit%s: trim metadata and deduplicate metadata. They are still available in module Next.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit">',
         '</a>'
     );
@@ -37,7 +39,7 @@ if (version_compare($oldVersion, '3.1.2.9', '<')) {
 
 if (version_compare($oldVersion, '3.1.2.12', '<')) {
     $message = new Message(
-        'Some features were moved and improved in a new module %sBlockPlus%s: SearchForm block and SimplePage block. They are still available in module Next.', // @translate
+        'Some features were moved and improved in a new module %sBlock Plus%s: SearchForm block and SimplePage block. They are still available in module Next.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus">',
         '</a>'
     );
@@ -53,7 +55,7 @@ SQL;
     $connection->executeStatement($sql);
 
     $settings->set('next_breadcrumbs_property_itemset',
-        $config['next']['settings']['next_breadcrumbs_property_itemset']);
+        $config['next']['settings']['next_breadcrumbs_property_itemset'] ?? null);
 
     $siteSettings = $services->get('Omeka\Settings\Site');
     /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
@@ -61,14 +63,14 @@ SQL;
     foreach ($sites as $site) {
         $siteSettings->setTargetId($site->id());
         $siteSettings->set('next_breadcrumbs_crumbs',
-            $config['next']['site_settings']['next_breadcrumbs_crumbs']);
+            $config['next']['site_settings']['next_breadcrumbs_crumbs'] ?? null);
     }
 }
 
 if (version_compare($oldVersion, '3.1.2.14', '<')) {
     $settings->set(
         'next_property_itemset',
-        $settings->get('next_breadcrumbs_property_itemset', $config['next']['settings']['next_property_itemset'])
+        $settings->get('next_breadcrumbs_property_itemset', $config['next']['settings']['next_property_itemset'] ?? null)
     );
     $settings->delete('next_breadcrumbs_property_itemset');
 }
@@ -103,10 +105,11 @@ if (version_compare($oldVersion, '3.1.2.31', '<')) {
 
 if (version_compare($oldVersion, '3.3.2.32', '<')) {
     $message = new Message(
-        'Some features were moved and improved in modules %1$sAdvanced Search Plus%4$s, %2$sBlock Plus%4$s, and  %3$sBulk Edit%4$s: in particular select in used properties and classes, SearchForm block, Simple Mirror Page block, automatic trimming and deduplication.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearchPlus" target="_blank">',
+        'Some features were moved and improved in modules %1$sAdvanced Search%5$s, %2$sBlock Plus%5$s, %3$sBulk Edit%5$s, and %4$sEasy Admin%5$s, in particular Select in used properties and classes, SearchForm block, Simple Mirror Page block, automatic trimming and deduplication.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearch" target="_blank">',
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">',
         '</a>'
     );
 
@@ -173,8 +176,7 @@ if (version_compare($oldVersion, '3.3.42', '<')) {
     $messenger->addWarning($message);
 }
 
-if (version_compare($oldVersion, '3.3.44', '<')) {
-    $services = $this->getServiceLocator();
+if (false && version_compare($oldVersion, '3.3.44', '<')) {
     $translator = $services->get('MvcTranslator');
 
     /** @var \Omeka\Module\Manager $moduleManager */
@@ -197,7 +199,7 @@ if (version_compare($oldVersion, '3.3.45', '<')) {
     $settings->delete('next_property_itemset');
 
     $message = new Message(
-        'The helper "PrimaryItemSet" was moved to module %1$sMenu%2$s.', // @translate
+        'The helper "PrimaryItemSet" was moved to module %1$sBlock Plus%2$s.', // @translate
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',
         '</a>'
     );
@@ -211,6 +213,27 @@ if (version_compare($oldVersion, '3.4.45', '<')) {
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
         '</a>',
         '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">'
+    );
+    $message->setEscapeHtml(false);
+    $messenger->addWarning($message);
+}
+
+if (version_compare($oldVersion, '3.4.46', '<')) {
+    $message = new Message(
+        'The button "Public view" was moved to module %1$sEasy Admin%2$s.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">',
+        '</a>'
+    );
+    $message->setEscapeHtml(false);
+    $messenger->addWarning($message);
+}
+
+if (version_compare($oldVersion, '3.4.47', '<')) {
+    $message = new Message(
+        'The helpers "PreviousResource()" and "NextResource()" were moved to modules %1$sBlock Plus%2$s and %3$sEasy Admin%2$s.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
+        '</a>',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">'
     );
     $message->setEscapeHtml(false);
     $messenger->addWarning($message);
