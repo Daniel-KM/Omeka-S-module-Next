@@ -9,54 +9,14 @@ Next (module for Omeka S)
 to be a full module. They may be integrated in the next release of Omeka S, or
 not.
 
+Most of features are not integrated in Omeka S or in modules, in particular
+[Block Plus] and [Easy Admin].
+
 
 Features (all versions)
 -----------------------
 
 ### Public
-
-#### Previous/Next resources
-
-Allow to get the previous or the next resources, that simplifies browsing like
-in Omeka Classic. An option allows to use it in admin board. For sites, there is
-a specific option to limit and to order items and item sets according to a
-standard query.
-
-To use it, you need to add this in the item, item set, or media show page of the
-theme:
-
-```php
-<?php
-$plugins = $this->getHelperPluginManager();
-$hasNext = $plugins->has('previousResource');
-?>
-<?php if ($hasNext): ?>
-<div class="previous-next-items">
-    <?php if ($previous = $this->previousResource($resource)): ?>
-    <?= $previous->link($translate('Previous item'), null, ['class' => 'previous-item']) ?>
-    <?php endif; ?>
-    <?php if ($next = $this->nextResource($resource)): ?>
-    <?= $next->link($translate('Next item'), null, ['class' => 'next-item']) ?>
-    <?php endif; ?>
-</div>
-<?php endif; ?>
-```
-
-#### Last browse page
-
-Allow to go back to the last list of results in order to browse inside item sets,
-items or media after a search without losing the search results. The helper is
-used by default in admin resources pages.
-
-#### Current site (Omeka S v3, integrated in core for v4)
-
-Allow to get the current site in public view, that may be missing in some cases.
-
-#### Default order of items in item set
-
-Display resources in a specific order in the item set main page in front-end,
-for example by title or identifier. This option can be specified differently for
-each site.
 
 #### Item set position
 
@@ -148,6 +108,53 @@ below `apply_templates`:
 ```php
     'used_terms' => $this->siteSetting('next_search_used_terms'),
 ```
+
+#### Previous/Next resources
+
+This feature was moved to module [Block Plus] and [Easy Admin] since version 3.4.47.
+
+Allow to get the previous or the next resources, that simplifies browsing like
+in Omeka Classic. An option allows to use it in admin board. For sites, there is
+a specific option to limit and to order items and item sets according to a
+standard query.
+
+To use it, you need to add this in the item, item set, or media show page of the
+theme:
+
+```php
+<?php
+$plugins = $this->getHelperPluginManager();
+$hasNext = $plugins->has('previousResource');
+?>
+<?php if ($hasNext): ?>
+<div class="previous-next-items">
+    <?php if ($previous = $this->previousResource($resource)): ?>
+    <?= $previous->link($translate('Previous item'), null, ['class' => 'previous-item']) ?>
+    <?php endif; ?>
+    <?php if ($next = $this->nextResource($resource)): ?>
+    <?= $next->link($translate('Next item'), null, ['class' => 'next-item']) ?>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+```
+
+#### Last browse page
+
+This feature was moved to module [Block Plus] since version 3.4.47.
+
+Allow to go back to the last list of results in order to browse inside item sets,
+items or media after a search without losing the search results. The helper is
+used by default in admin resources pages.
+
+#### Current site (Omeka S v3, integrated in core for v4)
+
+Allow to get the current site in public view, that may be missing in some cases.
+
+#### Default order of items in item set
+
+Display resources in a specific order in the item set main page in front-end,
+for example by title or identifier. This option can be specified differently for
+each site.
 
 #### Citation
 
