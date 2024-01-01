@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Next\View\Renderer;
 
 use JsonSerializable;
@@ -13,9 +14,13 @@ use Traversable;
 
 /**
  * JSON renderer for API responses.
+ *
+ * Manage Omeka < v4.1 and >= v4.1.
  */
 class ApiJsonRenderer extends \Omeka\View\Renderer\ApiJsonRenderer
 {
+    protected $eventManager = null;
+
     public function render($model, $values = null)
     {
         $response = $model->getApiResponse();
@@ -42,8 +47,11 @@ class ApiJsonRenderer extends \Omeka\View\Renderer\ApiJsonRenderer
             $this->setJsonpCallback($jsonpCallback);
         }
 
-        // Copy of \Laminas\Json\Json::render(), but with JsonUnescaped as encoding
-        // method in order to use a full pretty print if wanted, in one step.
+        // Copy of \Laminas\View\Renderer\JsonRenderer::render(), but with
+        // JsonUnescaped as encoding method in order to use a full pretty print
+        // if wanted, in one step.
+
+        /** @see \Laminas\View\Renderer\JsonRenderer::render() */
 
         $nameOrModel = &$payload;
         $values = null;
@@ -68,7 +76,7 @@ class ApiJsonRenderer extends \Omeka\View\Renderer\ApiJsonRenderer
             if ($this->hasJsonpCallback()) {
                 $values = $this->jsonpCallback . '(' . $values . ');';
             }
-            return $values;
+            return $this->renderReturn($model, $payload, $values);
         }
 
         // use case 2: $nameOrModel is populated, $values is not
@@ -86,7 +94,7 @@ class ApiJsonRenderer extends \Omeka\View\Renderer\ApiJsonRenderer
             if ($this->hasJsonpCallback()) {
                 $return = $this->jsonpCallback . '(' . $return . ');';
             }
-            return $return;
+            return $this->renderReturn($model, $payload, $return);
         }
 
         // use case 3: Both $nameOrModel and $values are populated
@@ -94,5 +102,22 @@ class ApiJsonRenderer extends \Omeka\View\Renderer\ApiJsonRenderer
             '%s: Do not know how to handle operation when both $nameOrModel and $values are populated',
             __METHOD__
         ));
+    }
+
+    protected function renderReturn($model, $payload, $output)
+    {
+        if (!$this->eventManager) {
+            return $output;
+        }
+
+        // Allow modules to return custom output.
+        $args = $this->eventManager->prepareArgs([
+            'model' => $model,
+            'payload' => $payload,
+            'format' => $this->format,
+            'output' => $output,
+        ]);
+        $this->eventManager->trigger('api.output.serialize', $this, $args);
+        return $args['output'];
     }
 }

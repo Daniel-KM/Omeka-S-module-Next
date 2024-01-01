@@ -46,6 +46,11 @@ $isV4 = version_compare(\Omeka\Module::VERSION, '4', '>=');
 
 if ($isV4) {
     unset($conf['view_helpers']['invokables']['currentSite']);
+    $isV41 = version_compare(\Omeka\Module::VERSION, '4.1', '>=');
+    if ($isV41) {
+        unset($conf['service_manager']['invokables']);
+        $conf['service_manager']['factories']['Omeka\ViewApiJsonRenderer'] = Service\ViewApiJsonRendererFactory::class;
+    }
 }
 
 return $conf;
