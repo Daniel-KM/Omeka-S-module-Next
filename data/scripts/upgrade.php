@@ -106,10 +106,10 @@ if (version_compare($oldVersion, '3.1.2.31', '<')) {
 if (version_compare($oldVersion, '3.3.2.32', '<')) {
     $message = new Message(
         'Some features were moved and improved in modules %1$sAdvanced Search%5$s, %2$sBlock Plus%5$s, %3$sBulk Edit%5$s, and %4$sEasy Admin%5$s, in particular Select in used properties and classes, SearchForm block, Simple Mirror Page block, automatic trimming and deduplication.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearch" target="_blank">',
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit" target="_blank">',
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearch" target="_blank" rel="noopener">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank" rel="noopener">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit" target="_blank" rel="noopener">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank" rel="noopener">',
         '</a>'
     );
 
@@ -139,7 +139,7 @@ SQL;
 if (version_compare($oldVersion, '3.3.40', '<')) {
     $message = new Message(
         'The better identification of xml files was moved to new module %1$sXml Viewer%2$s.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer" target="_blank" rel="noopener">',
         '</a>'
     );
 
@@ -159,7 +159,7 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
 if (version_compare($oldVersion, '3.3.41', '<')) {
     $message = new Message(
         'The helper "Breadcrumbs" was moved to new module %1$sMenu%2$s. Upgrade is automatic.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank" rel="noopener">',
         '</a>'
     );
     $message->setEscapeHtml(false);
@@ -169,7 +169,7 @@ if (version_compare($oldVersion, '3.3.41', '<')) {
 if (version_compare($oldVersion, '3.3.42', '<')) {
     $message = new Message(
         'The helper to manage cron tasks was moved and improved to new module %1$sEasy Admin%2$s. Upgrade is automatic.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank" rel="noopener">',
         '</a>'
     );
     $message->setEscapeHtml(false);
@@ -200,7 +200,7 @@ if (version_compare($oldVersion, '3.3.45', '<')) {
 
     $message = new Message(
         'The helper "PrimaryItemSet" was moved to module %1$sBlock Plus%2$s.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank" rel="noopener">',
         '</a>'
     );
     $message->setEscapeHtml(false);
@@ -210,9 +210,9 @@ if (version_compare($oldVersion, '3.3.45', '<')) {
 if (version_compare($oldVersion, '3.4.45', '<')) {
     $message = new Message(
         'The helper "IsHomePage()" was moved to modules %1$sBlock Plus%2$s and %3$sMenu%2$s.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank" rel="noopener">',
         '</a>',
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank">'
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Menu" target="_blank" rel="noopener">'
     );
     $message->setEscapeHtml(false);
     $messenger->addWarning($message);
@@ -221,7 +221,7 @@ if (version_compare($oldVersion, '3.4.45', '<')) {
 if (version_compare($oldVersion, '3.4.46', '<')) {
     $message = new Message(
         'The button "Public view" was moved to module %1$sEasy Admin%2$s.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank" rel="noopener">',
         '</a>'
     );
     $message->setEscapeHtml(false);
@@ -231,9 +231,9 @@ if (version_compare($oldVersion, '3.4.46', '<')) {
 if (version_compare($oldVersion, '3.4.47', '<')) {
     $message = new Message(
         'The helpers "PreviousResource()" and "NextResource()" were moved to modules %1$sBlock Plus%2$s and %3$sEasy Admin%2$s.', // @translate
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank" rel="noopener">',
         '</a>',
-        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank">'
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin" target="_blank" rel="noopener">'
     );
     $message->setEscapeHtml(false);
     $messenger->addWarning($message);
