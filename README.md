@@ -9,7 +9,7 @@ Next (module for Omeka S)
 to be a full module. They may be integrated in the next release of Omeka S, or
 not.
 
-Most of features are not integrated in Omeka S or in modules, in particular
+Most of features are now integrated in Omeka S or in modules, in particular
 [Block Plus] and [Easy Admin].
 
 
