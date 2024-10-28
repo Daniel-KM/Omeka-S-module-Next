@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-03 00:00+0000\n"
+"POT-Creation-Date: 2024-10-28 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,427 +17,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Generic/AbstractModule.php:601
+#: data/scripts/upgrade.php:189
 #, php-format
-msgid "This module requires the module \"%s\"."
+msgid "This module requires module \"%1$s\" version \"%2$s\" or greater."
 msgstr ""
 
-#: src/Generic/AbstractModule.php:621
-#, php-format
-msgid "This module requires modules \"%s\"."
-msgstr ""
-
-#: src/Generic/AbstractModule.php:689
+#: data/scripts/upgrade.php:31
 #, php-format
 msgid ""
-"The module \"%s\" was automatically deactivated because the dependencies are "
-"unavailable."
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:89
-msgid "Choose any page from any site."
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:90
-msgid ""
-"If a page of a private site is selected, it will be hidden on the public "
-"side."
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:91
-msgid "The current page and recursive pages are forbidden."
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:373 src/View/Helper/Breadcrumbs.php:383
-#: src/View/Helper/Breadcrumbs.php:411 src/View/Helper/Breadcrumbs.php:446
-#: src/View/Helper/Breadcrumbs.php:452
-msgid "Dashboard"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:389 src/View/Helper/Breadcrumbs.php:473
-msgid "Basket"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:397
-msgid "Collecting"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:414
-msgid "Login"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:417
-msgid "Register"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:420
-msgid "Authentication error"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:464
-msgid "Update account"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:467
-msgid "Update email"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:470
-msgid "Accept terms"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:476
-msgid "Selection"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:493
-msgid "Current page"
-msgstr ""
-
-#: src/View/Helper/Breadcrumbs.php:528
-msgid "Collections"
-msgstr ""
-
-#: src/View/Helper/SearchFilters.php:36
-#: view/common/advanced-search/properties.phtml:84
-msgid "starts with"
-msgstr ""
-
-#: src/View/Helper/SearchFilters.php:37
-#: view/common/advanced-search/properties.phtml:85
-msgid "does not start with"
-msgstr ""
-
-#: src/View/Helper/SearchFilters.php:38
-#: view/common/advanced-search/properties.phtml:86
-msgid "ends with"
-msgstr ""
-
-#: src/View/Helper/SearchFilters.php:39
-#: view/common/advanced-search/properties.phtml:87
-msgid "does not end with"
-msgstr ""
-
-#: view/admin/media/show-details-renderer.phtml:12
-msgid "Renderer"
-msgstr ""
-
-#: view/common/browse-previous-next.phtml:15
-msgid "Previous resource"
-msgstr ""
-
-#: view/common/browse-previous-next.phtml:17
-msgid "No previous resource"
-msgstr ""
-
-#: view/common/browse-previous-next.phtml:21
-msgid "Back to last browse page"
-msgstr ""
-
-#: view/common/browse-previous-next.phtml:25
-msgid "Next resource"
-msgstr ""
-
-#: view/common/browse-previous-next.phtml:27
-msgid "No next resource"
-msgstr ""
-
-#: view/omeka/admin/item-set/browse.phtml:179
-#: view/omeka/admin/item-set/browse.phtml:197
-#, php-format
-msgid ""
-"%s: this action will permanently delete %s item sets and cannot be undone."
-msgstr ""
-
-#: view/omeka/admin/item-set/show.phtml:35 view/omeka/admin/item/show.phtml:24
-#: view/omeka/admin/media/show.phtml:20
-msgid "Public view"
-msgstr ""
-
-#: view/omeka/admin/item/browse.phtml:179
-#: view/omeka/admin/item/browse.phtml:197
-#, php-format
-msgid "%s: this action will permanently delete %s items and cannot be undone."
-msgstr ""
-
-#: view/omeka/admin/job/browse.phtml:40
-msgid "Id / Params"
-msgstr ""
-
-#: view/omeka/admin/job/browse.phtml:43
-msgid "Status / Log"
-msgstr ""
-
-#: view/omeka/admin/media/browse.phtml:173
-#: view/omeka/admin/media/browse.phtml:191
-#, php-format
-msgid "%s: this action will permanently delete %s medias and cannot be undone."
-msgstr ""
-
-#: view/omeka/site-admin/index/users.phtml:43
-#: view/omeka/site-admin/index/users.phtml:89
-msgid "User to be removed"
-msgstr ""
-
-#: data/scripts/task.php:33
-#, php-format
-msgid "The script \"%s\" must be run from the command line."
-msgstr ""
-
-#: data/scripts/task.php:60
-msgid ""
-"Required options: -t --task / -u --user-id\n"
-"Optional option: -b --base-path"
-msgstr ""
-
-#: data/scripts/task.php:69
-msgid "The task name must be set and exist."
-msgstr ""
-
-#: data/scripts/task.php:94
-#, php-format
-msgid "The task \"%s\" should be set and exist."
-msgstr ""
-
-#: data/scripts/task.php:102
-msgid "The user id must be set and exist."
-msgstr ""
-
-#: data/scripts/task.php:111
-#, php-format
-msgid "The user #%d is set for the task \"%s\", but doesn’t exist."
-msgstr ""
-
-#: data/scripts/upgrade.php:28
-#, php-format
-msgid ""
-"Some features were moved and improved in a new module %sBulkEdit%s: trim "
+"Some features were moved and improved in a new module %sBulk Edit%s: trim "
 "metadata and deduplicate metadata. They are still available in module Next."
 msgstr ""
 
-#: data/scripts/upgrade.php:40
+#: data/scripts/upgrade.php:42
 #, php-format
 msgid ""
-"Some features were moved and improved in a new module %sBlockPlus%s: "
+"Some features were moved and improved in a new module %sBlock Plus%s: "
 "SearchForm block and SimplePage block. They are still available in module "
 "Next."
 msgstr ""
 
-#: Module.php:448
-msgid "Trim property values"
-msgstr ""
-
-#: Module.php:449
-msgid "Remove initial and trailing whitespace of all values of all properties"
-msgstr ""
-
-#: Module.php:462
-msgid "Deduplicate property values case insensitively"
-msgstr ""
-
-#: Module.php:463
-msgid ""
-"Deduplicate values of all properties, case INsensitively. Trimming values "
-"before is recommended, because values are checked strictly."
-msgstr ""
-
-#: src/Form/SearchFormFieldset.php:16
-msgid "Block title"
-msgstr ""
-
-#: src/Form/SearchFormFieldset.php:17
-msgid "Heading for the block, if any."
-msgstr ""
-
-#: src/Form/SimplePageFieldset.php:16
-msgid ""
-"Private sites are marked with a \"*\". If a private page is selected, it "
-"will be hidden on the public site. The current page and recursive pages are "
-"forbidden."
-msgstr ""
-
-#: src/Form/Element/AbstractGroupBySiteSelect.php:166
-msgid "[No site]"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:11
-msgid "Next Module"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:26
-msgid "Internal id"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:27
-msgid "Resource class"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:31
-msgid "Modified"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:39
-msgid "Property to set primary item set"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:40
-msgid ""
-"When an item is included in multiple item sets, the main one may be "
-"determined by this property."
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:47
-msgid "Select a property…"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:55
-msgid "Columns for browse views"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:56
-msgid "These columns will be used in the admin resource browse views."
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:67
-msgid "Select columns…"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:74
-msgid "Disable previous/next"
-msgstr ""
-
-#: src/Form/SettingsFieldset.php:75
-msgid ""
-"An issue exists on some versions of mysql database (mariadb is working fine)."
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:9
-msgid "Next module"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:18
-msgid "Default items order in each item set"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:19
-msgid ""
-"Set order for item set, one by row, format \"id,id,id property order\". Use "
-"\"0\" for the default."
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:32
-msgid "List only used properties and resources classes"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:33
-msgid ""
-"Restrict the list of properties and resources classes to the used ones in "
-"advanced search form (for properties, when option \"templates\" is not used)."
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:45
-msgid "Next module : Breadcrumbs"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:56
-msgid "Crumbs"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:58
-msgid "Prepend home"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:59
-msgid "Include \"Collections\""
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:60
-msgid "Include main item set for item"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:61
-msgid "Append current resource"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:73
-msgid "Prepended links"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:74
-msgid ""
-"List of urls followed by a label, one by line, that will be prepended to the "
-"breadcrumb."
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:85
-msgid "Url for collections"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:86
-msgid ""
-"The url to use for the link \"Collections\", if set above. Let empty to use "
-"the default one."
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:97
-msgid "Separator"
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:98
-msgid ""
-"The separator between crumbs may be set as raw text or via css. it should be "
-"set as an html text (\"&gt;\")."
-msgstr ""
-
-#: src/Form/SiteSettingsFieldset.php:109
-msgid "Display on home page"
-msgstr ""
-
-#: src/Job/LoopItems.php:39
-msgid "No resource to process."
-msgstr ""
-
-#: src/Job/LoopItems.php:45
-#, php-format
-msgid "Processing %d resources."
-msgstr ""
-
-#: src/Job/LoopItems.php:66
-#, php-format
-msgid "The job \"%s\" was stopped."
-msgstr ""
-
-#: src/Job/LoopItems.php:89
-#, php-format
-msgid "End of the job: %d/%d processed."
-msgstr ""
-
-#: src/Site/BlockLayout/SearchForm.php:17
-msgid "Search simple form"
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:34
-msgid "Simple page"
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:42
-msgid "A page should be selected to create a simple page."
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:47
-msgid "A simple page cannot be inside itself."
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:55
-#: src/Site/BlockLayout/SimplePage.php:61
-msgid "A simple page cannot use a page that uses it recursively as a block."
-msgstr ""
-
-#: src/Site/BlockLayout/SimplePage.php:106
+#: data/scripts/upgrade.php:108
 #, php-format
 msgid ""
-"Simple page block #%d of page \"%s\" of site \"%s\" should be updated: it "
-"refers to a removed page."
+"Some features were moved and improved in modules %1$sAdvanced Search%5$s, "
+"%2$sBlock Plus%5$s, %3$sBulk Edit%5$s, and %4$sEasy Admin%5$s, in particular "
+"Select in used properties and classes, SearchForm block, Simple Mirror Page "
+"block, automatic trimming and deduplication."
+msgstr ""
+
+#: data/scripts/upgrade.php:141
+#, php-format
+msgid ""
+"The better identification of xml files was moved to new module %1$sXml "
+"Viewer%2$s."
+msgstr ""
+
+#: data/scripts/upgrade.php:152
+msgid ""
+"The option to select columns in admin/item/browse was disabled. Use https://"
+"github.com/omeka/omeka-s/pull/1497 if needed."
+msgstr ""
+
+#: data/scripts/upgrade.php:161
+#, php-format
+msgid ""
+"The helper \"Breadcrumbs\" was moved to new module %1$sMenu%2$s. Upgrade is "
+"automatic."
+msgstr ""
+
+#: data/scripts/upgrade.php:171
+#, php-format
+msgid ""
+"The helper to manage cron tasks was moved and improved to new module "
+"%1$sEasy Admin%2$s. Upgrade is automatic."
+msgstr ""
+
+#: data/scripts/upgrade.php:202
+#, php-format
+msgid "The helper \"PrimaryItemSet\" was moved to module %1$sBlock Plus%2$s."
+msgstr ""
+
+#: data/scripts/upgrade.php:212
+#, php-format
+msgid ""
+"The helper \"IsHomePage()\" was moved to modules %1$sBlock Plus%2$s and "
+"%3$sMenu%2$s."
+msgstr ""
+
+#: data/scripts/upgrade.php:223
+#, php-format
+msgid "The button \"Public view\" was moved to module %1$sEasy Admin%2$s."
+msgstr ""
+
+#: data/scripts/upgrade.php:233
+#, php-format
+msgid ""
+"The helpers \"PreviousResource()\" and \"NextResource()\" were moved to "
+"modules %1$sBlock Plus%2$s and %3$sEasy Admin%2$s."
+msgstr ""
+
+#: data/scripts/upgrade.php:244
+msgid ""
+"This version is the last one to support Omeka S versions 3.1 to 4.0. New "
+"releases will support only versions 4.1 and greater."
 msgstr ""
 
 msgid "First"
