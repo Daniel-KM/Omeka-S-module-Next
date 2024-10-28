@@ -9,8 +9,12 @@ Next (module for Omeka S)
 to be a full module. They may be integrated in the next release of Omeka S, or
 not.
 
-Most of features are not integrated in Omeka S or in modules, in particular
-[Block Plus] and [Easy Admin].
+Most of features are now integrated in Omeka S or in modules, in particular
+[Block Plus], [Common] and [Easy Admin].
+
+To use features from Omeka S v3.0 to Omeka S v4.0, you should use versions
+of the module until 3.4.48. New versions of the module will support only
+Omeka S v4.1 or greater.
 
 
 Features (all versions)
@@ -53,6 +57,35 @@ By default, the breadcrumb for an item uses the first item set as the parent
 crumb. The first item set is the item set with the smallest id. If you want to
 use another item set, set it as resource in the property that is set in the main
 settings, or in the options of the view helper.
+
+#### Previous/Next resources
+
+This feature was moved to module [Menu] and improved since version 3.3.42.
+
+Allow to get the previous or the next resources, that simplifies browsing like
+in Omeka Classic. An option allows to use it in admin board. For sites, there is
+a specific option to limit and to order items and item sets according to a
+standard query.
+
+To use it, you need to add this in the item, item set, or media show page of the
+theme:
+
+```php
+<?php
+$plugins = $this->getHelperPluginManager();
+$hasNext = $plugins->has('previousResource');
+?>
+<?php if ($hasNext): ?>
+<div class="previous-next-items">
+    <?php if ($previous = $this->previousResource($resource)): ?>
+    <?= $previous->link($translate('Previous item'), null, ['class' => 'previous-item']) ?>
+    <?php endif; ?>
+    <?php if ($next = $this->nextResource($resource)): ?>
+    <?= $next->link($translate('Next item'), null, ['class' => 'next-item']) ?>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+```
 
 #### Simple mirror page
 
@@ -216,7 +249,7 @@ Allow to get the current site in public view, that may be missing in some cases
 
 #### AbstractModule
 
-This feature was moved to module [Generic] more simply.
+This feature was moved to module [Generic] more simply, then to module [Common].
 
 A class to simplify management of generic methods of the module (install and
 settings).
@@ -267,6 +300,8 @@ php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id
 Installation
 ------------
 
+Install module [Common] first, that is a required dependency.
+
 Uncompress files and rename module folder `Next`. Then install it like any
 other Omeka module and follow the config instructions.
 
@@ -278,7 +313,7 @@ TODO
 
 - [x] Normalize the breadcrumbs with Laminas navigation (module [Menu]).
 - [ ] Move all navigation and theme helpers to module BlockPlus.
-- [ ] Site permission links to user page (v3)
+- [-] Site permission links to user page (v3)
 
 
 Warning
@@ -322,7 +357,7 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018-2023 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2018-2024 (see [Daniel-KM] on GitLab)
 
 
 [Omeka S]: https://omeka.org/s
@@ -340,8 +375,9 @@ Copyright
 [#1464]: https://github.com/omeka/omeka-s/issues/1464
 [#1493]: https://github.com/omeka/omeka-s/issues/1493
 [#1497]: https://github.com/omeka/omeka-s/issues/1497
-[Bibliography]: https://gitlab.com/Daniel-KM/Omeka-S-module-Bibliography
+[Common]: https://gitlab.com/Daniel-KM/Omeka-S-module-Common
 [Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
+[Bibliography]: https://gitlab.com/Daniel-KM/Omeka-S-module-Bibliography
 [Advanced Search Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearchPlus
 [Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
 [Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
