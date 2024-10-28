@@ -9,8 +9,6 @@ if (!class_exists(\Generic\AbstractModule::class)) {
 }
 
 use Generic\AbstractModule;
-use Laminas\EventManager\Event;
-use Laminas\EventManager\SharedEventManagerInterface;
 
 /**
  * Next
@@ -24,25 +22,4 @@ use Laminas\EventManager\SharedEventManagerInterface;
 class Module extends AbstractModule
 {
     const NAMESPACE = __NAMESPACE__;
-
-    public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
-    {
-        $sharedEventManager->attach(
-            'Omeka\Controller\Admin\Media',
-            'view.show.sidebar',
-            [$this, 'handleViewShowSidebarMedia']
-        );
-        $sharedEventManager->attach(
-            'Omeka\Controller\Admin\Media',
-            'view.details',
-            [$this, 'handleViewShowSidebarMedia']
-        );
-    }
-
-    public function handleViewShowSidebarMedia(Event $event): void
-    {
-        $view = $event->getTarget();
-        $resource = $view->resource;
-        echo $view->partial('admin/media/show-details-renderer', ['media' => $resource]);
-    }
 }
