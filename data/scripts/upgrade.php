@@ -238,3 +238,10 @@ if (version_compare($oldVersion, '3.4.47', '<')) {
     $message->setEscapeHtml(false);
     $messenger->addWarning($message);
 }
+
+if (version_compare($oldVersion, '3.4.48', '<')) {
+    $message = new Message(
+        'This version is the last one to support Omeka S versions 3.1 to 4.0. New releases will support only versions 4.1 and greater.' // @translate
+    );
+    $messenger->addWarning($message);
+}
