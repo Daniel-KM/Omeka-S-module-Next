@@ -2,10 +2,10 @@
 
 namespace Next;
 
-$conf = [
+return [
     'service_manager' => [
-        'invokables' => [
-            'Omeka\ViewApiJsonRenderer' => View\Renderer\ApiJsonRenderer::class,
+        'factories' => [
+            'Omeka\ViewApiJsonRenderer' => Service\ViewApiJsonRendererFactory::class,
         ],
     ],
     'view_manager' => [
@@ -18,12 +18,10 @@ $conf = [
     ],
     'view_helpers' => [
         'invokables' => [
-            'currentSite' => View\Helper\CurrentSite::class,
-            'isHomePage' => View\Helper\IsHomePage::class,
+            'defaultSiteSlug' => View\Helper\DefaultSiteSlug::class,
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
         ],
         'factories' => [
-            'defaultSiteSlug' => Service\ViewHelper\DefaultSiteSlugFactory::class,
             'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
             'userSiteSlugs' => Service\ViewHelper\UserSiteSlugsFactory::class,
         ],
@@ -41,16 +39,3 @@ $conf = [
     'next' => [
     ],
 ];
-
-$isV4 = version_compare(\Omeka\Module::VERSION, '4', '>=');
-
-if ($isV4) {
-    unset($conf['view_helpers']['invokables']['currentSite']);
-    $isV41 = version_compare(\Omeka\Module::VERSION, '4.1', '>=');
-    if ($isV41) {
-        unset($conf['service_manager']['invokables']);
-        $conf['service_manager']['factories']['Omeka\ViewApiJsonRenderer'] = Service\ViewApiJsonRendererFactory::class;
-    }
-}
-
-return $conf;

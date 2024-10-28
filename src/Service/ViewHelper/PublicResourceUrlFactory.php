@@ -18,12 +18,11 @@ class PublicResourceUrlFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $services, $requestedName, array $options = null)
     {
-        $defaultSiteId = $services->get('Omeka\Settings')->get('default_site');
         $viewHelpers = $services->get('ViewHelperManager');
+        $defaultSite = $viewHelpers->get('defaultSite');
         $userSiteSlugs = $viewHelpers->get('userSiteSlugs');
-        $defaultSiteSlug = $viewHelpers->get('defaultSiteSlug');
         return new PublicResourceUrl(
-            [$defaultSiteId => $defaultSiteSlug()],
+            $defaultSite('id_slug'),
             $userSiteSlugs()
         );
     }

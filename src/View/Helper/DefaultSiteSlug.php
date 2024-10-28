@@ -6,31 +6,22 @@ use Laminas\View\Helper\AbstractHelper;
 
 /**
  * View helper to get the default site slug, or the first one.
+ *
+ * @deprecated Use Common >defaultSite('slug').
  */
 class DefaultSiteSlug extends AbstractHelper
 {
     /**
-     * @var string
-     */
-    protected $defaultSiteSlug;
-
-    /**
-     * Construct the helper.
-     *
-     * @param string|null $defaultSiteSlug
-     */
-    public function __construct($defaultSiteSlug)
-    {
-        $this->defaultSiteSlug = $defaultSiteSlug;
-    }
-
-    /**
      * Return the default site slug, or the first one.
      *
      * @return string
+     *
+     * @deprecated Use Common ->defaultSite('slug').
      */
-    public function __invoke(): string
+    public function __invoke(): ?string
     {
-        return $this->defaultSiteSlug;
+        $view = $this->getView();
+        $defaultSite = $view->plugin('defaultSite');
+        return $defaultSite('slug');
     }
 }
