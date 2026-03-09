@@ -17,10 +17,6 @@ return [
         'invokables' => [
             'itemSetPosition' => View\Helper\ItemSetPosition::class,
         ],
-        'factories' => [
-            'publicResourceUrl' => Service\ViewHelper\PublicResourceUrlFactory::class,
-            'userSiteSlugs' => Service\ViewHelper\UserSiteSlugsFactory::class,
-        ],
     ],
     'next' => [
     ],
