@@ -3,16 +3,6 @@
 namespace Next;
 
 return [
-    'service_manager' => [
-        'factories' => [
-            'Omeka\ViewApiJsonRenderer' => Service\ViewApiJsonRendererFactory::class,
-        ],
-    ],
-    'view_manager' => [
-        'strategies' => [
-            'ViewJsonStrategy',
-        ],
-    ],
     'next' => [
     ],
 ];
