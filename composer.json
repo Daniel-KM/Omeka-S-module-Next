@@ -1,28 +1,32 @@
 {
     "name": "daniel-km/omeka-s-module-next",
-    "type": "library",
-    "description": "Next, module for Omeka S, that allows to use some new features of the next release of Omeka S in the stable release.",
+    "type": "omeka-s-module",
+    "description": "Module for Omeka S: Bring together various features too small to be a full module; may be integrated in the next release of Omeka S, or not.",
+    "keywords": [
+        "Omeka S",
+        "Omeka S module",
+        "feature",
+        "extension",
+        "plugin",
+        "helper",
+        "block",
+        "admin"
+    ],
     "license": "CECILL-2.1",
+    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-Next",
     "authors": [
         {
             "name": "Daniel Berthereau",
             "email": "Daniel.packagist@Berthereau.net"
         }
     ],
-    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-Next",
     "support": {
         "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Next/-/issues",
         "forum": "https://forum.omeka.org/"
     },
-    "keywords": [
-        "Omeka S",
-        "module",
-        "feature",
-        "block",
-        "admin"
-    ],
-    "require-dev": {
-        "biblibre/omeka-s-test-helper": "dev-master"
+    "_require (not set until Omeka S merges PR #2432)": {
+        "omeka/omeka-s": "^4.1",
+        "daniel-km/omeka-s-module-common": "*"
     },
     "autoload": {
         "psr-4": {
@@ -31,7 +35,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "NextTest\\": "test/NextTest/"
+            "NextTest\\": "tests/NextTest/"
         }
+    },
+    "extra": {
+        "installer-name": "Next"
     }
 }
