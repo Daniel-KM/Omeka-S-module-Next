@@ -2,25 +2,21 @@
 
 namespace Next;
 
-if (!class_exists(\Common\TraitModule::class)) {
-    require_once dirname(__DIR__) . '/Common/TraitModule.php';
-}
-
-use Common\TraitModule;
 use Omeka\Module\AbstractModule;
 
 /**
- * Next
- *
- * Bring together various features too small to be a full module; may be
- * integrated in the next release of Omeka S, or not.
- *
- * @copyright Daniel Berthereau, 2018-2024
+ * @deprecated All features moved to other modules.
+ * @copyright Daniel Berthereau, 2018-2026
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  */
 class Module extends AbstractModule
 {
-    use TraitModule;
-
-    const NAMESPACE = __NAMESPACE__;
+    public function upgrade(
+        $oldVersion,
+        $newVersion,
+        \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
+    ) {
+        $services = $serviceLocator;
+        require_once __DIR__ . '/data/scripts/upgrade.php';
+    }
 }
