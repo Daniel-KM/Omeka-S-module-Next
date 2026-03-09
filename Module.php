@@ -15,7 +15,7 @@ class Module extends AbstractModule
         $oldVersion,
         $newVersion,
         \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
-    ) {
+    ): void {
         $services = $serviceLocator;
         require_once __DIR__ . '/data/scripts/upgrade.php';
     }
