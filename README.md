@@ -12,10 +12,6 @@ not.
 Most of features are now integrated in Omeka S or in modules, in particular
 [Block Plus], [Common] and [Easy Admin].
 
-To use features from Omeka S v3.0 to Omeka S v4.0, you should use versions
-of the module until 3.4.48. New versions of the module will support only
-Omeka S v4.1 or greater.
-
 
 Features (all versions)
 -----------------------
