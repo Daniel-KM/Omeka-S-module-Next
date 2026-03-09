@@ -13,11 +13,6 @@ return [
             'ViewJsonStrategy',
         ],
     ],
-    'view_helpers' => [
-        'invokables' => [
-            'itemSetPosition' => View\Helper\ItemSetPosition::class,
-        ],
-    ],
     'next' => [
     ],
 ];
