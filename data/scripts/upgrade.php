@@ -2,7 +2,6 @@
 
 namespace Next;
 
-use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Stdlib\Message;
 
 /**
@@ -23,8 +22,6 @@ $settings = $services->get('Omeka\Settings');
 $connection = $services->get('Omeka\Connection');
 $messenger = $plugins->get('messenger');
 $entityManager = $services->get('Omeka\EntityManager');
-
-$config = include dirname(__DIR__, 2) . '/config/module.config.php';
 
 if (version_compare($oldVersion, '3.1.2.9', '<')) {
     $message = new Message(
@@ -49,42 +46,28 @@ if (version_compare($oldVersion, '3.1.2.12', '<')) {
 }
 
 if (version_compare($oldVersion, '3.1.2.13', '<')) {
-    $sql = <<<SQL
-UPDATE site_setting SET id = "next_search_used_terms" WHERE `id` = "search_used_terms";
-SQL;
+    $sql = <<<'SQL'
+        UPDATE site_setting SET id = "next_search_used_terms" WHERE `id` = "search_used_terms";
+        SQL;
     $connection->executeStatement($sql);
 
-    $settings->set('next_breadcrumbs_property_itemset',
-        $config['next']['settings']['next_breadcrumbs_property_itemset'] ?? null);
+    $settings->set('next_breadcrumbs_property_itemset', null);
 
     $siteSettings = $services->get('Omeka\Settings\Site');
     /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
     $sites = $api->search('sites')->getContent();
     foreach ($sites as $site) {
         $siteSettings->setTargetId($site->id());
-        $siteSettings->set('next_breadcrumbs_crumbs',
-            $config['next']['site_settings']['next_breadcrumbs_crumbs'] ?? null);
+        $siteSettings->set('next_breadcrumbs_crumbs', null);
     }
 }
 
 if (version_compare($oldVersion, '3.1.2.14', '<')) {
     $settings->set(
         'next_property_itemset',
-        $settings->get('next_breadcrumbs_property_itemset', $config['next']['settings']['next_property_itemset'] ?? null)
+        $settings->get('next_breadcrumbs_property_itemset')
     );
     $settings->delete('next_breadcrumbs_property_itemset');
-}
-
-if (version_compare($oldVersion, '3.1.2.30', '<')) {
-    $siteSettings = $services->get('Omeka\Settings\Site');
-    /** @var \Omeka\Api\Representation\SiteRepresentation[] $sites */
-    $sites = $api->search('sites')->getContent();
-    foreach ($sites as $site) {
-        $siteSettings->setTargetId($site->id());
-        $string = $siteSettings->get('next_breadcrumbs_prepend');
-        $siteSettings->set('next_breadcrumbs_prepend',
-            $this->filterBreadcrumbsPrepend($string));
-    }
 }
 
 if (version_compare($oldVersion, '3.1.2.31', '<')) {
@@ -118,10 +101,10 @@ if (version_compare($oldVersion, '3.3.2.32', '<')) {
 
     // Option moved to module Block Plus.
     $sql = <<<'SQL'
-UPDATE site_page_block
-SET layout = "mirrorPage"
-WHERE layout = "simplePage";
-SQL;
+        UPDATE site_page_block
+        SET layout = "mirrorPage"
+        WHERE layout = "simplePage";
+        SQL;
     $connection->executeStatement($sql);
 
     $siteSettings = $services->get('Omeka\Settings\Site');
@@ -176,24 +159,6 @@ if (version_compare($oldVersion, '3.3.42', '<')) {
     $messenger->addWarning($message);
 }
 
-if (false && version_compare($oldVersion, '3.3.44', '<')) {
-    $translator = $services->get('MvcTranslator');
-
-    /** @var \Omeka\Module\Manager $moduleManager */
-    $moduleManager = $services->get('Omeka\ModuleManager');
-    $advancedSearch = $moduleManager->getModule('AdvancedSearch');
-    if ($advancedSearch) {
-        $advancedSearchVersion = $advancedSearch->getIni('version');
-        if (version_compare($advancedSearchVersion, '3.3.6.16', '<')) {
-            $message = new Message(
-                $translator->translate('This module requires module "%1$s" version "%2$s" or greater.'), // @translate
-                'Advanced Search', '3.3.6.16'
-            );
-            throw new ModuleCannotInstallException((string) $message);
-        }
-    }
-}
-
 if (version_compare($oldVersion, '3.3.45', '<')) {
     $settings->set('menu_property_itemset', $settings->get('next_property_itemset'));
     $settings->delete('next_property_itemset');
@@ -243,5 +208,19 @@ if (version_compare($oldVersion, '3.4.48', '<')) {
     $message = new Message(
         'This version is the last one to support Omeka S versions 3.1 to 4.0. New releases will support only versions 4.1 and greater.' // @translate
     );
+    $messenger->addWarning($message);
+}
+
+if (version_compare($oldVersion, '3.4.50', '<')) {
+    $message = new Message(
+        'All features of this module have been moved to other modules. Use "defaultSite" from module %1$sCommon%6$s, "itemSetPosition" from module %2$sBlock Plus%6$s, "publicResourceUrl"/"userSiteSlugs" from module %3$sSawa%6$s, and the unescaped json api renderer from module %4$sApi Unescaped Json%6$s. See more infos in the %5$sreadme%6$s. This module can be uninstalled.', // @translate
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Common" target="_blank" rel="noopener">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus" target="_blank" rel="noopener">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Sawa" target="_blank" rel="noopener">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-ApiUnescapedJson" target="_blank" rel="noopener">',
+        '<a href="https://gitlab.com/Daniel-KM/Omeka-S-module-Next" target="_blank" rel="noopener">',
+        '</a>'
+    );
+    $message->setEscapeHtml(false);
     $messenger->addWarning($message);
 }

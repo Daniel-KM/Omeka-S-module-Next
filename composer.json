@@ -1,16 +1,11 @@
 {
     "name": "daniel-km/omeka-s-module-next",
     "type": "omeka-s-module",
-    "description": "Module for Omeka S: Bring together various features too small to be a full module; may be integrated in the next release of Omeka S, or not.",
+    "description": "Module for Omeka S: Deprecated. All features have been moved to dedicated modules (Common, Block Plus, Menu, EasyAdmin, Advanced Search, Log, Bibliography, Bulk Edit, Xml Viewer, Sawa, Api Unescaped Json).",
     "keywords": [
         "Omeka S",
         "Omeka S module",
-        "feature",
-        "extension",
-        "plugin",
-        "helper",
-        "block",
-        "admin"
+        "deprecated"
     ],
     "license": "CECILL-2.1",
     "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-Next",
@@ -23,20 +18,6 @@
     "support": {
         "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-Next/-/issues",
         "forum": "https://forum.omeka.org/"
-    },
-    "_require (not set until Omeka S merges PR #2432)": {
-        "omeka/omeka-s": "^4.1",
-        "daniel-km/omeka-s-module-common": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Next\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "NextTest\\": "tests/NextTest/"
-        }
     },
     "extra": {
         "installer-name": "Next"
