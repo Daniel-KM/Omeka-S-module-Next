@@ -1,315 +1,63 @@
-Next (module for Omeka S)
+Next (module for Omeka S) [archived]
 =========================
+
+> **IMPORTANT**
+> This module is deprecated and replaced by the modules indicated below.
 
 > __New versions of this module and support for Omeka S version 3.0 and above
 > are available on [GitLab], which seems to respect users and privacy better
 > than the previous repository.__
 
-[Next] is a module for [Omeka S] that brings together various features too small
-to be a full module. They may be integrated in the next release of Omeka S, or
-not.
-
-Most of features are now integrated in Omeka S or in modules, in particular
-[Block Plus], [Common] and [Easy Admin].
-
-
-Features (all versions)
------------------------
-
-### Public
-
-#### Item set position
-
-Determine the position of an item set in the site.
-
-### Admin
-
-#### Better display of json output in api
-
-The json standard doesn’t require to escape anything, except ", "" and control
-characters. But php and Zend escape many other characters by default : tags,
-ampersand, apostrophe and overall the slashes "/" and the unicode characters,
-making json unreadable in many cases, whereas it’s designed to be readable by
-people and machines. So this feature displays the api output as unicode and
-unescaped, so it can be readable by people who don’t have a json viewer in their
-browser ([#1493]).
-
-Of course, when used inside html, it must be escaped.
-
-
-Features of older versions (< Omeka 3.2)
-----------------------------------------
-
-### Public
-
-#### Breadcrumbs
-
-This feature was moved to modules [Menu] and [Block Plus] and improved since version 3.3.41.
-
-A breadcrumb may be added on resources pages via the command `echo $this->breadcrumbs();`.
-The default template is `common/breadcrumbs.phtml`, so the breadcrumb can be
-themed. Some options are available too.
-By default, the breadcrumb for an item uses the first item set as the parent
-crumb. The first item set is the item set with the smallest id. If you want to
-use another item set, set it as resource in the property that is set in the main
-settings, or in the options of the view helper.
-
-#### Previous/Next resources
-
-This feature was moved to module [Menu] and improved since version 3.3.42.
-
-Allow to get the previous or the next resources, that simplifies browsing like
-in Omeka Classic. An option allows to use it in admin board. For sites, there is
-a specific option to limit and to order items and item sets according to a
-standard query.
-
-To use it, you need to add this in the item, item set, or media show page of the
-theme:
-
-```php
-<?php
-$plugins = $this->getHelperPluginManager();
-$hasNext = $plugins->has('previousResource');
-?>
-<?php if ($hasNext): ?>
-<div class="previous-next-items">
-    <?php if ($previous = $this->previousResource($resource)): ?>
-    <?= $previous->link($translate('Previous item'), null, ['class' => 'previous-item']) ?>
-    <?php endif; ?>
-    <?php if ($next = $this->nextResource($resource)): ?>
-    <?= $next->link($translate('Next item'), null, ['class' => 'next-item']) ?>
-    <?php endif; ?>
-</div>
-<?php endif; ?>
-```
-
-#### Simple mirror page
-
-This block is now managed by module [Block Plus] since version 3.1.2.12.
-
-Allow to use a page as a block, so the same page can be use in multiple sites,
-for example the page "About" or "Privacy". Of course, the page is a standard
-page and can be more complex with multiple blocks. May be fun.
-This is an equivalent for the [shortcode as a page] in Omeka classic too.
-
-#### Is home page
-
-This feature is now managed by modules [Block Plus] since version 3.4.15.11 and
-module [Menu] since version 3.4.8.
-
-Allow to check if the current page is the home page of the site, like in Omeka Classic.
-
-#### Thumbnail url
-
-This feature was moved to module [Block Plus] since version 3.3.11.8.
-
-Allow to get the url of the thumbnail of a resource, a page or a site.
-Warning: For site, the module [Advanced Search Plus] is needed when there is no
-page with a thumbnail (the module provides the api for the url argument `has_thumbnails`).
-
-#### Direct links in user bar
-
-Display direct links to the current resource in the public user bar in order to
-simplify edition and management of resources (fix [#1283], included in Omeka S 1.4).
-The revert links are available too. They display the resource in the default
-site, or in the first one (fix [#1259]).
-
-#### Random order of resources (only for Omeka S version < 3)
-
-Display resources in a random order, for example for a carousel or a featured
-resource. Simply add `sort_by=random` to the query when needed, in particular
-in the page block `Browse preview` (fix [#1281]).
-
-#### Advanced search by start with, end with, or in list
-
-Allow to do more advanced search in public or admin board on values of the
-properties: start with, end with, in list (fix [#1274], [#1276]).
-This feature is moved to module [Advanced Search Plus] in Omeka 3.
-
-#### Advanced search with list of used properties and resource classes.
-
-Display only the used properties and resources classes in the advanced search
-form, via a site setting (fix [#1423]). This feature is integrated in Omeka 3.
-
-In some cases, a change is required in the theme. In the files `themes/my-theme/common/advanced-search/properties.phtml`
-and `themes/my-theme/common/advanced-search/resource-classes.phtml`, add this option
-below `apply_templates`:
-```php
-    'used_terms' => $this->siteSetting('next_search_used_terms'),
-```
-
-#### Previous/Next resources
-
-This feature was moved to module [Block Plus] and [Easy Admin] since version 3.4.47.
-
-Allow to get the previous or the next resources, that simplifies browsing like
-in Omeka Classic. An option allows to use it in admin board. For sites, there is
-a specific option to limit and to order items and item sets according to a
-standard query.
-
-To use it, you need to add this in the item, item set, or media show page of the
-theme:
-
-```php
-<?php
-$plugins = $this->getHelperPluginManager();
-$hasNext = $plugins->has('previousResource');
-?>
-<?php if ($hasNext): ?>
-<div class="previous-next-items">
-    <?php if ($previous = $this->previousResource($resource)): ?>
-    <?= $previous->link($translate('Previous item'), null, ['class' => 'previous-item']) ?>
-    <?php endif; ?>
-    <?php if ($next = $this->nextResource($resource)): ?>
-    <?= $next->link($translate('Next item'), null, ['class' => 'next-item']) ?>
-    <?php endif; ?>
-</div>
-<?php endif; ?>
-```
-
-#### Last browse page
-
-This feature was moved to module [Block Plus] since version 3.4.47.
-
-Allow to go back to the last list of results in order to browse inside item sets,
-items or media after a search without losing the search results. The helper is
-used by default in admin resources pages.
-
-#### Current site (Omeka S v3, integrated in core for v4)
-
-Allow to get the current site in public view, that may be missing in some cases.
-
-#### Default order of items in item set
-
-Display resources in a specific order in the item set main page in front-end,
-for example by title or identifier. This option can be specified differently for
-each site.
-
-#### Citation
-
-Since 3.1.2.7, this feature has moved to module [Bibliography], that uses a
-template view to easily customize it. The view helper doesn’t change.
-
-### Admin
-
-#### Trim property values
-
-Remove leading and trailing whitespaces preventively on any resource creation or
-update, or curatively via the batch edit, so values will be easier to find and
-to compare exactly (fix [#1258]).
-
-Warning: This feature is removed in the version for Omeka 3, but is available in
-an improved version in module [Bulk Edit].
-
-#### Deduplicate property values
-
-Remove exact duplicated values on any new or updated resource preventively.
-Note: preventive deduplication is case sensitive, but curative deduplication is
-case insensitive (it uses a direct query and the Omeka database is case
-insensitive by default).
-
-Warning: This feature is removed in the version for Omeka 3, but is available in
-an improved version in module [Bulk Edit].
-
-#### New links
-
-- From the site permissions to the user page (fix [#1301]).
-
-### Backend
-
-#### Button "Public view"
-
-Display a button "Public view" in resource show pages.
-
-This feature was moved to module [Easy Admin] since version 3.4.8.
-
-#### Choice of columns in admin browse view
-
-An option is added to select the metadata to display in the main browse view (fix [#1497]).
-This option in no more integrated in the module, but available through the pull
-request.
-Included in Omeka S v4 via user settings.
-
-#### Logger in view
-
-Allow to use `$this->logger()` in the views (fix [#1371], included in Omeka S 1.4).
-
-#### Current site
-
-Allow to get the current site in public view, that may be missing in some cases
-(included in Omeka S v4).
-
-#### New links
-
-- From the list of jobs to each log (fix [#1156]), moved to module [Log].
-
-#### AbstractModule
-
-This feature was moved to module [Generic] more simply, then to module [Common].
-
-A class to simplify management of generic methods of the module (install and
-settings).
-
-#### Better identification of media types for xml and zip files
-
-This feature was moved to module [XML Viewer] since version 3.3.40.
-
-In Omeka core, all xml files are identified as `text/xml` and zip files as `application/zip`,
-so it’s not possible to make a distinction between a mets file and an ead file,
-or to identify an epub, that is a zipped xhtml. This feature is required to use
-the module [Verovio] when files don’t use the extension "mei" ([#1464]).
-
-#### Cron tasks
-
-This feature was moved to module [Easy Admin] since version 3.3.42.
-
-A script allows to run jobs from the command line, even if they are not
-initialized. It’s useful to run cron tasks. See required and optional arguments:
-
-```sh
-php /path/to/omeka/modules/Next/data/scripts/task.php --help
-```
-
-In your cron tab, you can add a task like that:
-
-```sh
-/bin/su - www-data -C "php /var/www/omeka/modules/Next/data/scripts/task.php" --task MyTask --user-id 1
-```
-
-Note: since there is no job id, the job should not require it (for example,
-method `shouldStop()` should not be called. The use of the abstract class `AbstractTask`,
-that extends `AbstractJob`, is recommended, as it takes care of this point.
-
-#### Loop items task
-
-This feature was moved to module [Easy Admin] and improved since version 3.3.42.
-
-A task (job) allows to update all items, so all the modules that uses api events
-are triggered. This job can be use as a one-time task that help to process
-existing items when a new feature is added in a module.
-
-```sh
-php /path/to/omeka/modules/Next/data/scripts/task.php --task LoopItems --user-id 1
-```
-
-
-Installation
-------------
-
-Install module [Common] first, that is a required dependency.
-
-Uncompress files and rename module folder `Next`. Then install it like any
-other Omeka module and follow the config instructions.
-
-See general end user documentation for [installing a module].
-
-
-TODO
-----
-
-- [x] Normalize the breadcrumbs with Laminas navigation (module [Menu]).
-- [ ] Move all navigation and theme helpers to module BlockPlus.
-- [-] Site permission links to user page (v3)
+[Next] is a module for [Omeka S] that brought together various features too
+small to be a full module.
+
+**This module is now deprecated**: all features have been moved to dedicated
+modules:
+
+| Feature                       | Moved to                                  |
+|-------------------------------|-------------------------------------------|
+| Default site slug             | [Common] (`$this->defaultSite()`)         |
+| Item set position             | [Block Plus] (`$this->itemSetPosition()`) |
+| Unescaped JSON API renderer   | [Api Unescaped Json]                      |
+| Breadcrumbs                   | [Menu]                                    |
+| Previous/Next resources       | [Block Plus] and [Easy Admin]             |
+| Last browse page              | [Block Plus]                              |
+| Mirror page                   | [Block Plus]                              |
+| Is home page                  | [Block Plus] and [Menu]                   |
+| Thumbnail url                 | [Block Plus]                              |
+| Cron tasks                    | [Cron] and [Easy Admin]                   |
+| Loop items task               | [Easy Admin]                              |
+| Public view button            | [Easy Admin]                              |
+| Logger in view                | Omeka S core (since v1.4)                 |
+| Current site                  | Omeka S core (since v4)                   |
+| Columns in browse view        | Omeka S core (since v4)                   |
+| Random order                  | Omeka S core (since v3)                   |
+| Advanced search               | [Advanced Search]                         |
+| Trim / deduplicate values     | [Bulk Edit]                               |
+| AbstractModule                | [Common]                                  |
+| Xml/zip media type detection  | [Common] and [XML Viewer]                 |
+| Job log links                 | [Log]                                     |
+| Citation                      | [Bibliography]                            |
+| Public resource url           | [Sawa]                                    |
+| User site slugs               | [Sawa]                                    |
+
+Fixes for old versions of Omeka S:
+
+- Direct link to logs for jobs ([#1156])
+- Search results different with/without spaces ([#1258])
+- Button to link to the public page of a resource ([#1259])
+- Advanced search "starts with" and "ends with" ([#1274])
+- Search a property in a list of values ([#1276])
+- Search in a random order ([#1281])
+- User bar admin links ([#1283])
+- Link to the user in the user permissions page ([#1301])
+- View helper for logging ([#1371])
+- Mimetype xml zip ([#1464])
+- Pretty unescaped json ([#1493])
+- Show template in item list ([#1497])
+
+You can safely uninstall this module after installing the replacement modules
+listed above, if needed.
 
 
 Warning
@@ -353,12 +101,24 @@ altered, and that no provisions are either added or removed herefrom.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2018-2024 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2018-2026 (see [Daniel-KM] on GitLab)
 
 
 [Omeka S]: https://omeka.org/s
 [Next]: https://gitlab.com/Daniel-KM/Omeka-S-module-Next
-[shortcode as a page]: https://github.com/omeka/plugin-SimplePages/pull/24
+[Common]: https://gitlab.com/Daniel-KM/Omeka-S-module-Common
+[Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
+[Api Unescaped Json]: https://gitlab.com/Daniel-KM/Omeka-S-module-ApiUnescapedJson
+[Menu]: https://gitlab.com/Daniel-KM/Omeka-S-module-Menu
+[Cron]: https://gitlab.com/Daniel-KM/Omeka-S-module-Cron
+[Easy Admin]: https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin
+[Advanced Search]: https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearch
+[Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
+[Log]: https://gitlab.com/Daniel-KM/Omeka-S-module-Log
+[Bibliography]: https://gitlab.com/Daniel-KM/Omeka-S-module-Bibliography
+[XML Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer
+[Sawa]: https://gitlab.com/Daniel-KM/Omeka-S-module-Sawa
+[#1493]: https://github.com/omeka/omeka-s/issues/1493
 [#1156]: https://github.com/omeka/omeka-s/issues/1156
 [#1258]: https://github.com/omeka/omeka-s/issues/1258
 [#1259]: https://github.com/omeka/omeka-s/issues/1259
@@ -371,23 +131,11 @@ Copyright
 [#1464]: https://github.com/omeka/omeka-s/issues/1464
 [#1493]: https://github.com/omeka/omeka-s/issues/1493
 [#1497]: https://github.com/omeka/omeka-s/issues/1497
-[Common]: https://gitlab.com/Daniel-KM/Omeka-S-module-Common
-[Generic]: https://gitlab.com/Daniel-KM/Omeka-S-module-Generic
-[Bibliography]: https://gitlab.com/Daniel-KM/Omeka-S-module-Bibliography
-[Advanced Search Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-AdvancedSearchPlus
-[Block Plus]: https://gitlab.com/Daniel-KM/Omeka-S-module-BlockPlus
-[Bulk Edit]: https://gitlab.com/Daniel-KM/Omeka-S-module-BulkEdit
-[Menu]: https://gitlab.com/Daniel-KM/Omeka-S-module-Menu
-[Easy Admin]: https://gitlab.com/Daniel-KM/Omeka-S-module-EasyAdmin
-[Log]: https://gitlab.com/Daniel-KM/Omeka-S-module-Log
-[Verovio]: https://gitlab.com/Daniel-KM/Omeka-S-module-Verovio
-[XML Viewer]: https://gitlab.com/Daniel-KM/Omeka-S-module-XmlViewer
 [installing a module]: https://omeka.org/s/docs/user-manual/modules/#installing-modules
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-Next/-/issues
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
 [OSI]: http://opensource.org
-[MIT]: http://opensource.org/licenses/MIT
 [GitLab]: https://gitlab.com/Daniel-KM
 [Daniel-KM]: https://gitlab.com/Daniel-KM "Daniel Berthereau"
